@@ -12,7 +12,7 @@
                 <header id="banner" class="body">
                         <h1><a href="/">J Lee's Blog</a></h1>
                         <nav><ul>
-                                                <li><a href="/category/misc.html">misc</a></li>
+                                                <li><a href="/category/miscellaneous.html">Miscellaneous</a></li>
                         </ul></nav>
                 </header><!-- /#banner -->
 
@@ -23,12 +23,16 @@
         <abbr class="published" title="2025-08-25T00:00:00+09:00">
                 Published: Mon 25 August 2025
         </abbr>
+                <br />
+                <abbr class="modified" title="2025-08-26T00:00:00+09:00">
+                        Updated: Tue 26 August 2025
+                </abbr>
 
                 <address class="vcard author">
                         By                                 <a class="url fn" href="/author/j-lee.html">J Lee</a>
                 </address>
-        <p>In <a href="/category/misc.html">misc</a>.</p>
-        
+        <p>In <a href="/category/miscellaneous.html">Miscellaneous</a>.</p>
+<p>tags: <a href="/tag/baseball.html">Baseball</a> </p>        
 </footer><!-- /.post-info --><p>Bottom of the 9th, bases loaded, full count, the home team trailing by one run. How often does this cliché actually occur in an MLB game?</p>
 <p>To answer this question, let's obtain the data from the Retrosheet website. Here is the statement required by the website:</p>
 <blockquote>
@@ -38,8 +42,8 @@
 <p>The code runs in the following way:</p>
 <ol>
 <li>From the parsed version, filter for at-bats with bot ninth, 3-2 and bases loaded. (it's difficult to recover the "bases loaded" condition from the event file)</li>
-<li>For some reason, the parsed version does not contain the score. So I take the game ID of the previous step and search for the game from the event files.</li>
-<li>Recover the run at the at-bats and filter for "1 run down".</li>
+<li>For some reason, the parsed version does not contain the score. So I take the IDs of the games found in the previous step and search for them in the event files.</li>
+<li>Recover the score at the relevant at-bats and filter for "1 run down".</li>
 </ol>
 <p>I manually downloaded the data between 2010 and 2024.</p>
 <p>This function filters for the at-bats that I want:</p>
@@ -151,7 +155,7 @@ SDN202304160 K
 NYN202405240 53/G56S
 </code></pre></div>
 
-<p>That's 24 occurrences in the space of 15 years, or <span class="math">\(14\times2430+900=34920\)</span> games, so there is a 0.07% chance of witnessing it in each game (or once in 1,455 games).
+<p>That's 24 occurrences in the space of 15 years, or <span class="math">\(14\times2430+900=34920\)</span> games (one pandemic-shortened season), so there is a 0.07% chance of witnessing it in each game (or once in 1,455 games).
 The breakdown of the at-bats:</p>
 <ul>
 <li>5 strikeouts</li>
