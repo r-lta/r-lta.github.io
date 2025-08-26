@@ -2,7 +2,7 @@ name: Deploy Pelican to GitHub Pages
 
 on:
   push:
-    branches: [source]   # change to [main] if you prefer editing on main
+    branches: [main]
 
 permissions:
   contents: read
