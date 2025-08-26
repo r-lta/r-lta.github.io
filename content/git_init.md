@@ -1,7 +1,7 @@
 Title: git init
 Date: 2025-08-26
 Category: Git
-Tags: Programming
+Tags: basic-info
 
 `git init`
 
