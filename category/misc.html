@@ -13,15 +13,16 @@
                         <h1><a href="/">J Lee's Blog</a></h1>
                         <nav><ul>
                                                 <li class="active"><a href="/category/misc.html">misc</a></li>
+                                                <li><a href="/category/miscellaneous.html">Miscellaneous</a></li>
                         </ul></nav>
                 </header><!-- /#banner -->
 
                 <aside id="featured" class="body">
                     <article>
-                        <h1 class="entry-title"><a href="/the-final-pitch-usually.html">The final pitch (usually)</a></h1>
+                        <h1 class="entry-title"><a href="/git-init.html">git init</a></h1>
 <footer class="post-info">
-        <abbr class="published" title="2025-08-25T00:00:00+09:00">
-                Published: Mon 25 August 2025
+        <abbr class="published" title="2025-08-26T00:00:00+09:00">
+                Published: Tue 26 August 2025
         </abbr>
 
                 <address class="vcard author">
@@ -29,200 +30,106 @@
                 </address>
         <p>In <a href="/category/misc.html">misc</a>.</p>
         
-</footer><!-- /.post-info --><p>Bottom of the 9th, bases loaded, full count, the home team trailing by one run. How often does this cliché actually occur in an MLB game?</p>
-<p>To answer this question, let's obtain the data from the Retrosheet website. Here is the statement required by the website:</p>
-<blockquote>
-<p>The information used here was obtained free of charge from and is copyrighted by Retrosheet. Interested parties may contact Retrosheet at "www.retrosheet.org".</p>
-</blockquote>
-<p>You can download <a href="https://www.retrosheet.org/game.htm">event data</a> and its <a href="https://retrosheet.org/downloads/plays.html">parsed version</a> from the website. I only included the regular season games.</p>
-<p>The code runs in the following way:</p>
-<ol>
-<li>From the parsed version, filter for at-bats with bot ninth, 3-2 and bases loaded. (it's difficult to recover the "bases loaded" condition from the event file)</li>
-<li>For some reason, the parsed version does not contain the score. So I take the game ID of the previous step and search for the game from the event files.</li>
-<li>Recover the run at the at-bats and filter for "1 run down".</li>
-</ol>
-<p>I manually downloaded the data between 2010 and 2024.</p>
-<p>This function filters for the at-bats that I want:</p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">filter_df</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
-    <span class="n">bases_loaded</span> <span class="o">=</span> <span class="o">~</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;br1_pre&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">*~</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;br2_pre&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">*~</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;br3_pre&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span>
-    <span class="n">bot_ninth</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;inning&quot;</span><span class="p">]</span><span class="o">==</span><span class="s2">&quot;9&quot;</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;top_bot&quot;</span><span class="p">]</span><span class="o">==</span><span class="s2">&quot;1&quot;</span><span class="p">)</span>
-    <span class="n">two_outs</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;outs_pre&quot;</span><span class="p">]</span><span class="o">==</span><span class="s2">&quot;2&quot;</span>
-    <span class="n">full_count</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;count&quot;</span><span class="p">]</span><span class="o">==</span><span class="s2">&quot;32&quot;</span>
-
-    <span class="n">filtered_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">bases_loaded</span><span class="o">*</span><span class="n">bot_ninth</span><span class="o">*</span><span class="n">two_outs</span><span class="o">*</span><span class="n">full_count</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">filtered_df</span>
+</footer><!-- /.post-info --><!-- Modified: 2025-08-26 -->
+<p>Category: Git
+Tags: Programming</p>
+<p><code>git init</code></p>
+<p>Creates folder .git with the following tree:</p>
+<div class="highlight"><pre><span></span><code><span class="na">.git</span>
+<span class="err">|--</span><span class="w"> </span><span class="nf">config</span>
+<span class="err">|--</span><span class="w"> </span><span class="nf">description</span>
+<span class="err">|--</span><span class="w"> </span><span class="nf">HEAD</span>
+<span class="err">|--</span><span class="w"> </span><span class="nf">hooks</span>
+<span class="err">|</span><span class="w">   </span><span class="err">|--</span><span class="w"> </span><span class="nf">applypatch-msg.sample</span>
+<span class="err">|</span><span class="w">   </span><span class="err">|--</span><span class="w"> </span><span class="nf">commit-msg.sample</span>
+<span class="err">|</span><span class="w">   </span><span class="err">|--</span><span class="w"> </span><span class="nf">fsmonitor-watchman.sample</span>
+<span class="err">|</span><span class="w">   </span><span class="err">|--</span><span class="w"> </span><span class="nf">post-update.sample</span>
+<span class="err">|</span><span class="w">   </span><span class="err">|--</span><span class="w"> </span><span class="nf">pre-applypatch.sample</span>
+<span class="err">|</span><span class="w">   </span><span class="err">|--</span><span class="w"> </span><span class="nf">pre-commit.sample</span>
+<span class="err">|</span><span class="w">   </span><span class="err">|--</span><span class="w"> </span><span class="nf">pre-merge-commit.sample</span>
+<span class="err">|</span><span class="w">   </span><span class="err">|--</span><span class="w"> </span><span class="nf">pre-push.sample</span>
+<span class="err">|</span><span class="w">   </span><span class="err">|--</span><span class="w"> </span><span class="nf">pre-rebase.sample</span>
+<span class="err">|</span><span class="w">   </span><span class="err">|--</span><span class="w"> </span><span class="nf">pre-receive.sample</span>
+<span class="err">|</span><span class="w">   </span><span class="err">|--</span><span class="w"> </span><span class="nf">prepare-commit-msg.sample</span>
+<span class="err">|</span><span class="w">   </span><span class="err">|--</span><span class="w"> </span><span class="nf">push-to-checkout.sample</span>
+<span class="err">|</span><span class="w">   </span><span class="err">|--</span><span class="w"> </span><span class="nf">sendemail-validate.sample</span>
+<span class="err">|</span><span class="w">   </span><span class="err">`--</span><span class="w"> </span><span class="nf">update.sample</span>
+<span class="err">|--</span><span class="w"> </span><span class="nf">info</span>
+<span class="err">|</span><span class="w">   </span><span class="err">`--</span><span class="w"> </span><span class="nf">exclude</span>
+<span class="err">|--</span><span class="w"> </span><span class="nf">objects</span>
+<span class="err">|</span><span class="w">   </span><span class="err">|--</span><span class="w"> </span><span class="nf">info</span>
+<span class="err">|</span><span class="w">   </span><span class="err">`--</span><span class="w"> </span><span class="nf">pack</span>
+<span class="err">`--</span><span class="w"> </span><span class="nf">refs</span>
+<span class="w">    </span><span class="err">|--</span><span class="w"> </span><span class="nf">heads</span>
+<span class="w">    </span><span class="err">`--</span><span class="w"> </span><span class="nf">tags</span>
 </code></pre></div>
 
-<p>This function returns the plays (and not other information) within the game that I am searching for:</p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_play_data</span><span class="p">(</span><span class="n">event_list</span><span class="p">,</span> <span class="n">gid</span><span class="p">):</span>
-    <span class="n">play_list</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">recording</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">event_list</span><span class="p">:</span>
-        <span class="n">parsed</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">recording</span> <span class="ow">and</span> <span class="n">parsed</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="s2">&quot;id&quot;</span> <span class="ow">and</span> <span class="n">parsed</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">==</span><span class="n">gid</span><span class="p">:</span>
-            <span class="n">recording</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="k">elif</span> <span class="n">recording</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">parsed</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="s2">&quot;id&quot;</span><span class="p">:</span>
-                <span class="k">break</span>
-            <span class="k">elif</span> <span class="n">parsed</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="s2">&quot;play&quot;</span><span class="p">:</span>
-                <span class="n">play_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">parsed</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">play_list</span>
+<h4>HEAD</h4>
+<p>Contains the current branch.</p>
+<p>Default: <code>ref: refs/heads/main</code></p>
+<h4>description</h4>
+<p>Description used by GitWeb.</p>
+<p>Default: <code>Unnamed repository; edit this file 'description' to name the repository.</code></p>
+<p>Q: What's GitWeb?</p>
+<p>A: Web interface for viewing a repo, now mostly unused.</p>
+<h4>config</h4>
+<p>Local configuration file, which overrides the global one.</p>
+<p>Default:</p>
+<div class="highlight"><pre><span></span><code><span class="k">[core]</span>
+<span class="w">    </span><span class="na">repositoryformatversion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">0</span>
+<span class="w">    </span><span class="na">filemode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">false</span>
+<span class="w">    </span><span class="na">bare</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">false</span>
+<span class="w">    </span><span class="na">logallrefupdates</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">true</span>
+<span class="w">    </span><span class="na">symlinks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">false</span>
+<span class="w">    </span><span class="na">ignorecase</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">true</span>
 </code></pre></div>
 
-<p>This function recovers the score state based on the plays. ("H" without an alphanumeric around it refers to a runner reaching home; but this excludes the run scored by the batter hitting a home run "HR". "SBH" refers to stealing home.) I am not entirely certain this always returns the correct score, but it works for the cases that I checked.</p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">recover_score</span><span class="p">(</span><span class="n">play_list</span><span class="p">):</span>
-    <span class="n">home_runs</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">away_runs</span> <span class="o">=</span> <span class="mi">0</span>
-
-    <span class="k">for</span> <span class="n">play</span> <span class="ow">in</span> <span class="n">play_list</span><span class="p">:</span>
-        <span class="n">event_split</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;[^a-zA-Z0-9]&quot;</span><span class="p">,</span> <span class="n">play</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
-        <span class="n">run_count</span> <span class="o">=</span> <span class="n">event_split</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s2">&quot;H&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">event_split</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s2">&quot;HR&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">event_split</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s2">&quot;SBH&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">run_count</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">play</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">:</span>
-                <span class="n">away_runs</span> <span class="o">+=</span> <span class="n">run_count</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">home_runs</span> <span class="o">+=</span> <span class="n">run_count</span>
-    <span class="k">return</span> <span class="n">home_runs</span><span class="p">,</span> <span class="n">away_runs</span>
-</code></pre></div>
-
-<p>The main program:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">glob</span> <span class="kn">import</span> <span class="n">glob</span>
-<span class="kn">import</span> <span class="nn">re</span>
-
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-
-<span class="n">searched_rows</span> <span class="o">=</span> <span class="p">[]</span>
-
-<span class="k">for</span> <span class="n">year</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2010</span><span class="p">,</span> <span class="mi">2025</span><span class="p">):</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s2">plays.csv&quot;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
-    <span class="n">filtered_df</span> <span class="o">=</span> <span class="n">filter_df</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-
-    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">filtered_df</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
-        <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;event&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;NP&quot;</span><span class="p">:</span>
-            <span class="k">continue</span>
-
-        <span class="n">team</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;gid&quot;</span><span class="p">][:</span><span class="mi">3</span><span class="p">]</span>
-        <span class="n">event_file_name</span> <span class="o">=</span> <span class="n">glob</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s2">eve/</span><span class="si">{</span><span class="n">year</span><span class="si">}{</span><span class="n">team</span><span class="si">}</span><span class="s2">.EV*&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">event_file_name</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">event_file</span><span class="p">:</span>
-            <span class="n">event_lines</span> <span class="o">=</span> <span class="n">event_file</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
-
-        <span class="n">play_list</span> <span class="o">=</span> <span class="n">get_play_data</span><span class="p">(</span><span class="n">event_lines</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;gid&quot;</span><span class="p">])</span>
-        <span class="n">game_upto_searched_play</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">play</span> <span class="ow">in</span> <span class="n">play_list</span><span class="p">:</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">play</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;inning&quot;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">play</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;top_bot&quot;</span><span class="p">]</span> 
-                <span class="ow">and</span> <span class="n">play</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;batter&quot;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">play</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">==</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;count&quot;</span><span class="p">]</span>
-                <span class="ow">and</span> <span class="n">play</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;event&quot;</span><span class="p">]):</span>
-                <span class="k">break</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">game_upto_searched_play</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">play</span><span class="p">)</span>
-
-        <span class="n">home_runs</span><span class="p">,</span> <span class="n">away_runs</span> <span class="o">=</span> <span class="n">recover_score</span><span class="p">(</span><span class="n">game_upto_searched_play</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">away_runs</span> <span class="o">-</span> <span class="n">home_runs</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">searched_rows</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
-
-<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">searched_rows</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;gid&quot;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;event&quot;</span><span class="p">])</span>
-</code></pre></div>
-
-<p>This prints the following events (the notation is explained <a href="https://www.retrosheet.org/eventfile.htm">here</a>):</p>
-<div class="highlight"><pre><span></span><code>MIN201010020 S8/G6M+.3-H;2-H;1-2
-PIT201004170 W.3-H;2-3;1-2
-ATL201108150 S8/G4M.3-H;2-H;1-2
-NYN201104141 9/F9D+
-SLN201109240 W.3-H;2-3;1-2
-WAS201104300 K
-MIA201406130 W.3-H;2-3;1-2
-TEX201407290 7/F7D
-SFN201505100 W.3-H;2-3;1-2
-ANA201608170 5!3/G
-SLN201608080 W.3-H;2-3;1-2
-SDN201707140 9/F9D+
-BOS201807260 K
-TOR201807020 W.3-H;2-3;1-2
-MIN201907160 5/P5F
-PIT201908160 W.3-H;2-3;1-2
-CIN202007270 8/L8D
-ATL202108240 7/F78XD
-DET202109260 K
-PHI202106220 63/G56
-NYN202205150 K
-CHN202305310 7/F7LD
-SDN202304160 K
-NYN202405240 53/G56S
-</code></pre></div>
-
-<p>That's 24 occurrences in the space of 15 years, or <span class="math">\(14\times2430+900=34920\)</span> games, so there is a 0.07% chance of witnessing it in each game (or once in 1,455 games).
-The breakdown of the at-bats:</p>
-<ul>
-<li>5 strikeouts</li>
-<li>10 batted ball outs</li>
-<li>7 walks (none since 2020)</li>
-<li>2 hits (both ending the game, in 2010 and 2011)</li>
-</ul>
-<p>This gives us an OBP of <span class="math">\(9/24=0.375\)</span> and batting average of <span class="math">\(2/17=0.118\)</span>. So throw a strike?</p>
-<p>Finally, we can see that the Angels game in 2016 contains <code>5!3/G</code>, where <code>!</code> refers to a great play. The <a href="https://www.mlb.com/video/seager-s-game-saving-play-in-9th-c1065024383?q=ContentTags%20==%20[%22defense%22,%22gamepk-448661%22]%20Order%20By%20Timestamp%20DESC&amp;pt=Defensive%20Highlights">link</a>.</p>
-<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
-    var align = "center",
-        indent = "0em",
-        linebreak = "false";
-
-    if (false) {
-        align = (screen.width < 768) ? "left" : align;
-        indent = (screen.width < 768) ? "0em" : indent;
-        linebreak = (screen.width < 768) ? 'true' : linebreak;
-    }
-
-    var mathjaxscript = document.createElement('script');
-    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
-    mathjaxscript.type = 'text/javascript';
-    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
-
-    var configscript = document.createElement('script');
-    configscript.type = 'text/x-mathjax-config';
-    configscript[(window.opera ? "innerHTML" : "text")] =
-        "MathJax.Hub.Config({" +
-        "    config: ['MMLorHTML.js']," +
-        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
-        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
-        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
-        "    displayAlign: '"+ align +"'," +
-        "    displayIndent: '"+ indent +"'," +
-        "    showMathMenu: true," +
-        "    messageStyle: 'normal'," +
-        "    tex2jax: { " +
-        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
-        "        displayMath: [ ['$$','$$'] ]," +
-        "        processEscapes: true," +
-        "        preview: 'TeX'," +
-        "    }, " +
-        "    'HTML-CSS': { " +
-        "        availableFonts: ['STIX', 'TeX']," +
-        "        preferredFont: 'STIX'," +
-        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
-        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
-        "    }, " +
-        "}); " +
-        "if ('default' !== 'default') {" +
-            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
-                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
-                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
-                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
-                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
-                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
-            "});" +
-            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
-                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
-                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
-                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
-                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
-                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
-            "});" +
-        "}";
-
-    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
-    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
-}
-</script>                    </article>
+<p>Q: What does each line mean?</p>
+<p>A:
+- <code>repositoryformatversion</code>: Version number of the repo format, always 0 unless Git decides to change the storage format.
+- <code>filemode</code>: On Unix-like systems, <code>filemode = true</code> means that the change in the <code>+x</code> (execute) permission is tracked.
+- <code>bare</code>: True if the repo has no working directory, e.g. a remote repo.
+- <code>logallrefupdates</code>: Whether the history of branch and head changes (reflogs) is kept.
+- <code>symlinks</code>: Whether Git supports symbolic links. (Skipped: what symbolic links are)
+- <code>ignorecase</code>: Whether the file names are treated as case-insensitive.</p>
+<p>Q: Why <code>[core]</code>?</p>
+<p>A: <code>config</code> is an INI-style file, which uses square brackets for sections. Other sections appear for remotes and branches.</p>
+<h4>refs</h4>
+<p>References to commits.</p>
+<p>Subdirectories in <code>refs</code>:
+- <code>heads</code>
+- <code>tags</code></p>
+<h6>heads</h6>
+<p>Branch tips.</p>
+<p>Q: What are those?</p>
+<p>A: Pointer to the most recent commit on the branch.</p>
+<h6>tags</h6>
+<p>Tag pointers.</p>
+<p>Q: What are those?</p>
+<p>A: A human-readable label for a commit or an object.</p>
+<h4>objects</h4>
+<p>Contains all Git objects.</p>
+<p>Subdirectories in <code>objects</code>:
+- <code>info</code>
+- <code>pack</code></p>
+<h6>info</h6>
+<p>Q: What does this contain?</p>
+<p>A: Object database info, e.g. that certain objects are stored in another repo. Normally empty.</p>
+<h6>pack</h6>
+<p>Q: What does this contain?</p>
+<p>A: Packfiles, i.e. compressed collection of objects created by Git.</p>
+<h4>hooks</h4>
+<p>Shell scripts for actions, disabled by default. They execute when the extension <code>.sample</code> is removed.</p>
+<p>Q: When do they execute?</p>
+<p>A: The timing of the execution depends on the name of the script.</p>
+<h4>info</h4>
+<p><code>exclude</code> file lives here, which contain repo-specific ignore rules.</p>
+<p>Q: Do any other files live here?</p>
+<p>A: Yes, for certain advanced features.</p>
+<p>Q: What do "ignore rules" do?</p>
+<p>A: Prevents files from showing up as "untracked" in <code>git status</code>.</p>
+<p>Q: How does <code>exclude</code> differ from <code>.gitignore</code>?</p>
+<p>A: <code>.gitignore</code> is version-controlled and shared with who clones the repo. <code>exclude</code> is specific to the local clone - use for files like <code>.vscode/</code>.</p>                    </article>
                 </aside><!-- /#featured -->
                 <section id="extras" class="body">
                 </section><!-- /#extras -->
