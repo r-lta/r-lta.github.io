@@ -8,6 +8,7 @@ Tags: basic-info
 Write to one of the three config files.
 
 These files have the following order of precedence (file path for Unix-like):
+
 1. Local: `.git/config` within the repo, accessed by `--local`
 2. Global: `~/.gitconfig`, accessed by `--global`
 3. System: `/etc/gitconfig`, accessed by `--system`

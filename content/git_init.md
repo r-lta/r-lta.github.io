@@ -121,4 +121,5 @@ Q: What do "ignore rules" do?
 A: Prevents files from showing up as "untracked" in `git status`.
 
 Q: How does `exclude` differ from `.gitignore`?
+
 A: `.gitignore` is version-controlled and shared with who clones the repo. `exclude` is specific to the local clone - use for files like `.vscode/`.
