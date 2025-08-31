@@ -13,7 +13,7 @@ These files have the following order of precedence (file path for Unix-like):
 2. Global: `~/.gitconfig`, accessed by `--global`
 3. System: `/etc/gitconfig`, accessed by `--system`
 
-#### write
+## write
 Write (or overwrite) to config file: `git config --[scope] foo.bar "baz"`
 
 This adds
@@ -22,11 +22,11 @@ This adds
 	bar = baz
 ```
 While arbitrary section/key combos can thus be added, only certain pre-defined ones are read by Git, e.g. `user.name`.
-#### read
+## read
 Read from config file: `git config --[scope] foo.bar`
-#### remove
+## remove
 Remove a key: `git config --[scope] --unset foo.bar`
-#### list
+## list
 See what a config file stores: `git config --[scope] --list`
-#### trace
+## trace
 See which file defines a section/key combo: `git config --show-origin foo.bar`
