@@ -1,5 +1,6 @@
 Title: Can you say that sprinting is pornographic?
 Date: 2026-02-15
+Modified: 2026-03-09
 Category: Philosophy
 
 Every two years, the Olympics games come and go with their proud nationalistic spirit and disciplines you forgot existed. While I will not name names, I confess that I find some of the disciplines to be terribly pointless. (Just to pre-empt: I don't think sprinting is pointless, just potentially pornographic.) While I was mulling on this pointlessness, a rather different thought struck me: Many disciplines are not entirely unlike pornography. So I looked up which paper has been influential in our thinking about pornography, in order for me to apply it to sprinting. This led me to *Objectification* by Nussbaum (1995). But before I could apply Nussbaum's theory, I sensed some potential holes in how she characterised the different types of objectification. So this post is in two parts. I first describe and analyse Nussbaum's typology, and then move on to sprinting.
@@ -40,4 +41,4 @@ The end result is that the sprinter is expected to *strive* in their surrender o
 
 Despite it all, I do not claim that Olympic sprinting represents a unique evil in the world. However, under the criteria given by Nussbaum, we should say that it *objectifies* as much as pornography does. And insofar as the moral depravity of pornography consists in its objectification of people to their bodies, we may say that sprinting is pornographic.
 
-Postscript. Ironically, one can argue that a person X becomes truly objectified only when other people chip in and claim that X is being objectified on theoretical grounds; it ignores the lived reality of X over its intellectual abstraction. So I apologise to the sprinters; I just saw a fun provocative opportunity that reveals the potential absurdity of the existing discussion.
+Postscript. Ironically, one can argue that a person X becomes truly objectified only when other people chip in and claim that X is being objectified on theoretical grounds, for it ignores the lived reality of X over its intellectual abstraction.
