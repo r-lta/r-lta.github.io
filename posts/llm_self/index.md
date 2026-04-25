@@ -1,6 +1,8 @@
-Title: Consciousness ascription and the narrative self
-Date: 2026-03-13
-Category: Philosophy
+---
+title: "Consciousness ascription and the narrative self"
+date: "2026-03-13"
+categories: ["Philosophy"]
+---
 
 ## 1. Clarifying consciousness
 Ascription of consciousness (henceforth "Ascription") to others is a strange business, for it seemingly involves inductive reasoning from a single example (myself). Yet calling it an induction is not quite strictly right either, because we do not know what non-consciousness looks like---hence the lingering possibility of panpsychism or zombies.

@@ -1,8 +1,9 @@
-Title: The final pitch (usually)
-Date: 2025-08-25
-Modified: 2025-08-26
-Category: Miscellaneous
-Tags: baseball
+---
+title: "The final pitch (usually)"
+date: "2025-08-25"
+date-modified: "2025-08-26"
+categories: ["Miscellaneous", "baseball"]
+---
 
 Bottom of the 9th, bases loaded, full count, the home team trailing by one run. How often does this cliché actually occur in an MLB game?
 

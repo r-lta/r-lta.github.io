@@ -1,0 +1,26 @@
+project:
+  type: website
+  output-dir: _site
+  render:
+    - "*.qmd"
+    - "posts/**/*.qmd"
+    - "posts/**/*.md"
+    - "!posts/_drafts/**"
+    - "!content/**"
+
+website:
+  title: "J Lee's Blog"
+  site-url: "https://r-lta.github.io"
+  navbar:
+    right:
+      - href: index.qmd
+        text: Home
+      - about.qmd
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+
+execute:
+  freeze: auto

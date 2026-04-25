@@ -1,6 +1,8 @@
-Title: Magical realism in philosophy of science
-Date: 2026-02-26
-Category: Philosophy
+---
+title: "Magical realism in philosophy of science"
+date: "2026-02-26"
+categories: ["Philosophy"]
+---
 
 Philosophers of science are mostly divided into two camps, *realists* and *anti-realists*. Roughly speaking, realists hold that science speaks of unfamiliar entities like electrons because they actually do exist; anti-realists disagree, arguing that the mention of electrons is largely for convenience, and not because there are electrons out there in the world. (Of course, like any position in philosophy, an infinite variety of realism and anti-realism exists in the literature.) I believe both sides of the debate suffer from what I call "magical realism" (apologies to the writers for the mis-appropriation of the term).
 

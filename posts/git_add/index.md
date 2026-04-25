@@ -1,8 +1,9 @@
-Title: git add
-Date: 2025-09-05
-Modified: 2026-02-15
-Category: Git
-Tags: basic-info
+---
+title: "git add"
+date: "2025-09-05"
+date-modified: "2026-02-15"
+categories: ["Git", "basic-info"]
+---
 
 `git add`
 

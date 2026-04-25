@@ -1,7 +1,8 @@
-Title: git config
-Date: 2025-08-27
-Category: Git
-Tags: basic-info
+---
+title: "git config"
+date: "2025-08-27"
+categories: ["Git", "basic-info"]
+---
 
 `git config`
 

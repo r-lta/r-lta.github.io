@@ -1,7 +1,8 @@
-Title: git branch
-Date: 2025-08-31
-Category: Git
-Tags: basic-info
+---
+title: "git branch"
+date: "2025-08-31"
+categories: ["Git", "basic-info"]
+---
 
 `git branch [branch_name]`
 

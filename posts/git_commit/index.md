@@ -1,7 +1,8 @@
-Title: git commit
-Date: 2025-08-28
-Category: Git
-Tags: basic-info
+---
+title: "git commit"
+date: "2025-08-28"
+categories: ["Git", "basic-info"]
+---
 
 `git commit`
 
