@@ -60,6 +60,23 @@ git clone git@github.com:r-lta/r-lta.github.io.git
 cd r-lta.github.io
 ```
 
+The `git@github.com:...` form uses SSH, which needs an SSH key registered with your GitHub account. On a brand-new device that won't work until you set one up. Two ways:
+
+1. **Set up an SSH key** (one-off, then `push`/`pull` Just Work without prompts):
+   ```
+   ssh-keygen -t ed25519 -C "your-email@example.com"   # press Enter through the prompts
+   cat ~/.ssh/id_ed25519.pub                            # copy the output
+   ```
+   Paste it at <https://github.com/settings/keys> → "New SSH key". Then the clone command above works.
+
+2. **Or clone over HTTPS** (no key needed; GitHub will prompt for credentials when you push):
+   ```
+   git clone https://github.com/r-lta/r-lta.github.io.git
+   ```
+   First push will ask you to authenticate — easiest is to install [GitHub CLI](https://cli.github.com) (`gh auth login`), which sets up a credential helper, so future pushes are silent.
+
+After cloning, you also need Quarto installed locally if you want `quarto preview` on that device — see <https://quarto.org/docs/get-started/>.
+
 Every session:
 
 ```
