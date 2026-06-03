@@ -1,4 +1,23 @@
 ```{=html}
+<script>
+  window.MathJax = {
+    tex: {
+      macros: {
+        mb: ["\\mathbf{#1}", 1],
+        bs: ["\\boldsymbol{#1}", 1],
+        cD: "\\mathcal{D}",
+        cF: "\\mathcal{F}",
+        E: "\\mathbb{E}",
+        Var: "\\text{Var}",
+        Cov: "\\text{Cov}",
+        im: "\\text{im}"
+      }
+    }
+  };
+</script>
+```
+
+```{=html}
 <style>
 /* ===== Proofs ===== */
 div.proof {
