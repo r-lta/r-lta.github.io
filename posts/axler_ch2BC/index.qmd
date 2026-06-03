@@ -1,5 +1,6 @@
 ---
 title: "Bases and dimensions"
+description: "Bases, dimension, and the dimension formula for subspace sums — an augmented summary of Axler's LADR §2.B–2.C."
 date: "2026-06-03"
 categories: ["mathematics", "linear-algebra", "ladr"]
 execute:

@@ -1,5 +1,6 @@
 ---
 title: "Span and linear independence"
+description: "Span, linear independence, and the Steinitz exchange lemma — an augmented summary of Axler's LADR §2.A."
 date: "2026-06-03"
 categories: ["mathematics", "linear-algebra", "ladr"]
 execute:

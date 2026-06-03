@@ -1,5 +1,6 @@
 ---
 title: "Linear maps"
+description: "Linear maps, the vector space L(U,W), and products of linear maps — an augmented summary of Axler's LADR §3.A."
 date: "2026-06-03"
 categories: ["mathematics", "linear-algebra", "ladr"]
 execute:
