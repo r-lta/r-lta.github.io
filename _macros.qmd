@@ -1,16 +1,3 @@
-::: {style="display:none"}
-$$
-\newcommand{\mb}[1]{\mathbf{#1}}
-\newcommand{\bs}[1]{\boldsymbol{#1}}
-\newcommand{\cD}{\mathcal{D}}
-\newcommand{\cF}{\mathcal{F}}
-\newcommand{\E}{\mathbb{E}}
-\newcommand{\Var}{\text{Var}}
-\newcommand{\Cov}{\text{Cov}}
-\newcommand{\im}{\text{im}}
-$$
-:::
-
 ```{=html}
 <style>
 /* ===== Proofs ===== */
