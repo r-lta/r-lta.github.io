@@ -2,6 +2,7 @@
 title: "Bases and dimensions"
 description: "Bases, dimension, and the dimension formula for subspace sums — an augmented summary of Axler's LADR §2.B–2.C."
 date: "2026-06-03"
+date-modified: "2026-06-05"
 categories: ["mathematics", "linear-algebra", "ladr"]
 execute:
     echo: true
@@ -67,6 +68,10 @@ $$
 
 where $W=\{a'_1w_1\}\oplus\cdots\oplus\{a'_nw_n\}$.
 :::
+
+Being a direct sum---and as we can check directly---the intersection of $U$ and $W$ is trivial.
+
+This **complement subspace** $W$ depends on the basis chosen, and so is not unique. This connects to the fact that the direct sum does not cancel. Again, if $V$ is $\mathbb{R}^2$ and $U$ is some line through the origin, $W$ can be any line through the origin not equal to $U$. 
 
 #### Basis for direct sum
 Suppose that $V=U\oplus W$, where $u_1,\cdots,u_m$ and $w_1,\cdots,w_n$ are bases of $U$ and $W$ respectively. Then the union of the two bases is a basis of $V$.

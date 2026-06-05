@@ -1,0 +1,461 @@
+---
+title: "Invertible maps"
+description: "Invertible maps and isomorphisms, when maps coincide up to isomorphism, operators, and the centre and two-sided ideals of L(V) — an augmented summary of Axler's LADR §3.D."
+date: "2026-06-05"
+categories: ["mathematics", "linear-algebra", "ladr"]
+execute:
+    echo: true
+---
+
+{{< include ../../_macros.qmd >}}
+
+This is an augmented summary of Sections 3.D of [Linear Algebra Done Right](https://linear.axler.net/index.html) by Sheldon Axler.
+
+## Invertibility
+A linear map $T:V\to W$ is **invertible** if there exists a linear map $S:W\to V$ (called the **inverse** of $T$) such that
+
+$$ST=I_V\quad\text{and}\quad TS=I_W,$$
+
+where $I_V$ and $I_W$ are the identity maps of $V$ and $W$ respectively. It is easy to check that the inverse of $T$ is unique, so we denote it by $T^{-1}$.
+
+#### Product of invertible maps
+If $S:U\to V$ and $T:V\to W$ are invertible, then $TS:U\to W$ is also invertible with the inverse given by $S^{-1}T^{-1}$.
+
+#### Equivalence to injectivity plus surjectivity
+A linear map is invertible if and only if it is injective and surjective.
+
+:::{.proof}
+Suppose that $T$ is invertible. Then $Tv_1=Tv_2$ implies
+
+$$v_1=T^{-1}(Tv_1)=T^{-1}(Tv_2)=v_2,$$
+
+so $T$ is injective. Also, for all $w\in W$, we have
+
+$$T(T^{-1}w)=w,$$
+
+so $T$ is surjective.
+
+Conversely, suppose that $T$ is injective and surjective. For every $w\in W$, surjectivity implies the existence of $v_w\in V$ such that $Tv_w=w$. Then injectivity ensures that this $v_w$ is unique for each $w$. So the function $S:w\mapsto v_w$ is well-defined.
+
+Clearly, $T(Sw)=w$ for all $w\in W$, so $TS=I$. To show that $ST=I$, note that
+
+$$T((ST)w)=(TS)(Tw)=Tw,$$
+
+which implies $(ST)w=w$ by the injectivity of $T$.
+
+Finally, we have to prove the linearity of $S$. The additivity condition
+
+$$S(w_1+w_2)=Sw_1+Sw_2$$
+
+states that $Sw_1+Sw_2$ is the (unique) vector that $T$ maps to $w_1+w_2$, and we find this to be the case as
+
+$$T(Sw_1+Sw_2)=T(Sw_1)+T(Sw_2)=w_1+w_2.$$
+
+Similarly, we can show that $S$ is homogeneous. Therefore, $T$ is invertible.
+:::
+
+###### One-to-one map between basis vectors is invertible
+Let $V$ and $W$ be finite-dimensional with the same dimension, and let $v_1,\cdots,v_n$ and $w_1,\cdots,w_n$ be bases of $V$ and $W$ respectively. Then the linear map $T:V\to W$ defined by $Tv_i=w_i$ for all $i=1,\cdots,n$ is invertible.
+
+:::{.proof}
+It is clear that $T$ is surjective and $\ker T=\{0\}$.
+:::
+
+#### Non-invertible operators
+For a finite-dimensional $V$ with $\dim V>1$, the set of non-invertible operators on $V$ is not a subspace of $\mathcal{L}(V)$. (Note that this does not hold for some fields outside $\mathbb{R}$ and $\mathbb{C}$.)
+
+:::{.proof}
+Let $v_1,\cdots,v_n$ be a basis of $V$. Consider $T_1,T_2\in\mathcal{L}(V)$ defined through this basis as
+
+$$
+T_1v_i=
+\begin{cases}
+0&\text{if }i=1\\
+v_i&\text{otherwise}
+\end{cases}
+\quad\text{and}\quad
+T_2v_i=
+\begin{cases}
+0&\text{if }i=2\\
+v_i&\text{otherwise}.
+\end{cases}
+$$
+
+Neither are invertible, but for any $v=a_1v_1+\cdots+a_nv_n$, we have
+
+$$(T_1+T_2)(v)=a_1v_1+a_2v_2+2a_3v_3+\cdots+2a_nv_n.$$
+
+So $T_1+T_2$ is injective by the linear independence of the $v_i$s, and surjective as the $v_i$s span $V$. This means that $T_1+T_2$ is invertible, so non-invertibility is not closed under vector addition.
+:::
+
+#### Extending linear map on subspace
+Let $U$ be a subspace of finite-dimensional $V$, and let $S\in\mathcal{L}(U,V)$. Then there is an invertible $T\in\mathcal{L}(V)$ satisfying $Tu=Su$ for all $u\in U$ if and only if $S$ is injective.
+
+:::{.proof}
+Suppose there exists $T:V\to V$ such that $Tu=Su$ for all $u\in U$. Then for any $u_1,u_2\in U$, we have
+
+$$Su_1=Su_2\implies Tu_1=Tu_2,$$
+
+which in turn implies $u_1=u_2$ by the injectivity of $T$. So $S$ is injective.
+
+Conversely, suppose that $S$ is injective. Let $u_1,\cdots,u_n$ be a basis of $U$, and extend it to a basis of $V$ by appending $v_1,\cdots,v_m$. As injections preserve linear independence, $Su_1,\cdots,Su_n$ is linearly independent and can thus be extended to a basis of $V$ by appending $v'_1,\cdots,v'_m$. 
+
+Let us define $T:V\to V$ by
+
+$$Tu_i=Su_i\quad\text{and}\quad Tv_i=v'_i,$$
+
+which satisfies $Tu=Su$ by construction. As a one-to-one mapping between basis vectors, $T$ is invertible as required. 
+:::
+
+#### Kernel and image determine map up to isomorphism
+###### Kernel
+In a previous post, we proved that a linear function is determined up to a scalar multiple by the kernel. The following generalises that result.
+
+Let $W$ be finite-dimensional and $T_1,T_2\in\mathcal{L}(V,W)$. Then $\ker T_1=\ker T_2$ if and only if there exists invertible $S\in\mathcal{L}(W)$ such that $T_1=ST_2$.
+
+:::{.proof}
+Suppose that $\ker T_1=\ker T_2$ holds. Let us define a map $S_0:\im\ T_2\to W$ as
+
+$$S_0(T_2v)=T_1v,$$
+
+such that $T_1=S_0T_2$ by construction. To verify that this is well-defined, suppose that $T_2v_1=T_2v_2$. If so, then we have
+
+$$T_2(v_1-v_2)=0\implies v_1-v_2\in\ker T_2=\ker T_1\implies T_1(v_1-v_2)=0,$$
+
+leading to $T_1v_1=T_1v_2$ and so $S_0(T_2v_1)=S_0(T_2v_2)$. Therefore, $S_0$ is well-defined.
+
+But note that the above inference works in the converse direction as well. That is, $S_0(T_2v_1)=S_0(T_2v_2)$ implies $T_2v_1=T_2v_2$, and so $S_0$ is injective.
+
+As per the previous result, $S_0$ can thus be extended to $S:W\to W$, which satisfies
+
+$$S(T_2v)=S_0(T_2v)=T_1v$$
+
+for all $T_2v\in\im\ T_2$. So we have $T_1=ST_2$ as required.
+
+Conversely, suppose that there exists invertible $S$ such that $T_1=ST_2$. Then
+
+$$T_1v=0\iff ST_2v=0\iff T_2v=S^{-1}0=0,$$
+
+and so we have $\ker T_1=\ker T_2$.
+:::
+
+###### Image
+Let $V$ be finite-dimensional and $T_1,T_2\in\mathcal{L}(V,W)$. Then $\im\ T_1=\im\ T_2$ if and only if there exists invertible $S\in\mathcal{L}(V)$ such that $T_1=T_2S$.
+
+:::{.proof}
+Suppose that $\im\ T_1=\im\ T_2$, and let $w_1,\cdots,w_m$ be a basis of the common image. Let $u_1,\cdots,u_n$ be a basis of $\ker T_1$, and let $u'_1,\cdots,u'_m$ be such that $T_1u'_i=w_i$. 
+
+We will show that $u_1,\cdots,u_n,u'_1,\cdots,u'_m$ is a basis of $V$. Suppose that
+
+$$a_1u_1+\cdots+a_nu_n+b_1u'_1+\cdots+b_mu'_m=0.$$
+
+Applying $T_1$ to both sides, we have
+
+$$0=b_1T_1u'_1+\cdots+b_mT_1u'_m=b_1w_1+\cdots+b_mw_m.$$
+
+By the linear independence of the $w_i$s, we have $b_1=\cdots=b_m=0$. Consequently, we have $a_1=\cdots=a_n=0$ by the linear independence of the $u_i$s. As $u_1,\cdots,u_n,u'_1,\cdots,u'_m$ is a linearly independent set of vectors with size $\dim V$, it is a basis of $V$.
+
+Let $v_1,\cdots,v_n,v'_1,\cdots,v'_m$ be a basis of $V$ defined in terms of $T_2$ in analogous manner to above. Define the operator $S$ as
+
+$$Su_i=v_i\quad\text{and}\quad Su'_i=v'_i.$$
+
+Then for arbitrary 
+
+$$v=a_1u_1+\cdots+a_nu_n+b_1u'_1+\cdots+b_mu'_m\in V,$$
+
+we have 
+
+$$
+\begin{aligned}
+T_2Sv&=T_2(a_1v_1+\cdots+a_nv_n+b_1v'_1+\cdots+b_mv'_m)\\
+&=b_1w_1+\cdots+b_mw_m\\
+&=T_1v,
+\end{aligned}
+$$
+
+which means that $T_1=T_2S$. Again, $S$ is invertible as it was defined one-to-one between bases.
+
+Conversely, suppose that there exists such $S$. If $w=T_1v$, then $w=T_2(Sv)$ where $Sv\in V$, so $w\in\im\ T_1$. If $w=T_2v$, then $w=T_1(S^{-1}v)$ (where $S^{-1}$ exists by invertibility), so $w\in\im\ T_2$. Therefore, $\im\ T_1=\im\ T_2$. 
+:::
+
+###### Dimension of kernel
+Let both $V$ and $W$ be finite-dimensional and $T_1,T_2\in\mathcal{L}(V,W)$. Then $\dim\ker T_1=\dim\ker T_2$ if and only if there are invertible operators $R\in\mathcal{L}(V)$ and $S\in\mathcal{L}(W)$ such that $T_1=ST_2R$.
+
+:::{.proof}
+Suppose that $\dim\ker T_1=\dim\ker T_2$. Let 
+
+$$
+u^1_1,\cdots,u^1_n\quad\text{and}\quad u^2_1,\cdots,u^2_n
+$$
+
+be bases of $\ker T_1$ and $\ker T_2$ respectively, and let their extensions
+
+$$
+u^1_1,\cdots,u^1_n,u'^1_1,\cdots,u'^1_m\quad\text{and}\quad u^2_1,\cdots,u^2_n,u'^2_1,\cdots,u'^2_m
+$$
+
+be bases of $V$. Now define $R:V\to V$ as
+
+$$Ru^1_i=u^2_i\quad\text{and}\quad Ru'^1_i=u'^2_i,$$
+
+which is an invertible one-to-one map between basis vectors. 
+
+For an arbitrary vector
+
+$$v=a_1u^1_1+\cdots+a_nu^1_n+b_1u'^1_1+\cdots+b_mu'^1_m\in V,$$
+
+the actions of $T_1$ and $T_2$ lead to
+
+$$
+\begin{aligned}
+T_1v&=b_1T_1u'^1_1+\cdots+b_mT_1u'^1_m\\
+T_2Rv&=b_1T_2u'^2_1+\cdots+b_mT_2u'^2_m.
+\end{aligned}
+$$
+
+Here, both sets $u'^1_1,\cdots,u'^1_m$ and $u'^2_1,\cdots,u'^2_m$ are linearly independent because they are bases for kernel complements. This linear independence implies that
+
+$$\ker T_1=\ker T_2R=\{a_1u^1_1+\cdots+a_nu^1_n:a_i\in\mb{F}\}.$$
+
+So what we have is $T_1,T_2R\in\mathcal{L}(V,W)$ with the same kernel. A previous result shows the existence of invertible $S\in\mathcal{L}(W)$ such that $T_1=ST_2R$.
+
+Conversely, suppose that there are invertible $R:V\to V$ and $S:W\to W$ such that $T_1=ST_2R$.
+
+Firstly, we have $\ker ST_2=\ker T_2$, because
+
+$$ST_2v=0\iff T_2v=S^{-1}0=0.$$
+
+As for $\ker T_2R$, suppose that $k_1,\cdots,k_n$ is a basis of $\ker T_2$. Then we may conjecture that $R^{-1}k_1,\cdots,R^{-1}k_n$ is a basis of $\ker T_2R$. This set is linearly indepedent, so we only have to show that it spans $\ker T_2R$. If we have $v\in\ker T_2R$, then
+
+$$0=T_2(Rv)\implies Rv\in\ker T_2\implies Rv=a_1k_1+\cdots+a_nk_n$$
+
+for some $a_i\in\mb{F}$. Since $v=a_1R^{-1}k_1+\cdots+a_nR^{-1}k_n$, we see that the $R^{-1}k_i$s do span $\ker T_2R$.
+
+Therefore, we have $\dim\ker T_2R=\dim\ker T_2$, and this leads to
+
+$$\dim\ker T_1=\dim\ker ST_2R=\dim\ker T_2R=\dim\ker T_2$$
+
+as required.
+:::
+
+## Isomorphism
+An invertible linear map is called an **isomorphism**. Two vector spaces are **isomorphic** if there is an isomorphism between them.
+
+:::{#exm-}
+For $V$ with dimension $n$, the map $T:V\to\mb{F}^n$ defined as
+
+$$Tv=\mathcal{M}(v)$$
+
+is injective and surjective, and so $V$ is isomorphic to $\mb{F}^n$.
+:::
+
+:::{#exm-}
+An isomorphism between $V$ and $\mathcal{L}(\mb{F},V)$ is the map $M$ that sends each vector $v\in V$ to the linear map $\phi(x)=xv$. We may check that $M$ is linear, injective and surjective.
+:::
+
+#### Finite-dimensional vector spaces over field is determined by dimension
+All finite-dimensional vector spaces over a given field $\mb{F}$ are isomorphic to each other if and only if they have the same dimension.
+
+:::{.proof}
+Suppose that there exists an invertible linear map $T:V\to W$ where $V$ and $W$ are finite-dimensional. As $T$ is injective, $\ker T=\{0\}$. As $T$ is surjective, $\im\ T=W$. Therefore, the rank-nullity theorem gives us
+
+$$\dim V=\dim\ker T+\dim\im\ T=0+\dim W=\dim W.$$
+
+Conversely, suppose that $V$ and $W$ are finite-dimensional with the same dimension $n$. Let $v_1,\cdots,v_n$ and $w_1,\cdots,w_n$ be bases of $V$ and $W$ respectively, and let us define a linear map $T:V\to W$ as $Tv_i=w_i$ for each $i=1,\cdots,n$. We have seen that this is an isomorphism.
+:::
+
+#### Isomorphism of space of matrices
+With respect to some given bases of $V$ and $W$, we have seen that each linear map $T\in\mathcal{L}(V,W)$ has a corresponding matrix $\mathcal{M}(T)\in\mb{F}^{m,n}$ where $n=\dim V$ and $m=\dim W$. We have further seen that $\mathcal{M}$ is a linear map from $\mathcal{L}(V,W)$ to $\mb{F}^{m,n}$.
+
+As it turns out, $\mathcal{M}$ is invertible and so $\mathcal{L}(V,W)$ and $\mb{F}^{m,n}$ are isomorphic.
+
+:::{.proof}
+Suppose that $T\in\ker\mathcal{M}$. If the matrix of $T$ is all zero, this implies that $Tv_i=0$ for all basis vectors $v_i$ of $V$, which means that $T$ is the zero map. So $\ker\mathcal{M}=\{0\}$, and $\mathcal{M}$ is injective.
+
+Let $A$ be an arbitrary matrix in $\mb{F}^{m,n}$. But this is just the matrix for $T\in\mathcal{L}(V,W)$ that sends each $v_j$ to
+
+$$Tv_j=\sum_{i=1}^ma_{i,j}w_i.$$
+
+So $\mathcal{M}$ is surjective and thereby invertible.
+:::
+
+Because $\mathcal{L}(V,W)$ and $\mb{F}^{m,n}$ are isomorphic, the previous result shows that they have the same dimension, which was shown to be
+
+$$\dim\mb{F}^{m,n}=mn=(\dim V)(\dim W).$$
+
+#### Isomorphisms from surjective linear maps
+Suppose that $V$ is finite-dimensional and let the linear map $T:V\to W$ be surjective. Then there is a subspace $U$ of $V$ such that the restriction $T|_U$ of $T$ to $U$ is an isomorphism between $U$ and $W$.
+
+:::{.proof}
+For $T:V\to W$ to exist, we have seen that $\dim V\geq \dim W$. Let $w_1,\cdots,w_n$ be a basis of $W$, and let $v_1,\cdots,v_n$ be such that $Tv_i=w_i$ (where the latter exists because $T$ is surjective). As the $w_i$s are linearly independent, so are the $v_i$s. 
+
+Let $U=\text{span}(v_1,\cdots,v_n)$. Then $T|_U$ is surjective because the $w_i$s span $W$. Also, $T|_U$ is injective by the linear independence of the $w_i$s. Therefore, $T|_U$ is an isomorphism between $U$ and $W$.
+:::
+
+## Matrix of vector
+Let us define the action of $\mathcal{M}$ on a vector $v\in V$ to be the $n\times 1$ matrix consisting of the coordinates of $v$ in the basis of $V$ associated with $\mathcal{M}$. That is, if
+
+$$v=a_1v_1+\cdots+a_nv_n$$
+
+in this basis, then
+
+$$
+\mathcal{M}(v)=
+\begin{pmatrix}
+a_1\\
+\vdots\\
+a_n
+\end{pmatrix}.
+$$
+
+Similarly, $\mathcal{M}(w)$ for $w\in W$ is the $m\times 1$ matrix consisting of the coordinates of $w$. 
+
+By definition, the $j$th column of $\mathcal{M}(T)$ is the column matrix $\mathcal{M}(Tv_j)$, so 
+
+$$\mathcal{M}(T)_{\cdot,j}=\mathcal{M}(Tv_j).$$
+
+#### Linear maps as matrix multiplication
+We have seen that $\mathcal{M}$ is an isomorphism between $\mathcal{L}(V,W)$ and $\mb{F}^{m,n}$. We will now show that applying a linear map to a vector is equivalent to multiplying their matrix representations together, i.e.
+
+$$\mathcal{M}(Tv)=\mathcal{M}(T)\mathcal{M}(v).$$
+
+:::{.proof}
+Consider an arbitrary
+
+$$v=a_1v_1+\cdots+a_nv_n\in V.$$
+
+By the linearity of $\mathcal{M}$, we have
+
+$$
+\begin{aligned}
+\mathcal{M}(Tv)&=a_1\mathcal{M}(Tv_1)+\cdots+a_n\mathcal{M}(Tv_n)\\
+&=a_1\mathcal{M}(T)_{\cdot,1}+\cdots+a_n\mathcal{M}(T)_{\cdot,n}\\
+&=\mathcal{M}(T)\mathcal{M}(v).
+\end{aligned}
+$$
+
+In the second line, we use the equality displayed just above. In the third line, we use the expression for $Ac$ (where $c$ is a column matrix) described in the previous section.
+
+:::
+
+## Operators
+A linear map in $\mathcal{L}(V)=\mathcal{L}(V,V)$ is called an **operator**.
+
+#### Invertible operators in finite dimensions
+If $V$ is finite, then its operator is invertible when it is injective *or* surjective. (We have already seen that invertibility implies injectivity and surjectivity.)
+
+:::{.proof}
+Suppose that $T\in\mathcal{L}(V)$ is injective. Then $\ker T=\{0\}$, so by the rank-nullity theorem
+
+$$\dim\im\ T=\dim V-\dim\ker T=\dim V.$$
+
+Therefore, $T$ is surjective.
+
+Suppose that $T$ is surjective. Then the rank-nullity theorem now gives $\dim\ker T=0$, so $\ker T=\{0\}$ and $T$ is injective.
+
+We have earlier shown that an injective and surjective linear map is invertible.
+:::
+
+:::{#exm-}
+Consider an operator $T$ on $\mb{F}^n$, which can always be represented in the form of
+
+$$T(x_1,\cdots,x_n)=(\sum_{i=1}^na_{1,i}x_i,\cdots,\sum_{i=1}^na_{n,i}x_i).$$
+
+The injectivity of $T$ implies that the corresponding homogeneous system of equations has no non-zero solutions. In this case, this is equivalent to the surjectivity of $T$, which implies that every inhomogeneous system of equations has a solution. 
+
+:::
+
+###### Product of operators
+Let $S,T\in\mathcal{L}(V)$ where $V$ is finite-dimensional. If $ST$ is invertible, then $S$ and $T$ are separately invertible. (The converse is obviously true.)
+
+:::{.proof}
+If $ST$ is invertible, there exists $A\in\mathcal{L}(V)$ such that
+
+$$I=(AS)T=S(TA).$$
+
+Therefore, $T$ has a left inverse, while $S$ has a right inverse. A map with a left inverse is injective, while a map with a right inverse is surjective. Since $V$ is finite-dimensional, either injectivity or surjectivity implies invertibility.
+:::
+
+Similarly, we have the following results:
+
+- $ST=I$ if and only if $TS=I$.
+- If $STU=I$, then $T$ is invertible with $T^{-1}=US$.
+- If $RST$ is surjective, then $S$ is injective.
+
+#### Centre of vector space
+Let $T$ be an operator of finite-dimensional $V$. Then $ST=TS$ for all $S\in\mathcal{L}(V)$^[That is, $T$ is a centre of $\mathcal{L}(V)$.] if and only if $T$ is a scalar multiple of the identity map.
+
+:::{.proof}
+If $T=\lambda I$ for some $\lambda\in\mb{F}$, then we have $ST=TS=\lambda S$ for all $S:V\to V$.
+
+Conversely, suppose that $ST=TS$ holds for all $S:V\to V$. We need to show two things: first, that $Tv=\lambda_vv$ for all $v\in V$, and second, that $\lambda_v$ is the same across the $v$s.
+
+For the first part, let us suppose that $Tv$ is not a scalar multiple of $v$ for some $v$. Then there exist $v\in V$ such that $v$ and $Tv$ are not scalar multiples of each other.
+
+As $v,Tv$ is thus linearly independent, we may extend it to a basis of $V$ as $v,Tv,v_3,\cdots,v_n$. Let us define an operator $S:V\to V$ as
+
+$$
+Sv=v\quad\text{and}\quad S(Tv)=0\quad\text{and}\quad Sv_i=0.
+$$
+
+Then we have
+
+$$(ST)v=S(Tv)=0\quad\text{and}\quad(TS)v=Tv\neq 0,$$
+
+so we see that $ST\neq TS$, which is a contradiction. Therefore, $Tv$ must be a scalar multiple of $v$.
+
+For the second part, let $v,w\in V$ be arbitrary, and let us write $Tv=\lambda_vv$ and $Tw=\lambda_ww$. We wish to show that $\lambda_v=\lambda_w$.
+
+If $v$ and $w$ are linearly dependent, then $w=cv$ for some $c\in\mb{F}$, and so
+
+$$Tw=cTv=c\lambda_vv\quad\text{and}\quad Tw=\lambda_ww=c\lambda_wv.$$
+
+Therefore, we have $\lambda_v=\lambda_w$ as required.
+
+Now suppose that $v$ and $w$ are linearly independent. Then we have
+
+$$T(v+w)=\lambda_{v+w}(v+w)=\lambda_{v+w}v+\lambda_{v+w}w,$$
+
+and we also find by linearity
+
+$$T(v+w)=Tv+Tw=\lambda_vv+\lambda_ww.$$
+
+Equating the two, we find that $\lambda_{v+w}=\lambda_v=\lambda_w$.
+
+Therefore, we find that $T=\lambda I$ for some $\lambda\in\mb{F}$.
+:::
+
+#### Two-sided ideal
+Suppose that $V$ is finite-dimensional. Let $\mathcal{E}$ be a subspace of $\mathcal{L}(V)$ with the property that, if $T\in\mathcal{E}$ holds, then $ST,TS\in\mathcal{E}$ for all $S\in\mathcal{L}(V)$^[This is called a two-sided ideal of the vector space.]. Then either $\mathcal{E}$ is trivial or is equal to $\mathcal{L}(V)$.
+
+:::{.proof}
+Suppose that a non-zero operator $T:V\to V$ exists in $\mathcal{E}$. Our goal is to construct, for any operator $R$, two series of operators $A_1,\cdots,A_n$ and $B_1,\cdots,B_n$ such that $R=\sum_{i=1}^nA_iTB_i$. Since $\mathcal{E}$ is a subspace and $A_iTB_i\in\mathcal{E}$, this would imply that $R\in\mathcal{E}$, and so $\mathcal{E}=\mathcal{L}(V)$.
+
+Since $T$ is non-zero, there exists $v_1\in V$ such that $Tv_1=w_1\neq0$. Let us extend $v_1$ into a basis of $V$ by appending $v_2,\cdots,v_n$. Suppose that $R$ is specified by $Rv_i=r_i$ for each $i=1,\cdots,n$.
+
+Let us define $B_i$ as 
+
+$$
+B_iv_j=
+\begin{cases}
+v_1&\text{if }j=i\\
+0&\text{otherwise},
+\end{cases}
+$$
+
+which acts to preserve the $i$th coordinate. Now, let us extend $w_1$ to another basis $w_1,\cdots,w_n$ of $V$, and define $A_i$ as
+
+$$
+A_iw_j=
+\begin{cases}
+r_i&\text{if }j=1\\
+0&\text{otherwise}.
+\end{cases}
+$$
+
+Then for an arbitrary $v=a_1v_1+\cdots+a_nv_n$, we have
+
+$$(A_iTB_i)v=(A_iT)(a_iv_1)=A_i(a_iw_1)=a_ir_i.$$
+
+Therefore, we have $(\sum_{i=1}^nA_iTB_i)v=Rv$, as required.
+:::

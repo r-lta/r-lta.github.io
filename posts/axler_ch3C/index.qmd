@@ -1,0 +1,352 @@
+---
+title: "Matrices"
+description: "The matrix of a linear map, rank normal form, and matrix addition and multiplication from the linear-map viewpoint — an augmented summary of Axler's LADR §3.C."
+date: "2026-06-05"
+categories: ["mathematics", "linear-algebra", "ladr"]
+execute:
+    echo: true
+---
+
+{{< include ../../_macros.qmd >}}
+
+This is an augmented summary of Sections 3.C of [Linear Algebra Done Right](https://linear.axler.net/index.html) by Sheldon Axler.
+
+## Matrices
+Consider finite-dimensional vector spaces $V$ and $W$, and let $T$ be a linear map from $V$ to $W$. For bases $v_1,\cdots,v_n$ and $w_1,\cdots,w_m$ of $V$ and $W$ respectively, there exist $m\times n$ scalars $A_{i,j}$ such that
+
+$$
+Tv_j=A_{1,j}w_1+\cdots+A_{m,j}w_m.
+$$
+
+That is, we have
+
+- first index = row number = $i$th coordinate in $W$
+- second index = column number = $j$th basis in $V$.
+
+We can collect these scalars into an $m\times n$ **matrix** of the form
+
+$$
+A=
+\begin{pmatrix}
+A_{1,1}&A_{1,2}&\cdots&A_{1,n}\\
+A_{2,1}&A_{2,2}&\cdots&A_{2,n}\\
+\vdots&\vdots&\ddots&\vdots\\
+A_{m,1}&A_{m,2}&\cdots&A_{m,n}
+\end{pmatrix}.
+$$
+
+This matrix represents $T$ *with respect to* this pair of basis. The number of rows (vertical height) of this matrix corresponds to the dimension of the codomain $W$, while the number of columns (horizontal width) corresponds to the dimension of the domain $V$.
+
+:::{#exm-}
+Consider the differentiation map $D:\mathcal{P}_3(\mathbb{R})\to\mathcal{P}_2(\mathbb{R})$. We wish to find the corresponding matrix with respect to the standard bases for $\mathcal{P}_3(\mathbb{R})$ and $\mathcal{P}_2(\mathbb{R})$. 
+
+As the $n$th standard basis vector $x^{n-1}$ maps to $(n-1)x^{n-2}$ under $D$, the $n$th column (tracking how the $n$th basis vector is transformed by $D$) will contain $n-1$ at the $(n-1)$th entry. So the matrix is
+
+$$
+\mathcal{M}(D)=
+\begin{pmatrix}
+0&1&0&0\\
+0&0&2&0\\
+0&0&0&3
+\end{pmatrix}.
+$$
+
+:::
+
+Since we already know what matrix multiplication looks like from other sources: Despite the equation $Tv_j=\sum_{i=1}^mA_{i,j}w_i$ above, we *should not* have in our minds
+
+$$
+\begin{pmatrix}
+Tv_1\\
+Tv_2\\
+\vdots\\
+Tv_n
+\end{pmatrix}=
+\begin{pmatrix}
+A_{1,1}&A_{1,2}&\cdots&A_{1,n}\\
+A_{2,1}&A_{2,2}&\cdots&A_{2,n}\\
+\vdots&\vdots&\ddots&\vdots\\
+A_{m,1}&A_{m,2}&\cdots&A_{m,n}
+\end{pmatrix}
+\begin{pmatrix}
+w_1\\
+w_2\\
+\vdots\\
+w_m
+\end{pmatrix},
+$$
+
+which even has dimensional mismatch. Instead, the correct matrix multiplication equations are
+
+$$
+\begin{pmatrix}
+A_{1,1}\\
+A_{2,1}\\
+\vdots\\
+A_{m,1}
+\end{pmatrix}=
+\begin{pmatrix}
+A_{1,1}&A_{1,2}&\cdots&A_{1,n}\\
+A_{2,1}&A_{2,2}&\cdots&A_{2,n}\\
+\vdots&\vdots&\ddots&\vdots\\
+A_{m,1}&A_{m,2}&\cdots&A_{m,n}
+\end{pmatrix}
+\begin{pmatrix}
+1\\
+0\\
+\vdots\\
+0
+\end{pmatrix}
+$$
+
+where it is understood that the column vector on the right expresses the coordinates of $v_1,\cdots,v_n$, and that on the left expresses the coordinates of $w_1,\cdots,w_m$. 
+
+#### Rows and columns
+Let $A$ be an $m\times n$ matrix. Then
+
+- $A_{i,\cdot}$ denotes the $1\times n$ matrix (row matrix) consisting of the $i$th row of $A$
+- $A_{\cdot,j}$ denotes the $m\times 1$ matrix (column matrix) consisting of the $j$th column of $A$. 
+
+#### Minimum number of non-zero entries
+Suppose that $V$ and $W$ are finite-dimensional and $T:V\to W$. Then for any choice of bases for $V$ and $W$, the corresponding matrix for $T$ has at least $\dim\im\ T$ non-zero entries.
+
+:::{.proof}
+For $\dim V-\dim\ker T$ (the dimension of the kernel complement) to be equal to $d$, it is necessary (but not sufficient) to map *at least* $d$ basis vectors to a non-zero vector. (It is not sufficient because combinations of the vectors could be mapped to zero.) This, in turn, requires *at least* $d$ non-zero entries in the matrix of $T$, as we can see from the definition of matrix. 
+
+The rank-nullity theorem states that
+
+$$\dim\im\ T=\dim V-\dim\ker T,$$
+
+and so we need at least $\dim\im\ T$ non-zero entries in the matrix.
+:::
+
+###### Rank normal form
+Let $V$ and $W$ be finite-dimensional. There exist bases in $V$ and $W$ such that $\mathcal{M}(T)$ actually does contain exactly $\dim\im\ T$ non-zero entries, namely $1$ in the first $\dim\im\ T$ diagonal entries.
+
+:::{.proof}
+Let $w_1,\cdots,w_n$ be a basis of $\im\ T$, and let $v_1,\cdots,v_n$ be vectors in $V$ such that $Tv_i=w_i$. Then we know that $v_1,\cdots,v_n$ is linearly independent.
+
+In addition, let $v'_1,\cdots,v'_m$ be a basis of $\ker T$, where $m+n=\dim V$ by the rank-nullity theorem. Since
+
+$$
+\begin{aligned}
+&0=a_1v_1+\cdots+a_nv_n+b_1v'_1+\cdots+b_mv'_m\\
+\implies&0=T(a_1v_1+\cdots+a_nv_n+b_1v'_1+\cdots+b_mv'_m)=b_1w_1+\cdots+b_mw_m\\
+\implies&0=b_1=\cdots=b_m\\
+\implies&0=a_1=\cdots=a_n,
+\end{aligned}
+$$
+
+we see that $v_1,\cdots,v_n,v'_1,\cdots,v'_m$ is linearly independent. As this set has the right size, it is a basis of $V$. 
+
+Let $w_1,\cdots,w_n,w'_1,\cdots,w'_{n'}$ be an extension of the $w_i$s to a basis of $W$. Then the matrix of $T$ with respect to
+
+$$v_1,\cdots,v_n,v'_1,\cdots,v'_m\quad\text{and}\quad w_1,\cdots,w_n,w'_1,\cdots,w'_{n'}$$
+
+has the requisite form.
+:::
+
+#### Matrix for rank one linear maps
+For a linear map $T\in\mathcal{L}(V,W)$ between finite-dimensional vector spaces, we have $\dim\im\ T=1$ if and only if there are bases of $V$ and $W$ such that every entry of $\mathcal{M}(T)$ is 1.
+
+:::{.proof}
+Suppose that $\dim\im\ T=1$, and let $w$ be a non-zero vector in $\im\ T$ (which would span $\im\ T$). Then for any basis $v_1,\cdots,v_n$ of $V$, we have
+
+$$Tv_i=\lambda_iw.$$
+
+But if all entries of $\mathcal{M}(T)$ are $1$, then we require
+
+$$Tv_1=\cdots=Tv_n=w_1+\cdots+w_m,$$
+
+where $w_1,\cdots,w_m$ is a basis of $W$. So there is a "division of labour" here: the basis of $V$ ensure that $\lambda_1=\cdots=\lambda_n=1$, while the basis of $W$ should be such that $w$ is resolved into $w_1+\cdots+w_m$.
+
+For the first part, we just have to find a basis in which $Tv_i\neq 0$. Let $v\in V$ be a non-zero vector not in $\ker T$, which exists because $\dim\ker T=n-1$ by the rank-nullity theorem. We have to extend it to a basis of $V$ while avoiding any vectors in $\ker T$. So let $k_1,\cdots,k_{n-1}$ be a basis of $\ker T$. Then we have
+
+$$
+\begin{aligned}
+0&=av+a_1(v+k_1)+\cdots+a_{n-1}(v+k_{n-1})\\
+&=(a+a_1+\cdots+a_{n-1})v+a_1k_1+\cdots+a_{n-1}k_{n-1}.
+\end{aligned}
+$$
+
+But this implies that $a_1k_1+\cdots+a_{n-1}k_{n-1}$ is a scalar multiple of $v\in V-\ker T$, which is only possible if that scalar is $0$. The linear independence of the $k_i$s implies $a_1=\cdots=a_{n-1}=0$, which subsequently leads to $a=0$. Therefore,
+
+$$v,v+k_1,\cdots,v+k_{n-1}$$
+
+is linearly independent, and is thereby a basis due to its size. Furthermore, we have 
+
+$$T(v+k_i)=Tv\neq0$$
+
+as required.
+
+For the second part, let $w'_1,\cdots,w'_{m-1}$ be a basis of a complement $U$ of $\im\ T$. Then the set
+
+$$w'_1,\cdots,w'_{m-1},w-(w'_1+\cdots+w'_{m-1})$$
+
+spans $W$, because $W=\im\ T\oplus U$ and the set can express any vector in $\im\ T$ and $U$. As it has the right size, the set is a basis of $W$.
+
+Since we have
+
+$$w=w'_1+\cdots+w'_{m-1}+w-(w'_1+\cdots+w'_{m-1}),$$
+
+this basis satisfies our needs.
+
+So we have found the bases of $V$ and $W$ such that
+
+$$Tv_1=\cdots=Tv_n=w_1+\cdots+w_m.$$
+
+Now conversely, suppose that there exist bases such that $\mathcal{M}(T)$ has all-$1$ entries. Then
+
+$$Tv_j=w_1+\cdots+w_m=w$$
+
+for all $j=1,\cdots,n$, and so for an arbitrary $v=a_1v_1+\cdots+a_nv_n$, we find
+
+$$Tv=a_1Tv_1+\cdots+a_nTv_n=(a_1+\cdots+a_n)w.$$
+
+Therefore, $\im\ T$ is spanned by $w$, which means that $\dim\im\ T=1$.
+
+<!-- For the forward direction, our job is twofold: to find a basis $v_1,\cdots,v_n$ of $V$ such that
+
+$$Tv_i=w$$
+
+for all $i=1,\cdots,n$, and to find a basis $w_1,\cdots,w_m$ of $W$ such that
+
+$$w=w_1+\cdots+w_m.$$
+
+For the first task, we will set $w$ to be any non-zero vector in $\im\ T$. Let $v_1$ be such that $Tv_1=w$. Let $k_1,\cdots,k_{n-1}$ be the basis of $\ker T$, which has dimension of $n-1$ by the rank-nullity theorem. Let us construct $v_2,\cdots,v_n$ as
+
+$$v_i=v_1+k_{i-1},$$
+
+so that $Tv_i=w$. Now suppose that
+
+$$
+\begin{aligned}
+0&=a_1v_1+a_2v_2+\cdots+a_nv_n\\
+&=(\sum_{i=1}^na_i)v_1+a_2k_1+\cdots+a_nk_{n-1}.
+\end{aligned}
+$$
+
+Then applying $T$ on both sides leads to $\sum_{i=1}^na_i=0$, which in turn leads to $a_2=\cdots=a_n=0$ by the linear independence of the $k_i$s. Finally, we have $a_1=0$. Therefore, the $v_i$s are linearly independent vectors of size $\dim V$, and is thereby a basis of $V$. 
+
+Moving on to the second task, let us start with $w$ and extend it to a basis of $W$, obtaining $w,w'_2,\cdots,w'_m$. From this, let us define
+
+$$
+w_i=
+\begin{cases}
+w-w'_2-\cdots-w'_m&\text{if }i=1\\
+w'_i&\text{otherwise}
+\end{cases}
+$$
+
+such that $w_1+\cdots+w_m=w$. If we have
+
+$$0=a_1w_1+\cdots+a_mw_m=a_1w+(a_2-a_1)w'_2+\cdots+(a_m-a_1)w'_m,$$
+
+then we have $a_1=0$ and subsequently $a_2=\cdots=a_m=0$ by the linear independence of $w,w'_2,\cdots,w'_m$. So the $w_i$s form a basis of $W$, as required.   -->
+:::
+
+#### Matrix addition and multiplication
+Given two linear maps $S,T\in\mathcal{L}(V,W)$ with
+
+$$
+\begin{gather}
+Tv_j=a_{1,j}w_1+\cdots+a_{m,j}w_m\\
+Sv_j=b_{1,j}w_1+\cdots+b_{m,j}w_m,
+\end{gather}
+$$
+
+the linear map $T+S$ acts on the basis as
+
+$$
+(T+S)v_j=(a_{1,j}+b_{1,j})w_1+\cdots+(a_{m,j}+b_{m,j})w_m.
+$$
+
+So the matrix corresponding to $T+S$ has the form
+
+$$
+\mathcal{M}(T+S)=
+\begin{pmatrix}
+a_{1,1}+b_{1,1}&a_{1,2}+b_{1,2}&\cdots&a_{1,n}+b_{1,n}\\
+a_{2,1}+b_{2,1}&a_{2,2}+b_{2,2}&\cdots&a_{2,n}+b_{2,n}\\
+\vdots&\vdots&\ddots&\vdots\\
+a_{m,1}+b_{m,1}&a_{m,2}+b_{m,2}&\cdots&a_{m,n}+b_{m,n}
+\end{pmatrix}.
+$$
+
+So we define the matrix addition $\mathcal{M}(S)+\mathcal{M}(T)$ as element-wise addition.
+
+By an analogous reasoning, we define the scalar multiplication of a matrix as element-wise multiplication.
+
+###### Linear map and vector space
+From the above definitions of addition and multiplication, we can conclude two things.
+
+First, if we define $\mb{F}^{m,n}$ to be the set of all $m\times n$ matrices, then we can verify that $\mb{F}^{m,n}$ forms a vector space under the operations defined above.
+
+Second, $\mathcal{M}$ can be viewed as a linear map from $\mathcal{L}(V,W)$ to $\mb{F}^{m,n}$, since additivity and homogeneity hold by the definitions of the operations.
+
+###### Dimension of $\mb{F}^{m,n}$
+It is trivial to show that the set of all $m\times n$ matrix units (which has $1$ in a single entry and $0$ everywhere else) is a basis of $\mb{F}^{m,n}$. So $\dim\mb{F}^{m,n}=mn$. 
+
+#### Matrix multiplication
+Consider the linear maps $T:U\to V$ and $S:V\to W$, where the dimensions of $U$, $V$ and $W$ are $m$, $n$, and $p$ respectively. Then their product acts on the basis vectors of $U$ as
+
+$$
+\begin{aligned}
+(ST)u_j&=S(\sum_{i=1}^na_{i,j}v_i)\\
+&=\sum_{i=1}^na_{i,j}Sv_i\\
+&=\sum_{i=1}^na_{i,j}(\sum_{k=1}^pb_{k,i}w_k).
+\end{aligned}
+$$
+
+This sum contains all terms of the form $a_{i,j}b_{k,i}w_k$ for $i=1,\cdots,n$ and $k=1,\cdots,p$, and so we may write it as
+
+$$
+(ST)u_j=\sum_{k=1}^p(\sum_{i=1}^nb_{k,i}a_{i,j})w_k.
+$$
+
+So the matrix corresponding to $ST$ has the form
+
+$$
+\mathcal{M}(ST)=
+\begin{pmatrix}
+\sum_{i=1}^nb_{1,i}a_{i,1}&\sum_{i=1}^nb_{1,i}a_{i,2}&\cdots&\sum_{i=1}^nb_{1,i}a_{i,m}\\
+\sum_{i=1}^nb_{2,i}a_{i,1}&\sum_{i=1}^nb_{2,i}a_{i,2}&\cdots&\sum_{i=1}^nb_{2,i}a_{i,m}\\
+\vdots&\vdots&\ddots&\vdots\\
+\sum_{i=1}^nb_{p,i}a_{i,1}&\sum_{i=1}^nb_{p,i}a_{i,2}&\cdots&\sum_{i=1}^nb_{p,i}a_{i,m}
+\end{pmatrix}.
+$$
+
+We define this to be the matrix product $\mathcal{M}(S)\mathcal{M}(T)$. Of course, this is identical to what we find through the usual algorithmic computation of $\mathcal{M}(S)\mathcal{M}(T)$.
+
+###### Properties of matrix multiplication
+From the definition, it is possible (but tedious) to check that the matrix multiplication satisfies the associativity and distribution (over matrix addition) laws. However, matrix mutliplication is famously non-commutative. 
+
+###### Different ways to view matrix multiplication
+Let us now think about matrix product $AB$ in of itself (where $A$ and $B$ have shapes $m\times n$ and $n\times p$ respectively), detached from its origins as the coordinates of a linear map product.
+
+Each entry at $(i,j)$ is the product of the $i$th row of $A$ and $j$th column of $B$:
+
+$$(AB)_{i,j}=A_{i,\cdot}B_{\cdot, j}.$$
+
+Consequently, the $j$th column of the product is obtained by going through each row of $A$:
+
+$$
+(AB)_{\cdot,j}=AB_{\cdot,j}
+$$
+
+More generally, for any $n\times 1$ matrix $c$ with entries $c_1,\cdots,c_n$, we have
+
+$$
+Ac=
+\begin{pmatrix}
+\sum_{i=1}^na_{1,i}c_i\\
+\vdots\\
+\sum_{i=1}^na_{m,i}c_i
+\end{pmatrix}=
+\begin{pmatrix}
+a_{1,1}c_1+\cdots+a_{1,n}c_n\\
+\vdots\\
+a_{m,1}c_1+\cdots+a_{m,n}c_n
+\end{pmatrix}=
+c_1A_{\cdot,1}+\cdots+c_nA_{\cdot,n}.
+$$

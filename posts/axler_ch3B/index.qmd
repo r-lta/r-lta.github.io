@@ -1,0 +1,454 @@
+---
+title: "Kernel and image"
+description: "Kernel and image of a linear map, the rank–nullity theorem, and a first look at linear functionals — an augmented summary of Axler's LADR §3.B."
+date: "2026-06-05"
+categories: ["mathematics", "linear-algebra", "ladr"]
+execute:
+    echo: true
+---
+
+{{< include ../../_macros.qmd >}}
+
+This is an augmented summary of Sections 3.B of [Linear Algebra Done Right](https://linear.axler.net/index.html) by Sheldon Axler.
+
+## Kernel and image
+Suppose that $T:V\to W$ is a linear map. Then you can obtain a subspace of $V$ and a subspace of $W$ out of $T$, called the *kernel* and the *image* of the map respectively.
+
+#### Kernel
+We saw that $T$ must map $0$ to $0$. But it may send other vectors in $V$ to $0$ as well. The set of all $v\in V$ with $Tv=0$ is called the **kernel** (or the **null space**) of $T$, and is written as $\ker T$. It is easy to check that $\ker T$ is a subspace of $V$. (For starters, we already saw that $0\in\ker T$.)
+
+:::{#exm-}
+The kernel of the differentiation linear map $D:\mathcal{P}(\mathbb{R})\to\mathcal{P}(\mathbb{R})$ consists of the constant polynomials. 
+:::
+
+###### Injectivity and kernel
+A linear map is injective (maps different inputs to different outputs) if and only if its kernel is trivial.
+
+:::{.proof}
+Suppose that a linear map $T$ is injective. Then for any $v\in V$ such that $Tv=0$, we have
+
+$$Tv=T0=0\implies v=0.$$
+
+So the kernel of $T$ is just $\{0\}$.
+
+Conversely, suppose that $\ker T=\{0\}$. If we have $Tv_1=Tv_2$, then this implies 
+
+$$T(v_1-v_2)=0\implies v_1-v_2\in\ker T\implies v_1-v_2=0\implies v_1=v_2.$$
+
+Therefore, $T$ is injective.
+:::
+
+:::{#exm-linind}
+Let $v_1,\cdots,v_n\in V$, and define $T\in\mathcal{L}(\mb{F}^n,V)$ as
+
+$$T(z_1,\cdots,z_n)=z_1v_1+\cdots+z_nv_n.$$
+
+Then the linear independence of the $v_i$s is equivalent to the triviality of $\ker T$, and so it occurs if and only if $T$ is injective.
+:::
+
+###### Kernel complement
+Suppose that $V$ is finite-dimensional and $T\in\mathcal{L}(V,W)$. Let $U$ be a complement of $\ker T$, and let $v_1,\cdots,v_n$ and $v'_1,\cdots,v'_m$ be bases of $\ker T$ and $U$ respectively. We know that $\ker T\cap U=\{0\}$ as they are complements. 
+
+Let $v$ be an arbitrary vector in $V$ with
+
+$$v=a_1v_1+\cdots+a_nv_n+a'_1v'_1+\cdots+a'_mv'_m.$$
+
+Then we have
+
+$$Tv=T(a'_1v'_1+\cdots+a'_mv'_m),$$
+
+where $a'_1v'_1+\cdots+a'_mv'_m$ can cover any vector in $U$. Therefore, $\im\ T$ (see below) coincides with $\{Tu:u\in U\}$. By the rank-nullity theorem (see below), we have
+
+$$\dim\im\ T=\dim V-\dim\ker T=m.$$
+
+Since $Tv'_1,\cdots,Tv'_m$ is a spanning set of $\im\ T$ with the right size, it is a basis of $\im\ T$.
+
+#### Image
+The **image**^[Note that we also use the term "image" to refer to the individual $Tv$.] (or the **range**) of $T$ is the set of all $w\in W$ that $T$ sends the vectors in $V$ to:
+
+$$\im\ T=\{Tv:v\in V\}.$$
+
+By the closure of $V$, $\im\ T$ is also closed under addition and multiplication, as we can check. In addition, the flip side of $T0=0$ is that $0\in\im\ T$. Therefore, the image is a subspace of $W$.
+
+:::{#exm-}
+The image of the differentiation linear map $D:\mathcal{P}_5(\mathbb{R})\to\mathcal{P}_5(\mathbb{R})$ is $\mathcal{P}_4(\mathbb{R})$.
+:::
+
+###### Surjectivity and kernel
+By definition, a linear map $T:V\to W$ is surjective if and only if $\im\ T=W$.
+
+:::{#exm-}
+Consider @exm-linind. The $v_i$s span $V$ if and only if $T$ is surjective.
+:::
+
+###### Image of spanning set
+Suppose that $v_1,\cdots,v_n$ spans $V$. Clearly, $Tv_1,\cdots,Tv_n$ does not span $W$ in general. A trivial example is when $T$ is a zero map. But it does span $\im\ T\subseteq W$.
+
+:::{.proof}
+Suppose that $v_1,\cdots,v_n$ spans $V$, and consider an arbitrary $Tv\in\im\ T$ where $v=a_1v_1+\cdots+a_nv_n$. Then we have
+
+$$Tv=T(a_1v_1+\cdots+a_nv_n)=a_1Tv_1+\cdots+a_nTv_n.$$
+
+Therefore, the $Tv_i$s span $\im\ T$.
+:::
+
+#### More on injectivity and surjectivity
+###### Injectivity and product
+If $S_1,\cdots,S_n$ are injective linear maps (with valid product), then it is easy to see that $S_1\cdots S_n$ is also injective.
+
+###### Injectivity and linear independence
+Previously, we have seen that linear maps do not preserve linear independence. But an *injective* linear map does preserve it. 
+
+:::{.proof}
+Suppose that $v_1,\cdots,v_n$ is linearly independent. If we have
+
+$$0=a_1Tv_1+\cdots+a_nTv_n=T(a_1v_1+\cdots+a_nv_n),$$
+
+then $a_1v_1+\cdots+a_nv_n\in\ker T$. Since $\ker T=\{0\}$ for injections, this linear combination is zero. By the linear independence of $v_1,\cdots,v_n$, we have $a_i=0$. Therefore, the $Tv_i$s are linearly independent.
+:::
+
+###### Set of injective/surjective maps
+The set of injective maps in $\mathcal{L}(V, W)$ does not form a subspace if $\dim V>0$, for then the zero map is not injective.
+
+The set of surjective maps does not form a subspace if $\dim W>0$, for then the zero map is not surjective.
+
+###### Set of non-injective maps
+Suppose that $\dim W\geq\dim V\geq 2$. The map of all non-injective maps in $\mathcal{L}(V, W)$ does not form a subspace. (Note that this does not hold in some fields outside $\mathbb{R}$ and $\mathbb{C}$.)
+
+:::{.proof}
+Let $v_1,\cdots,v_n$ and $w_1,\cdots,w_m$ be bases of $V$ and $W$ respectively. Consider the linear maps $T,S:V\to W$ specified as
+
+$$
+Tv_i=
+\begin{cases}
+0&\text{if }i=2\\
+w_i&\text{otherwise}
+\end{cases}
+\quad\text{and}\quad
+Sv_i=
+\begin{cases}
+0&\text{if }i=1\\
+w_i&\text{otherwise}.
+\end{cases}
+$$
+
+Neither are injective. Now suppose there are two vectors
+
+$$
+v=a_1v_1+\cdots+a_nv_n
+\quad\text{and}\quad
+v'=a'_1v_1+\cdots+a'_nv_n
+$$
+
+such that
+
+$$(T+S)v=(T+S)v'.$$
+
+This equality implies
+
+$$
+a_1w_1+a_2w_2+\sum_{i=3}^n2a_iw_i=a'_1w_1+a'_2w_2+\sum_{i=3}^n2a'_iw_i,
+$$
+
+and the linear independence of the $w_i$s means that $a_i=a'_i$. Therefore, we have $v=v'$ and so $S+T$ is injective. This means that the set of all non-injective maps is not closed under addition, and cannot be a subspace.
+:::
+
+###### Set of non-surjective maps
+Suppose that $\dim V\geq\dim W\geq 2$. (Note the difference from the previous case.) The set of all non-surjective maps in $\mathcal{L}(V, W)$ does not form a subspace.
+
+:::{.proof}
+Let $v_1,\cdots,v_n$ and $w_1,\cdots,w_m$ be bases of $V$ and $W$ respectively. Consider the linear maps $T,S:V\to W$ specified as
+
+$$
+Tv_i=
+\begin{cases}
+w_i&\text{if }i<m\\
+0&\text{otherwise}
+\end{cases}
+\quad\text{and}\quad
+Sv_i=
+\begin{cases}
+w_i&\text{if }i=m\\
+0&\text{otherwise}.
+\end{cases}
+$$
+
+Neither are surjective. But for every $w\in W$ with
+
+$$w=a_1w_1+\cdots+a_mw_m,$$
+
+we have
+
+$$(T+S)(a_1v_1+\cdots+a_mv_m)=w,$$
+
+and so $T+S$ is surjective. The set of all non-surjective maps is not closed under addition, and cannot be a subspace.
+:::
+
+#### Finite kernel and image implies finite domain
+Suppose that a vector space $V$ has a linear map $T:V\to W$ whose kernel and image are finite-dimensional. Then $V$ is itself finite-dimensional.
+
+:::{.proof}
+Let $v_1,\cdots,v_n$ and $w_1,\cdots,w_m$ be bases of $\ker T$ and $\im\ T$ respectively. Let $v'_1,\cdots,v'_m$ be such that $Tv'_i=w_i$, which exist because $w_i\in\im\ T$.
+
+For contradiction, suppose that the set of vectors $v_1,\cdots,v_n,v'_1,\cdots,v'_m$ does not span $V$. That means that there exists $v\in V$ where no scalars satisfy
+
+$$v=a_1v_1+\cdots+a_nv_n+b_1v'_1+\cdots+b_mv'_m.$$
+
+So there are no $b_i$s such that
+
+$$Tv=b_1w_1+\cdots+b_mw_m,$$
+
+which contradicts the assumption that $w_1,\cdots,w_m$ is a basis of $\im\ T$ (and so spans $\im\ T$). Therefore, the set does span $V$, and so $V$ is finite-dimensional.
+:::
+
+#### Chain complex
+Suppose that $S,T\in\mathcal{L}(V,V)$ with $\im\ S\subset\ker T$. Then we have $TS=0$. This is the defining relation of a **chain complex**, which is important in more advanced topics.
+
+## Rank-nullity theorem
+The dimension of $\ker T$ is called the **nullity** of $T$, while that of $\im\ T$ is called its **rank**. As it turns out, these add up to the dimension of $V$ when $V$ is finite-dimensional.
+
+:::{.proof}
+Let $v_1,\cdots,v_n$ be a basis of $\ker T\subseteq V$, and suppose that $v'_1,\cdots,v'_m$ extends this set to form a basis of $V$. Since 
+
+$$\dim V=n+m=\dim\ker T+m,$$
+
+we need to show that $\dim\im\ T=m$. This can be achieved by proving that $Tv'_1,\cdots,Tv'_m$ is a basis of $\im\ T$.
+
+Note that the span of $v'_1,\cdots,v'_m$ is the kernel complement, and so 
+
+$$\im\ T=\{T(a_1v'_1+\cdots+a_mv'_m):a_i\in\mb{F}\}=\text{span}(Tv'_1,\cdots,Tv'_m).$$
+
+That is, $Tv'_1,\cdots,Tv'_m$ spans $\im\ T$. What about linear independence? Suppose that
+
+$$a'_1Tv'_1+\cdots+a'_mTv'_m=0.$$
+
+After pulling out $T$, we see that this implies $a'_1v'_1+\cdots+a'_mv'_m\in\ker T$. In other words,
+
+$$a'_1v'_1+\cdots+a'_mv'_m=a_1v_1+\cdots+a_nv_n$$
+
+for some choice of the $a_i$s. Recall that $v_1,\cdots,v_n,v'_1,\cdots,v'_m$ is linearly independent because it is a basis. So moving everything to one side reveals that $a_i=a'_i=0$. Therefore, the $Tv'_i$s are linearly independent.
+
+So we have shown that $Tv'_1,\cdots,Tv'_m$ is a basis of $\im\ T$, leading to
+
+$$\dim V=\dim\ker T+\dim\im\ T.$$
+
+:::
+
+:::{#exm-}
+There is no linear map $T:\mathbb{R}^5\to\mathbb{R}^5$ with $\im\ T=\ker T$, because that requires 
+
+$$5=\dim\ker T+\dim\im\ T=2\dim\ker T.$$
+
+:::
+
+:::{#exm-}
+If a linear map $T$ maps from $\mathbb{R}^8$ to $\mathbb{R}^3$ and $\ker T$ has 5 dimensions, then we immediately know that $T$ is surjective because
+
+$$\dim\im\ T=\dim \mathbb{R}^8-\dim\ker T=8-5=3$$
+
+:::
+
+#### Kernel and image of linear map products
+###### Kernel
+Suppose that $U$ and $V$ have finite dimensions, and let $T:U\to V$ and $S:V\to W$ be linear maps. Then the nullity of the product $ST$ is related to those of $S$ and $T$ as
+
+$$\dim\ker ST\leq\dim\ker S+\dim\ker T.$$
+
+:::{.proof}
+There are two ways for $u\in U$ to lie in the kernel of $ST$. Either $u$ is directly in the kernel of $T$, or otherwise $Tu$ is in the kernel of $S$. This shows two facts hold: first, $\ker T$ is a subset of $\ker ST$, and second, $T$ maps each vector of $\ker ST$ to a vector of $\ker S$.
+
+Therefore, let us consider the restriction $T|_{\ker ST}:\ker ST\to\im\ T$. The rank-nullity theorem then gives us
+
+$$
+\dim\ker ST=\dim\ker T|_{\ker ST}+\dim\im\ T|_{\ker ST}.
+$$
+
+By the first fact, we find $\dim\ker T|_{\ker ST}=\dim\ker T$, while the second fact shows that $\im\ T|_{\ker ST}\subseteq\ker S$. Therefore, we have
+
+$$
+\dim\ker ST\leq\dim\ker S+\dim\ker T
+$$
+
+as required.
+:::
+
+###### Image
+Let the setup be the same as above. The rank of $ST$ is related to those of $S$ and $T$ as
+
+$$\dim\im\ ST\leq\min(\dim\im\ S,\dim\im\ T).$$
+
+:::{.proof}
+First of all, we should note that $x\leq\min(y,z)$ is equivalent to $x\leq y$ and $x\leq z$.
+
+Since we have
+
+$$\im\ ST=\{S(Tu):Tu\in\im\ T\},$$
+
+it is easy to see that $\im\ ST\subseteq\im\ S$ and so
+
+$$\dim\im\ ST\leq\dim\im\ S.$$
+
+It is also not too surprising that $\dim\im\ ST$ is no greater than $\dim\im\ T$, for intuitively speaking, acting $S$ on $\im\ T$ cannot *enlarge* this space. If we restrict the domain of $S$ to $\im\ T$, we restrict its image to $\im\ ST$, as we see from the definition of $\im\ ST$. Therefore, $S|_{\im\ T}:\im\ T\to\im\ ST$ is a surjection, and the rank-nullity theorem gives us
+
+$$
+\begin{aligned}
+\dim\im\ T&=\dim\ker S|_{\im\ T}+\dim\im\ ST\\
+&\geq \dim\im\ ST.
+\end{aligned}
+$$
+
+Hence, we have 
+
+$$\dim\im\ ST\leq\min(\dim\im\ S,\dim\im\ T)$$
+
+as required.
+:::
+
+#### Injection and surjection
+###### Injection and dimension
+Let $V$ and $W$ be finite-dimensional. An injection $T:V\to W$ exists if and only if $\dim V\leq\dim W$.
+
+:::{.proof}
+For contradiction, suppose that $\dim V>\dim W$. Then the rank-nullity theorem leads to
+
+$$
+\begin{aligned}
+\dim\ker T&=\dim V-\dim\im\ T\\
+&\geq\dim V-\dim W\\
+&>0.
+\end{aligned}
+$$
+
+But $\ker T=\{0\}$ when $T$ is an injection. So if $T$ is an injection, then $\dim V\leq\dim W$.
+
+Conversely, suppose that $\dim V\leq\dim W$, and let $w_1,\cdots,w_{\dim V+k}$ be a basis of $W$. Let $T$ be a linear map specified by $Tv_i=w_i$ for $i=1,\cdots,\dim V$. Clearly, we have $\ker T=\{0\}$, and so this is an injection.
+:::
+
+###### Surjection and dimension
+Let $V$ and $W$ be finite-dimensional. A surjection $T:V\to W$ exists if and only if $\dim V\geq \dim W$.
+
+:::{.proof}
+Suppose that a surjection $T:V\to W$ exists, whose image is $W$ by the definition of surjection. Then the rank-nullity theorem leads to
+
+$$
+\begin{aligned}
+\dim V&=\dim\ker T+\dim\im\ T\\
+&=\dim\ker T+\dim W\\
+&\geq\dim W.
+\end{aligned}
+$$
+
+Conversely, suppose that $\dim V\geq\dim W$, and let $w_1,\cdots,w_{\dim W}$ be a basis of $W$. Then the linear map defined by
+
+$$
+Tv_i=
+\begin{cases}
+w_i&\text{if }i\leq\dim W\\
+0&\text{otherwise}
+\end{cases}
+$$
+
+is clearly a surjection. 
+:::
+
+#### Linear equations
+Consider a system of $m$ linear equations in $n$ variables
+
+$$
+\begin{gather}
+a_{1,1}x_1+\cdots+a_{1,n}x_n=c_1\\
+\vdots\\
+a_{m,1}x_1+\cdots+a_{m,n}x_n=c_m,
+\end{gather}
+$$
+
+where $a_{i,j},x_i\in\mb{F}$. If we define a linear map $T:\mb{F}^n\to\mb{F}^m$ as
+
+$$T(x_1,\cdots,x_n)=(\sum_{i=1}^na_{1,i}x_i,\cdots,\sum_{i=1}^na_{m,i}x_i),$$
+
+then this system can be represented as
+
+$$T(x_1,\cdots,x_n)=(c_1,\cdots,c_m).$$
+
+###### Homogeneous system
+If $c_i=0$, then we have a **homogeneous** system. We often ask whether there are solutions to this system other than the trivial one $x_i=0$. In the linear map language, there exist non-trivial solutions when $\ker T\neq\{0\}$, in other words when $T$ is non-injective. We saw that it is always non-injective when $n>m$, i.e. when there are more variables than equations.
+
+###### Inhomogeneous system
+On the other hand, we may ask if there exist a combination of the $c_i$s to which no solutions exist. In the linear map language, no solutions exist when $T$ is non-surjective. We have seen that it is always non-surjective when $n<m$, i.e. when there are more equations than variables.
+
+## Some early results on linear functionals
+#### As coordinates of linear map
+For a linear map $T:V\to W$ and a basis $w_1,\cdots,w_n$ of $\im\ T$, there exist linear functionals $\phi_1,\cdots,\phi_n:V\to\mb{F}$ such that the $i$th coordinate of $Tv$ is given by $\phi_i(v)$.
+
+:::{.proof}
+Since the linear combination
+
+$$Tv=a_1w_1+\cdots+a_nw_n$$
+
+is unique for a given basis, the function $\phi_i:v\mapsto a_i$ is well-defined for each $i$. As
+
+$$
+\begin{aligned}
+T(v_1+v_2)&=Tv_1+Tv_2\\
+&=\phi_1(v_1)w_1+\cdots+\phi_n(v_1)w_n+\phi_1(v_2)w_1+\cdots+\phi_n(v_2)w_n\\
+&=(\phi_1(v_1)+\phi_1(v_2))w_1+\cdots+(\phi_n(v_1)+\phi_n(v_2))w_n,
+\end{aligned}
+$$
+
+we have $\phi_i(v_1+v_2)=\phi_i(v_1)+\phi_i(v_2)$ and so $\phi_i$ is additive. We can similarly show that $\phi_i$ is homogeneous.
+:::
+
+#### Kernel hyperplanes
+The kernel of a linear functional $\phi:V\to\mb{F}$ partitions $V$ into its translated copies. That is, for $u\notin\ker\phi$, we have the direct sum
+
+$$V=\ker\phi\oplus\{au:a\in\mb{F}\}.$$
+
+:::{.proof}
+We first need to show that, for each $v\in V$, there exist $w\in\ker\phi$ and $a\in\mb{F}$ such that
+
+$$v=w+au.$$
+
+If this expression did hold, we would have
+
+$$\phi(v)=\phi(w+au)=a\phi(u)\implies a=\frac{\phi(v)}{\phi(u)},$$
+
+where we recall that $\phi$ maps to $\mb{F}$. So by setting
+
+$$
+a=\frac{\phi(v)}{\phi(u)}\quad\text{and}\quad w=v-\frac{\phi(v)}{\phi(u)}u\in\ker\phi,
+$$
+
+we obtain the desired decomposition. Therefore, we have $V=\ker\phi+\{au:a\in\mb{F}\}$. 
+
+Now, let us check that the sum is direct. If $au\in\ker \phi$ for any $a\neq0$, we would have
+
+$$\phi(au)=a\phi(u)=0\implies \phi(u)=0,$$
+
+contradicting $u\notin\ker \phi$. Hence, we find that
+
+$$\ker \phi\cap\{au:a\in\mb{F}\}=\{0\}$$
+
+and the sum is direct.
+:::
+
+###### Linear functionals sharing same kernel
+
+As a corollary, consider $\phi_1,\phi_2:V\to\mb{F}$ that share the same kernel $K$. Then we have $\phi_1=c\phi_2$ for some $c\in\mb{F}$. That is, the kernel uniquely determines a linear functional up to a multiplicative constant.
+
+:::{.proof}
+We need to show that there exists a single $c\in\mb{F}$ such that
+
+$$\phi_1(v)=c\phi_2(v)$$
+
+for all $v\in V$. Let us choose some $u\notin K$. Then for any $v\in V$, we have
+
+$$
+v=k+\frac{\phi_2(v)}{\phi_2(u)}u
+$$
+
+for some $k\in K$, as we have seen previously. Subsequently, we find
+
+$$\phi_1(v)=\phi_1(k+\frac{\phi_2(v)}{\phi_2(u)}u)=\frac{\phi_2(v)}{\phi_2(u)}\phi_1(u)=\frac{\phi_1(u)}{\phi_2(u)}\phi_2(v).$$
+
+As $v$ was arbitrary, we see that $\phi_1(u)/\phi_2(u)$ is the sought constant $c$.
+:::
