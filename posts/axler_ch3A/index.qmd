@@ -9,7 +9,7 @@ execute:
 
 {{< include ../../_macros.qmd >}}
 
-This is an augmented summary of Sections 3.A of [Linear Algebra Done Right](https://linear.axler.net/index.html) by Sheldon Axler.
+This is an augmented summary of Section 3.A of [Linear Algebra Done Right](https://linear.axler.net/index.html) by Sheldon Axler.
 
 ## Linear map
 A function $T:V\to W$ between vector spaces is called a **linear map** if it satisfies two properties:

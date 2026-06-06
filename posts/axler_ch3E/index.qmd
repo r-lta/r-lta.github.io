@@ -1,0 +1,564 @@
+---
+title: "Product and quotient spaces"
+description: "Product spaces, quotient spaces, affine subsets and combinations, the quotient map, and the first isomorphism theorem — an augmented summary of Axler's LADR §3.E."
+date: "2026-06-06"
+categories: ["mathematics", "linear-algebra", "ladr"]
+execute:
+    echo: true
+---
+
+{{< include ../../_macros.qmd >}}
+
+This is an augmented summary of Section 3.E of [Linear Algebra Done Right](https://linear.axler.net/index.html) by Sheldon Axler.
+
+## Product of vector spaces
+The **product space** $V_1\times\cdots\times V_n$ of vector spaces $V_1,\cdots,V_n$ (all over $\mb{F}$) is their Cartesian product. (This shouldn't be confused with the product of linear maps.)
+
+If we define addition and scalar multiplication on $V_1\times\cdots\times V_n$ as element-wise operations, we can show that the product space is a vector space over $\mb{F}$.
+
+#### Dimension of product
+Suppose that the $V_i$s are finite-dimensional. Then $V_1\times\cdots\times V_n$ is also finite-dimensional, with its dimension given by the sum of the individual dimensions of the $V_i$s.
+
+:::{.proof}
+Let $v_{1,1},\cdots,v_{1,k_1}$ be a basis of $V_1$. Then the vectors
+
+$$(v_{1,1},0,\cdots,0),\cdots,(v_{1,\dim V_1},0,\cdots,0)$$
+
+are linearly independent and span $V_1\times0\times\cdots\times0$. Similarly, the vectors
+
+$$(0,v_{2,1},0,\cdots,0),\cdots,(0,v_{2,\dim V_2},0,\cdots,0)$$
+
+are linearly independent and span $0\times V_2\times0\times\cdots\times0$. The combined set of vectors are still linearly independent, and span $V_1\times V_2\times0\times\cdots\times0$. 
+
+Continuing in this manner, we see that a total of $\dim V_1+\cdots+\dim V_n$ linearly independent vectors span $V_1\times\cdots\times V_n$. Therefore, we have
+
+$$\dim(V_1\times\cdots\times V_n)=\dim V_1+\cdots+\dim V_n.$$
+
+:::
+
+Conversely, if $V_1\times\cdots\times V_n$ is finite-dimensional, we can show that the component spaces are finite-dimensional.
+
+:::{.proof}
+If $V_1\times\cdots\times V_n$ is finite-dimensional, then there exist vectors
+
+$$(v_1^1,\cdots,v_n^1),\cdots,(v_1^m,\cdots,v_n^m)$$
+
+that form a basis of this product space. But this implies that the set $v_i^1,\cdots,v_i^m\in V_i$ spans $V_i$ for each $i$, so the $V_i$s are finite-dimensional.
+:::
+
+#### Product to sum
+Let $U_1,\cdots,U_n$ be subspaces of $V$, and consider the linear map 
+
+$$\Gamma:U_1\times\cdots\times U_n\to U_1+\cdots+U_n$$
+
+that is defined as
+
+$$\Gamma(u_1,\cdots,u_n)=u_1+\cdots+u_n.$$
+
+By definition, $\Gamma$ is surjective.
+
+###### Conditions for directness
+In the setup above, $U_1+\cdots+U_n$ is a direct sum if and only if $\Gamma$ is injective (and thereby invertible).
+
+:::{.proof}
+$U_1+\cdots+U_n$ is a direct sum.
+
+$\iff$ $u_1+\cdots+u_n=0$ if and only if $u_1=\cdots=u_n=0$.
+
+$\iff$ $\ker\Gamma=\{0\}$.
+
+$\iff$ $\Gamma$ is injective.
+:::
+
+Furthermore, $\Gamma$ is injective if and only if
+
+$$\dim(U_1+\cdots+U_n)=\dim U_1+\cdots+\dim U_n.$$
+
+That is, a subspace is direct if and only if the dimension of the sum is the sum of the individual dimensions.
+
+:::{.proof}
+$\Gamma$ is injective.
+
+$\iff$ $\ker\Gamma=\{0\}$.
+
+$\iff$ $\dim(U_1\times\cdots\times U_n)=\dim(U_1+\cdots+U_n)$ by the rank-nullity theorem applied to $\Gamma$, using the fact that $\Gamma$ is surjective.
+
+We have seen that 
+
+$$\dim(U_1\times\cdots\times U_n)=\dim U_1+\cdots+\dim U_n.$$
+
+:::
+
+#### Splitting linear map of product
+The vector space $\mathcal{L}(V_1\times\cdots\times V_n,W)$ is isomorphic to $\mathcal{L}(V_1,W)\times\cdots\times\mathcal{L}(V_n,W)$.
+
+:::{.proof}
+For each $T:V_1\times\cdots\times V_n\to W$, we can associate a series of maps $T_i:V_i\to W$ defined as
+
+$$T_iv=T(0,\cdots,0,v,0,\cdots,0)$$
+
+where $v$ occurs in the $i$th argument of $T$. $T_i$ is linear because $T$ is linear. So consider the map 
+
+$$M:\mathcal{L}(V_1\times\cdots\times V_n,W)\to\mathcal{L}(V_1,W)\times\cdots\times\mathcal{L}(V_n,W)$$
+
+which maps $T$ to $T_1\times\cdots\times T_n$. Since
+
+$$
+\begin{aligned}
+(S+T)(0,\cdots,0,v,0,\cdots,0)&=S(0,\cdots,0,v,0,\cdots,0)+T(0,\cdots,0,v,0,\cdots,0)\\
+&=S_iv+T_iv,
+\end{aligned}
+$$
+
+we have 
+
+$$M(S+T)=(S_1+T_1)\times\cdots\times(S_n+T_n)$$
+
+and so $M$ is additive. Similarly, we can show that $M$ is homogeneous.
+
+For $M(T)$ to be $0\times\cdots\times0$, $T$ must map each $(0,\cdots,0,v,0,\cdots,0)$ to $0$. If so, the linearity of $T$ leads to
+
+$$
+T(v_1,\cdots,v_n)=T(v_1,0,\cdots,0)+\cdots+T(0,\cdots,0,v_n)=0+\cdots+0=0,
+$$
+
+which means that $T$ is the zero map. This implies $\ker M=\{0\}$, and so $M$ is injective.
+
+$M$ is surjective because for any set of linear maps $T_i:V_i\to W$, the map
+
+$$T:(v_1,\cdots,v_n)\mapsto T_1v_1+\cdots+T_nv_n$$
+
+is a linear map from $V_1\times\cdots\times V_n$ to $W$. (The linearity of $T$ follows from those of the individual $T_i$s.)
+
+Therefore, $M$ is an isomorphism.
+:::
+
+#### Splitting linear map to product
+Similarly to above, the vector space $\mathcal{L}(V,W_1\times\cdots\times W_n)$ is isomorphic to $\mathcal{L}(V,W_1)\times\cdots\times\mathcal{L}(V,W_n)$.
+
+:::{.proof}
+Define $T_iv$ as the $i$th component of $Tv$, and consider the map
+
+$$M:T\mapsto T_1\times\cdots\times T_n.$$
+
+We can show that $M$ is an isomorphism, by following the steps similar to the previous proof.
+:::
+
+#### Isomorphism of vector power
+The vector space $V^n$ is isomorphic to $\mathcal{L}(\mb{F}^n,V)$.
+
+:::{.proof}
+Let $M:V^n\to\mathcal{L}(\mb{F}^n,V)$ be the map that sends each $(v_1,\cdots,v_n)$ to the function
+
+$$\phi(x_1,\cdots,x_n)=x_1v_1+\cdots+x_nv_n.$$
+
+The linearity of $\phi$ can easily be ascertained. $M$ is additive because
+
+$$
+M((v_1,\cdots,v_n)+(u_1,\cdots,u_n))=M(v_1+u_1,\cdots,v_n+u_n),
+$$
+
+which is sent to the function
+
+$$
+\begin{aligned}
+\phi(x_1,\cdots,x_n)&=x_1(v_1+u_1)+\cdots+x_n(v_n+u_n)\\
+&=(x_1v_1+\cdots+x_nv_n)+(x_1u_1+\cdots+x_nu_n)
+\end{aligned}
+$$
+
+where the two bracketed terms correspond to $M(v_1,\cdots,v_n)$ and $M(u_1,\cdots,u_n)$ respectively. Similarly, we can find that $M$ is homogeneous, and so $M$ is a linear map.
+
+In order to have $x_1v_1+\cdots+x_nv_n=0$ for all $x_1,\cdots,x_n$, we must have $v_1=\cdots=v_n=0$. It follows that $\ker M=\{0\}$, and so $M$ is injective.
+
+By the linearity of $\phi$, we have
+
+$$\phi(x_1,\cdots,x_n)=x_1\phi(1,0,\cdots,0)+\cdots+x_n\phi(0,\cdots,0,1)=x_1\phi(e_1)+\cdots+x_n\phi(e_n)$$
+
+where $e_i$ is the $i$th standard basis.
+If we set $v_i=\phi(e_i)$, we see that $M(v_1,\cdots,v_n)=\phi$, and so $M$ is surjective.
+
+Therefore, $M$ is an isomorphism.
+:::
+
+## Quotient space
+Let $U$ be a subspace of $V$. Then the **quotient space** $V/U$ is a set of subsets of $V$, given by
+
+$$V/U=\{v+U:v\in V\}.$$
+
+Each subset $v+U$ is called an **affine subset** of $V$ that is **parallel** to $U$.
+
+#### Two affine subsets are equal or disjoint
+For any $v,w\in V$ and a subspace $U$ of $V$, the following three statements are equivalent to each other:
+
+1. $v-w\in U$.
+2. $(v+U)\cap (w+U)\neq\emptyset$.
+3. $v+U= w+U$.
+
+:::{.proof}
+Suppose that $v-w\in U$, so that $v-w=u$ for some $u\in U$. Then we have
+
+$$v+0=w+u,$$
+
+which means that this vector is in both $v+U$ and $w+U$ (since $0\in U$). So we find that $(v+U)\cap (w+U)\neq\emptyset$.
+
+Suppose that $(v+U)\cap (w+U)\neq\emptyset$. Then there exist $u_1,u_2\in U$ such that $v+u_1=w+u_2$, from which we have $v=w+(u_2-u_1)$.
+
+For any $v+u\in v+U$, we have
+
+$$v+u=w+(u_2-u_1)+u,$$
+
+which implies that $v+u\in w+U$ and so $v+U\subseteq w+U$. An analogous reasoning shows that $w+U\subseteq v+U$, hence we find $v+U=w+U$.
+
+Suppose that $v+U=w+U$. Then there exist $u_1,u_2$ such that $v+u_1=w+u_2$, which leads to
+
+$$v-w=u_2-u_1\in U.$$
+
+Therefore, we see that (1) implies (2), (2) implies (3), and (3) implies (1). So the three statements are equivalent.
+:::
+
+#### Equality of parallel subsets implies equality of subspaces
+For any $v,x\in V$ and subspaces $U,W\subseteq V$, if $v+U=x+W$, then we have $U=W$.
+
+:::{.proof}
+Suppose that $v+U=x+W$. Then for any $w\in W$, there exists $u\in U$ such that
+
+$$v+u=x+w\implies w=(v-x)+u,$$
+
+so $w\in(v-x)+U$ and $W\subseteq(v-x)+U$. Similarly, for any $u\in U$, there exists $w\in W$ satisfying the same equality, so we have $(v-x)+U\subseteq W$. Therefore, $W=(v-x)+U$.
+
+But for any $v-x\notin U$, we have $0\notin(v-x)+U$, and so $(v-x)+U$ is not a subspace. Since $W$ is a subspace, this implies that $v-x\in U$, and so $W=U$.
+:::
+
+#### Intersection of affine subsets
+If $A_1$ and $A_2$ are affine subsets of $V$, then $A_1\cap A_2$ is either empty or is another affine subset.
+
+:::{.proof}
+Let $A_1=u_1+V_1$ and $A_2=u_2+V_2$, and suppose that their intersection is non-empty with $x\in A_1\cap A_2$. Let $v_1\in V_1$ and $v_2\in V_2$ be such that $x=u_1+v_1=u_2+v_2$. In the absence of other candidate affine subsets, we can conjecture that
+
+$$A_1\cap A_2=x+(V_1\cap V_2).$$
+
+Suppose that $y\in A_1\cap A_2$, with $y=u_1+v'_1=u_2+v'_2$. We need to show that $y\in x+(V_1\cap V_2)$. If we think about two intersecting planes in $\mathbb{R}^3$, we see that $y=x+(y-x)$ with $y-x\in V_1\cap V_2$. This is indeed the case more generally, because
+
+$$
+\begin{gather}
+y-x=(u_1+v'_1)-(u_1+v_1)=v'_1-v_1\in V_1\\
+\text{and}\quad y-x=(u_2+v'_2)-(u_2+v_2)=v'_2-v_2\in V_2. 
+\end{gather}
+$$
+
+So $y=x+(y-x)$ does show that $y\in x+(V_1\cap V_2)$.
+
+Now suppose that $y\in x+(V_1\cap V_2)$. Then $y=x+v$ for some $v\in V_1\cap V_2$, which implies that $y\in A_1\cap A_2$.
+
+Therefore, $A_1\cap A_2=x+(V_1\cap V_2)$, and so $A_1\cap A_2$ is either empty or is an affine subset.
+:::
+
+#### Affine combination
+Given vectors $v_1,\cdots,v_n$, its **affine combination** is a special type of linear combination
+
+$$\lambda_1v_1+\cdots+\lambda_nv_n$$
+
+where the coordinates $\lambda_1,\cdots,\lambda_n$ sum to 1.
+
+###### Condition for affine subset
+A non-empty subset $A$ of $V$ is an affine subset if and only if, for every pair of vectors in $A$, all their affine combinations are also in $A$. (Note that an affine combination of two vectors can be written as $\lambda v_1+(1-\lambda)v_2$ without restricting $\lambda$.)
+
+:::{.proof}
+Suppose that $A=v+U$ for some $v\in V$ and a subspace $U\subseteq V$. For any two $v+u_1,v+u_2\in A$, we have
+
+$$\lambda(v+u_1)+(1-\lambda)(v+u_2)=v+(\lambda u_1+(1-\lambda) u_2)\in v+U$$
+
+as required.
+
+Conversely, suppose that a non-empty subset $A\subseteq V$ is such that
+
+$$\lambda v_1+(1-\lambda)v_2\in A$$
+
+for all $v_1,v_2\in A$ and $\lambda\in\mb{F}$. Let $w$ be a vector in $A$. Then for all $v\in A$, we have
+
+$$\lambda v+(1-\lambda)w=w+\lambda(v-w)\in A.$$
+
+From this, we may conjecture that
+
+$$A=w+\{\lambda(v-w):\lambda\in\mb{F},v\in A\}=w+U,$$
+
+but first we have to verify that $U$ is a subspace. We see that $U$ contains $0$ and is homogeneous by definition. For two vectors $\lambda_1(v_1-w),\lambda_2(v_2-w)\in U$, we have
+
+$$
+\begin{aligned}
+\lambda_1(v_1-w)+\lambda_2(v_2-w)&=(\lambda_1+\lambda_2)(\frac{\lambda_1}{\lambda_1+\lambda_2}v_1+\frac{\lambda_2}{\lambda_1+\lambda_2}v_2-w)\\
+&=(\lambda_1+\lambda_2)(\frac{\lambda_1}{\lambda_1+\lambda_2}v_1+(1-\frac{\lambda_1}{\lambda_1+\lambda_2})v_2-w),
+\end{aligned}
+$$
+
+and so $U$ is additive as well. Therefore, $U$ is a subspace.
+
+Suppose that $x\in A$. Then $x-w\in U$ and so
+
+$$x=w+(x-w)\in w+U,$$
+
+which implies $A\subseteq w+U$. Now suppose that $x\in w+U$. Then there exists $\lambda\in\mb{F}$ and $v\in A$ such that
+
+$$x=w+\lambda(v-w)=\lambda v+(1-\lambda)w.$$
+
+Because $w\in A$ as well, this implies that $x\in A$. So we have $w+U\subseteq A$. 
+
+Therefore, $A$ is equal to the affine subset $w+U$.
+:::
+
+###### Affine hull
+Given $v_1,\cdots,v_n\in V$, its **affine hull**
+
+$$A=\{\lambda_1v_1+\cdots+\lambda_nv_n:\lambda_1,\cdots,\lambda_n\in\mb{F},\lambda_1+\cdots+\lambda_n=1\}$$
+
+is the smallest affine subset that contains $v_1,\cdots,v_n$.
+
+:::{.proof}
+Using the constraint on the $\lambda_i$s to eliminate $\lambda_1$, we see that $A$ consists of vectors
+
+$$(1-\lambda_2-\cdots-\lambda_n)v_1+\lambda_2v_2+\cdots+\lambda_nv_n.$$
+
+This shows that $A$ is the affine subset
+
+$$
+A=v_1+\{(-\lambda_2-\cdots-\lambda_n)v_1+\lambda_2v_2+\cdots+\lambda_nv_n:\lambda_2,\cdots,\lambda_n\in\mb{F}\}=v_1+U,
+$$
+
+where we may easily check that $U$ is a subspace.
+
+Any affine subspace that contains $v_1,\cdots,v_n$ can be written as $v_1+W$ where $W$ is a subspace containing the vectors
+
+$$v_2-v_1,v_3-v_1,\cdots,v_n-v_1.$$
+
+The smallest subspace that contains these vectors is their span, which is just $U$. So $A$ is the smallest affine subset containing $v_1,\cdots,v_n$.
+:::
+
+#### Defining addition and multiplication
+We wish to define addition and scalar multiplication on $V/U$ by
+
+$$
+\begin{gather}
+(v+U)+(w+U)=(v+w)+U\\
+\lambda(v+U)=(\lambda v)+U
+\end{gather}
+$$
+
+respectively. But we have to check that such operations are well-defined.
+
+:::{.proof}
+For the addition to be well-defined, we require
+
+$$(v+w)+U=(v'+w')+U$$
+
+for any $v,w,v',w'\in V$ such that $v'-v$ and $w'-w$ are in $U$. For such $v'$ and $w'$, we have
+
+$$(v'+w')-(v+w)=(v'-v)+(w'-w)\in U,$$
+
+and so the required equality holds.
+
+Similarly, we can show that $\lambda v+U=\lambda v'+U$, and so the scalar multiplication is well-defined.
+:::
+
+From here, we can show that $V/U$ forms a vector space over $\mb{F}$ under these operations. As $0+U=U$ is the additive identity, $v+U$ is a non-zero vector only when $v\notin U$.
+
+###### Splitting lemma for vector space
+If $V/U$ is finite-dimensional, then $V$ is isomorphic to $U\times V/U$.
+
+:::{.proof}
+Let $v_1+U,\cdots,v_n+U$ be a basis of $V/U$. Then for every $v\in V$, there exist unique $a_1,\cdots,a_n$ such that
+
+$$
+\begin{aligned}
+v+U&=a_1(v_1+U)+\cdots+a_n(v_n+U)\\
+&=(a_1v_1+\cdots+a_nv_n)+U.
+\end{aligned}
+$$
+
+Then $v-(a_1v_1+\cdots+a_nv_n)\in U$, so there is (unique) $u\in U$ that equals this sum. By the uniqueness of the $a_i$s and $v$, we see that the map $M:V\to U\times V/U$ given by
+
+$$Mv=(u,(a_1v_1+\cdots+a_nv_n)+U)$$
+
+is well-defined.
+
+If the RHS is $(0,U)$, then we must have $a_1=\cdots=a_n=0$ by the linear independence of the $v_i+U$s. Subsequently, we obtain
+
+$$0=u=v-(a_1v_1+\cdots+a_nv_n)=v-0=v.$$
+
+
+So $\ker M=\{0\}$ and $M$ is injective. It is easy to check that $M$ is surjective by reconstructing the $v$ required for an arbitrary $(u,w+U)$.
+
+Therefore, $M$ is invertible and $V$ is isomorphic to $U\times V/U$.
+:::
+
+###### Finding direct sum from quotient space
+Suppose that $V/U$ is finite-dimensional. Then there is subspace $W\subseteq V$ with $\dim W=\dim (V/U)$ such that $V=U\oplus W$.
+
+:::{.proof}
+Let $v_1+U,\cdots,v_n+U$ be a basis of $V/U$, where $n=\dim(V/U)$. We will show that the span of $v_1,\cdots,v_n$ is the subspace $W$ that we are seeking.
+
+Suppose that
+
+$$a_1v_1+\cdots+a_nv_n=0.$$
+
+Then this combination is in $U$, so we have
+
+$$
+\begin{aligned}
+U&=(a_1v_1+\cdots+a_nv_n)+U\\
+&=a_1(v_1+U)+\cdots+a_n(v_n+U).
+\end{aligned}
+$$
+
+So we have $a_1=\cdots=a_n=0$ by the linear independence of the $v_i+U$s, which means that $\text{span}(v_1,\cdots,v_n)$ is a subspace of $V$ with the required dimension. 
+
+For an arbitrary $v\in V$, there exist coordinates $b_i$ such that
+
+$$
+\begin{aligned}
+v+U&=b_1(v_1+U)+\cdots+b_n(v_n+U)\\
+&=(b_1v_1+\cdots+b_nv_n)+U,
+\end{aligned}
+$$
+
+which means that 
+
+$$v-(b_1v_1+\cdots+b_nv_n)\in U.$$
+
+As $b_1v_1+\cdots+b_nv_n\in W$, this implies that $V=U+W$.
+
+Now suppose that
+
+$$c_1v_1+\cdots+c_nv_n\in U.$$
+
+Then similarly to above, we have
+
+$$U=(c_1v_1+\cdots+c_nv_n)+U$$
+
+and so $c_1=\cdots=c_n=0$. This implies $U\cap W=\{0\}$.
+
+Therefore, $V=U\oplus W$.
+:::
+
+## Quotient map
+The **quotient map** $\pi:V\to V/U$ is defined by
+
+$$\pi(v)=v+U.$$
+
+It is a linear map because
+
+$$
+\begin{gather}
+\pi(v+w)=(v+w)+U=(v+U)+(w+U)=\pi(v)+\pi(w)\\
+\pi(\lambda v)=\lambda v+U=\lambda(v+U)=\lambda\pi(v).
+\end{gather}
+$$
+
+#### Constructing basis of $V$ from quotient space
+If $v_1+U,\cdots,v_n+U$ is a basis of $V/U$ and $u_1,\cdots,u_m$ is a basis of $U$, then 
+
+$$v_1,\cdots,v_n,u_1,\cdots,u_m$$
+
+is a basis of $V$.
+
+:::{.proof}
+Since $\dim V/U=\dim V-\dim U$, we see that the set has the right size to be a basis of $V$.
+
+Suppose that 
+
+$$a_1v_1+\cdots+a_nv_n+b_1u_1+\cdots+b_mu_m=0.$$
+
+Then $a_1v_1+\cdots+a_nv_n\in U$, which implies that
+
+$$(a_1v_1+\cdots+a_nv_n)+U=U$$
+
+and so $a_1=\cdots=a_n=0$. Consequently, the linear independence of $u_1,\cdots,u_m$ implies $b_1=\cdots=b_m=0$. 
+
+So $v_1,\cdots,v_n,u_1,\cdots,u_m$ is a set of linearly independent vectors with the right size, and is therefore a basis.
+:::
+
+#### Factorisation into quotient map
+Suppose that $U$ is a subspace of $V$ and $T:V\to W$. Let $\pi$ be the quotient map from $V$ to $V/U$.
+
+Then $T$ can be factorised as $T=S\circ \pi$ for some $S:V/U\to W$ if and only if $U\subseteq\ker T$.
+
+:::{.proof}
+If there exists such $S$, then for all $u\in U$, we find
+
+$$Tu=S(\pi(u))=S(u+U)=S(0+U)=0.$$
+
+So $U\subseteq \ker T$.
+
+Conversely, suppose that $U\subseteq\ker T$. We will define $S:V/U\to W$ as
+
+$$S(v+U)=Tv.$$
+
+If $v_1+U=v_2+U$, then we have $v_1-v_2\in\ker T$ and so $Tv_1=Tv_2$. Therefore, $S$ is well-defined, and $T=S\circ\pi$ by definition.
+:::
+
+###### Pullback
+The **pullback** $\Gamma:\mathcal{L}(V/U,W)\to\mathcal{L}(V,W)$ of $S:V/U\to W$ by the quotient map $\pi:V\to V/U$ is the map
+
+$$\Gamma(S)=S\circ\pi.$$
+
+This is an injective linear map whose image is given by the annihilator of $U$.
+
+:::{.proof}
+It is easy to check that $\Gamma$ is linear, by the properties of the linear map product.
+
+Suppose that $\Gamma(S)=\Gamma(S')$. This implies
+
+$$
+\begin{aligned}
+&S(\pi(v))=S'(\pi(v))\text{ for all }v\in V\\
+\implies&S(v+U)=S'(v+U)\text{ for all }v+U\in V/U
+\end{aligned}
+$$
+
+and so $S=S'$. Therefore, $\Gamma$ is injective.
+
+Let $T\in\im\ \Gamma$. Then there exists $S:V/U\to W$ such that $\Gamma(S)=T$. For any $u\in U$, we find
+
+$$
+Tu=S(\pi(u))=S(0+U)=0,
+$$
+
+and so $T$ is an annihilator of $U$. Now suppose that $T$ is an annihilator of $U$. Then $U\subseteq\ker T$, and we have seen that this implies the existence of $S$ such that $\Gamma(S)=T$. Therefore, we have $\im\ \Gamma=U^0$.
+:::
+
+###### Dimension of quotient space
+Since the kernel of $\pi$ is $U$ and $\pi$ is surjective, the rank-nullity theorem gives us
+
+$$\dim V/U=\dim\im\ \pi=\dim V-\dim\ker\pi=\dim V-\dim U.$$
+
+## First isomorphism theorem
+Given a linear map $T:V\to W$, we can define $\tilde{T}:V/\ker T\to W$ as
+
+$$\tilde{T}(v+\ker T)=Tv.$$
+
+We will show that $\tilde{T}$ is an isomorphism between $V/\ker T$ and $\im\ T$, in steps.
+
+First, we need to show that $\tilde{T}$ is a well-defined linear map.
+
+:::{.proof}
+If $v+\ker T=u+\ker T$, then $v-u\in\ker T$. This implies that $Tv=Tu$, so $\tilde{T}$ is well-defined.
+
+The linearlity of $\tilde{T}$ follows from our definitions of addition and multiplication on $V/U$.
+:::
+
+We can then show that $\tilde{T}$ is injective and surjective (when we take the codomain to be $\im\ T$).
+
+:::{.proof}
+Suppose that $\tilde{T}(v+\ker T)=\tilde{T}(w+\ker T)$. This implies $Tv=Tw$, and so $v-w\in\ker T$. Therefore, $v+\ker T=w+\ker T$ and $\tilde{T}$ is injective.
+
+By the definition of $\tilde{T}$, we see that the images of $\tilde{T}$ and $T$ coincide. So $\tilde{T}$ is surjective on $\im\ T$. 
+:::
+
+Hence, $V/\ker T$ is isomorphic to $\im\ T$. This is called the **first isomorphism theorem**.
+
+:::{#exm-}
+For a non-zero linear functional $\phi\in\mathcal{L}(V,\mb{F})$, we have $\dim\im\ \phi=\dim\mb{F}=1$. So the first isomorphism theorem gives us
+
+$$\dim (V/\ker\phi)=1.$$
+
+:::

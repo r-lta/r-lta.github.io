@@ -9,7 +9,7 @@ execute:
 
 {{< include ../../_macros.qmd >}}
 
-This is an augmented summary of Sections 3.C of [Linear Algebra Done Right](https://linear.axler.net/index.html) by Sheldon Axler.
+This is an augmented summary of Section 3.C of [Linear Algebra Done Right](https://linear.axler.net/index.html) by Sheldon Axler.
 
 ## Matrices
 Consider finite-dimensional vector spaces $V$ and $W$, and let $T$ be a linear map from $V$ to $W$. For bases $v_1,\cdots,v_n$ and $w_1,\cdots,w_m$ of $V$ and $W$ respectively, there exist $m\times n$ scalars $A_{i,j}$ such that

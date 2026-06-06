@@ -9,7 +9,7 @@ execute:
 
 {{< include ../../_macros.qmd >}}
 
-This is an augmented summary of Sections 3.B of [Linear Algebra Done Right](https://linear.axler.net/index.html) by Sheldon Axler.
+This is an augmented summary of Section 3.B of [Linear Algebra Done Right](https://linear.axler.net/index.html) by Sheldon Axler.
 
 ## Kernel and image
 Suppose that $T:V\to W$ is a linear map. Then you can obtain a subspace of $V$ and a subspace of $W$ out of $T$, called the *kernel* and the *image* of the map respectively.
