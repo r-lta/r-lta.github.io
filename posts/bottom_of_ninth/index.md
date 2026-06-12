@@ -29,7 +29,7 @@ def filter_df(df):
 	full_count = df["count"]=="32"
 	
 	filtered_df = df[bases_loaded*bot_ninth*two_outs*full_count]
-    return filtered_df
+	return filtered_df
 ```
 This function returns the plays (and not other information) within the game that I am searching for:
 ```python
@@ -139,4 +139,4 @@ The breakdown of the at-bats:
 
 This gives us an OBP of $9/24=0.375$ and batting average of $2/17=0.118$. So throw a strike?
 
-Finally, we can see that the Angels game in 2016 contains `5!3/G`, where `!` refers to a great play. The [link](https://www.mlb.com/video/seager-s-game-saving-play-in-9th-c1065024383?q=ContentTags%20==%20[%22defense%22,%22gamepk-448661%22]%20Order%20By%20Timestamp%20DESC&pt=Defensive%20Highlights).
+Finally, we can see that the Angels game in 2016 contains `5!3/G`, where `!` refers to a great play. The play can be watched [here](https://www.mlb.com/video/seager-s-game-saving-play-in-9th-c1065024383?q=ContentTags%20==%20[%22defense%22,%22gamepk-448661%22]%20Order%20By%20Timestamp%20DESC&pt=Defensive%20Highlights).

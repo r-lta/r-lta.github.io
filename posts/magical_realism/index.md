@@ -1,7 +1,7 @@
 ---
 title: "Magical realism in philosophy of science"
 date: "2026-02-26"
-categories: ["Philosophy"]
+categories: ["philosophy"]
 ---
 
 Philosophers of science are mostly divided into two camps, *realists* and *anti-realists*. Roughly speaking, realists hold that science speaks of unfamiliar entities like electrons because they actually do exist; anti-realists disagree, arguing that the mention of electrons is largely for convenience, and not because there are electrons out there in the world. (Of course, like any position in philosophy, an infinite variety of realism and anti-realism exists in the literature.) I believe both sides of the debate suffer from what I call "magical realism" (apologies to the writers for the mis-appropriation of the term).
@@ -12,7 +12,7 @@ Consider the statement "electrons are real". This is a syntactically simple sent
 2. If we cannot reliably depend on their behaviour, then we are hesitant to call them real.
 3. Therefore, for the most part, electrons are real exactly to the extent that they are reliable.
 
-But philosophers would say that this reasoning is muddled. The classic no-miracles argument states that the reliability of our experiments is a *consequence* of the reality of the posited entities. Yet I find this argument quite baffling, because I do not see what "being real" means here. Perhaps it will help to move to a different language. Suppose that in Andromeda, people have a saying: "Experiments are reliable because things are *blorp*." We ask them why they keep uttering this sentence; they answer that it is only by virtue of *blorp*ness that various experiments work as expected. They point to their versions of televisions, oscilloscopes, and particle accelerators, and explain to us that these are all evidence of *blorp*ness of things. Upon hearing this, how would we understand *blorp*ness? Probably in similar manner as the Chinese *dào*, the mystical principle that keeps the world running. Consequently, we will think "being *blorp*" says more about the Andromedean psychology than it does about the physical world.
+But philosophers would say that this reasoning is muddled. The classic no-miracles argument states that the reliability of our experiments is a *consequence* of the reality of the posited entities. Yet I find this argument quite baffling, because I do not see what "being real" means here. Perhaps it will help to move to a different language. Suppose that in Andromeda, people have a saying: "Experiments are reliable because things are *blorp*." We ask them why they keep uttering this sentence; they answer that it is only by virtue of *blorp*ness that various experiments work as expected. They point to their versions of televisions, oscilloscopes, and particle accelerators, and explain to us that these are all evidence of *blorp*ness of things. Upon hearing this, how would we understand *blorp*ness? Probably in a similar manner as the Chinese *dào*, the mystical principle that keeps the world running. Consequently, we will think "being *blorp*" says more about the Andromedean psychology than it does about the physical world.
 
 Analogously, philosophy's obsession with "being real" is perhaps an artefact of human psychology. This is hinted by what both realists and anti-realists often agree to be real: namely, macroscopic objects such as tennis balls. But there is no fundamental epistemological safety provided by unaided visual detection. Even if we visually detect some tennis balls, they would be pronounced imaginary if we cannot use them in the usual manner, e.g. pick them up and throw them. Also, tennis balls become visually undetectable under extreme temperature, so they are not permanent in any fundamental sense. But under the typical situations that historically drove evolution, detecting and manipulating macroscopic objects were key to survival. Consequently, our mental images of trees and stones have more psychological *oomph* than those of electrons and viruses. And it is difficult to see how "being real" (or "being *blorp*" for Andromedeans) can mean something more than an expression of this *oomph*.
 
@@ -22,11 +22,11 @@ Let us end on a more "poetic" level. We always live under extreme inductive unce
 
 More snappily put: Electrons are as real as tennis balls, and "tennis balls" are as instrumental as "electrons".
 
-Postscript: A more satisfactory account of "being real" is provided by Polanyi (1966). Under his view, scientific understanding involves interiorising what is initially external, which in turn requires the investigated particulars to display a certain coherence. So I think there are two tiers of reality in Polanyi's account, although he does not say so explicitly:
+Postscript: A more satisfactory account of "being real" is provided by [Michael Polanyi](https://openlibrary.org/isbn/9780385069885). Under his view, scientific understanding involves interiorising what is initially external, which in turn requires the investigated particulars to display a certain coherence. So I think there are two tiers of reality in Polanyi's account, although he does not say so explicitly:
 
 - a felt sense of internal coherence in the investigated domain, although this can often be misleading;
 - a successful expansion of our body into the domain by making reliable manipulation within it, which can only succeed (in reasonable individuals) when the world complies.
 
-Unlike in the traditional sense, "reality" here is an *active* notion. Chang (2022) makes a similar argument and explicitly names his position *active realism*, although he does not touch upon the enactivism that is latent in Polanyi.
+Unlike in the traditional sense, "reality" here is an *active* notion. [Hasok Chang](https://openlibrary.org/isbn/9781108455930) makes a similar argument and explicitly names his position *active realism*, although he does not touch upon the enactivism that is latent in Polanyi.
 
-For more information, refer to Hacking, Fine (the "Natural Ontological Attitude"), the American pragmatists, Bridgman, Quine, and some more, all of whom I should have cited if this were a proper article. 
+For more information, refer to [Ian Hacking](https://openlibrary.org/isbn/0521238293), [Arthur Fine](https://philpapers.org/rec/FINTNO-3), the American pragmatists, [Percy Bridgman](https://openlibrary.org/books/OL6701357M/The_logic_of_modern_physics), [W.V.O. Quine](https://philpapers.org/rec/QUIEN-3) and some more, all of whom I should have cited if this were a proper article. 
