@@ -1,0 +1,16 @@
+---
+title: "May 2026 book list"
+description: "Academically relevant books I read in May 2026 — Humphrey, Gallagher & Zahavi, and Clark, on consciousness and the embodied, predictive mind."
+date: "2026-06-12"
+categories: ["book-list"]
+execute:
+    echo: true
+---
+
+{{< include ../../_macros.qmd >}}
+
+Academically relevant books I read in May 2026:
+
+- [Soul Dust: The Magic of Consciousness](https://openlibrary.org/isbn/9780857388292) by Nicholas Humphrey
+- [The Phenomenological Mind](https://openlibrary.org/isbn/9781136458163) by Shaun Gallagher and Dan Zahavi
+- [The Experience Machine](https://openlibrary.org/isbn/9780241394533) by Andy Clark
