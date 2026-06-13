@@ -80,7 +80,7 @@ Q: Why `[core]`?
 A: `config` is an INI-style file, which uses square brackets for sections.
 Other sections appear for remotes and branches.
 
-## refs
+## refs {#git-refs}
 References to commits.
 
 Subdirectories in `refs`:
