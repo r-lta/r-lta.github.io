@@ -5,6 +5,8 @@ date-modified: "2026-06-13"
 categories: ["Miscellaneous", "baseball"]
 ---
 
+{{< include ../../_macros.qmd >}}
+
 Bottom of the 9th, bases loaded, full count, the home team trailing by one run. How often does this cliché actually occur in an MLB game?
 
 To answer this question, let's obtain the data from the Retrosheet website. Here is the statement required by the website:

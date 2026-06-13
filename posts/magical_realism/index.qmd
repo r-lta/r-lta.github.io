@@ -5,6 +5,8 @@ date-modified: "2026-06-13"
 categories: ["philosophy"]
 ---
 
+{{< include ../../_macros.qmd >}}
+
 Philosophers of science are mostly divided into two camps, *realists* and *anti-realists*. Roughly speaking, realists hold that science speaks of unfamiliar entities like electrons because they actually do exist; anti-realists disagree, arguing that the mention of electrons is largely for convenience, and not because there are electrons out there in the world. (Of course, like any position in philosophy, an infinite variety of realism and anti-realism exists in the literature.) I believe both sides of the debate suffer from what I call "magical realism" (apologies to the writers for the mis-appropriation of the term).
 
 Consider the statement "electrons are real". This is a syntactically simple sentence, as it simply asks whether "electron" has a property of "being real". So in order for us to decide whether to assent to this statement, we have to first clarify what "being real" means. Despite its seeming philosophical weight, "being real" is an everyday concept like "being heavy" or "being red", as compared to "being chiral" or "being a virus". For many such concepts, we initially start from pre-theoretical distinctions that we find useful, then proceed to carefully investigate both ourselves and the world, so as to delineate the standards for their use. But "being real" is curiously empty of this depth, compared to "being red" which has led to centuries of colour science. The problem is that the pre-theoretical distinction corresponding to "being real" seems to very closely align with "being reliable" in many cases. Here is a biconditional pseudo-proof for electrons:

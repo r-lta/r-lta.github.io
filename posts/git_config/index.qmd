@@ -5,6 +5,8 @@ date-modified: "2026-06-13"
 categories: ["git"]
 ---
 
+{{< include ../../_macros.qmd >}}
+
 `git config`
 
 Write to one of the three config files.

@@ -5,6 +5,8 @@ date-modified: "2026-06-13"
 categories: ["git"]
 ---
 
+{{< include ../../_macros.qmd >}}
+
 `git add`
 
 Two things happen.

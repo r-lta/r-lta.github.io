@@ -5,6 +5,8 @@ date-modified: "2026-06-13"
 categories: ["git"]
 ---
 
+{{< include ../../_macros.qmd >}}
+
 `git commit`
 
 Commits the information about the current staging area and updates the branch pointer.
