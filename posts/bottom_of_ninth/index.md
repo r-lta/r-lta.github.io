@@ -1,7 +1,7 @@
 ---
 title: "The final pitch (usually)"
 date: "2025-08-25"
-date-modified: "2025-08-26"
+date-modified: "2026-06-13"
 categories: ["Miscellaneous", "baseball"]
 ---
 

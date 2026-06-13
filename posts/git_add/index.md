@@ -1,8 +1,8 @@
 ---
 title: "git add"
 date: "2025-09-05"
-date-modified: "2026-02-15"
-categories: ["Git", "basic-info"]
+date-modified: "2026-06-13"
+categories: ["git"]
 ---
 
 `git add`
@@ -14,20 +14,24 @@ Two things happen.
 
 ## blob
 When a new file is added, Git creates a blob from the following byte string:
+
 ```
 "blob " + <size of contents in bytes> + "\0" + <contents>
 ```
+
 The SHA-1 (or SHA-256 depending on the setting) hash of this byte string is used to create the directory and the file name:
 
 - The first 2 hex chars becomes the directory.
 - The remaining 38 hex chars becomes the file name.
 
 For example:
+
 ```
 |-- objects
 |   |-- 57
 |   |   `-- 16ca5987cbf97d6bb54920bea6adde242d87e6
 ```
+
 The content of the file is the byte string compressed by zlib.
 
 Q: How do you inspect the blob?
@@ -41,12 +45,16 @@ A:
 Q: What about the file name? What if there are two files with the same content?
 
 A: The file name is stored in `index`. If two files share the content, there will be two entries in the index with the same hash.
+
 ## index
 `index` contains the information of the staged files, in the following format:
+
 ```
 [metadata][hash][path][padding]
 ```
+
 To make this concrete, let's add a file with name `foo` and inspect `index` with `xxd -g 1 -c 16 .git/index`:
+
 ```
 00000000: 44 49 52 43 00 00 00 02 00 00 00 01 68 ac f6 b0  DIRC........h...
 00000010: 03 c1 fa f8 68 ac f6 b0 03 c1 fa f8 01 00 00 10  ....h...........
@@ -56,9 +64,10 @@ To make this concrete, let's add a file with name `foo` and inspect `index` with
 00000050: 00 00 00 00 ec 7e 89 70 0d 16 6c d8 61 35 6b 94  .....~.p..l.a5k.
 00000060: 34 e6 c3 eb e6 e7 48 cb                          4.....H.
 ```
-(A human-readable information can be printed with `git ls-files --stage` and `git-ls-files --debug`.)
 
-The first 12 bits is the header of the file:
+(Human-readable information can be printed with `git ls-files --stage` and `git-ls-files --debug`.)
+
+The first 12 bytes are the header of the file:
 
 - `DIRC`: "Magic number" telling Git that this is an index file.
 - `00 00 00 02`: Version of the index format (versions 3 and 4 are also supported).

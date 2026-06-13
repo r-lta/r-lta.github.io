@@ -1,7 +1,8 @@
 ---
 title: "git config"
 date: "2025-08-27"
-categories: ["Git", "basic-info"]
+date-modified: "2026-06-13"
+categories: ["git"]
 ---
 
 `git config`
@@ -23,11 +24,15 @@ This adds
 	bar = baz
 ```
 While arbitrary section/key combos can thus be added, only certain pre-defined ones are read by Git, e.g. `user.name`.
+
 ## read
 Read from config file: `git config --[scope] foo.bar`
+
 ## remove
 Remove a key: `git config --[scope] --unset foo.bar`
+
 ## list
 See what a config file stores: `git config --[scope] --list`
+
 ## trace
 See which file defines a section/key combo: `git config --show-origin foo.bar`

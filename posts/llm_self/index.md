@@ -1,6 +1,7 @@
 ---
 title: "Consciousness ascription and the narrative self"
 date: "2026-03-13"
+date-modified: "2026-06-13"
 categories: ["philosophy"]
 ---
 

@@ -1,6 +1,7 @@
 ---
 title: "Magical realism in philosophy of science"
 date: "2026-02-26"
+date-modified: "2026-06-13"
 categories: ["philosophy"]
 ---
 

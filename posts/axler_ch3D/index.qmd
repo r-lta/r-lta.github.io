@@ -2,6 +2,7 @@
 title: "Invertible maps"
 description: "Invertible maps and isomorphisms, when maps coincide up to isomorphism, operators, and the centre and two-sided ideals of L(V) — an augmented summary of Axler's LADR §3.D."
 date: "2026-06-05"
+date-modified: "2026-06-06"
 categories: ["mathematics", "linear-algebra", "ladr"]
 execute:
     echo: true

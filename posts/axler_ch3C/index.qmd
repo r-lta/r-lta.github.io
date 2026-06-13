@@ -2,6 +2,7 @@
 title: "Matrices"
 description: "The matrix of a linear map, rank normal form, and matrix addition and multiplication from the linear-map viewpoint — an augmented summary of Axler's LADR §3.C."
 date: "2026-06-05"
+date-modified: "2026-06-06"
 categories: ["mathematics", "linear-algebra", "ladr"]
 execute:
     echo: true

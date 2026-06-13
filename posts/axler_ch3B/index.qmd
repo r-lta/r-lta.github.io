@@ -2,6 +2,7 @@
 title: "Kernel and image"
 description: "Kernel and image of a linear map, the rank–nullity theorem, and a first look at linear functionals — an augmented summary of Axler's LADR §3.B."
 date: "2026-06-05"
+date-modified: "2026-06-06"
 categories: ["mathematics", "linear-algebra", "ladr"]
 execute:
     echo: true

@@ -1,7 +1,7 @@
 ---
 title: "Can you say that sprinting is pornographic?"
 date: "2026-02-15"
-date-modified: "2026-03-09"
+date-modified: "2026-06-13"
 categories: ["philosophy"]
 ---
 
