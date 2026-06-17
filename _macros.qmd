@@ -36,7 +36,56 @@ div.proof::after {
 div.proof > p:last-child { margin-bottom: 0; }
 .proof-title { font-weight: 600; }
 
-/* ===== Examples and other theorem environments ===== */
+/* ===== Proof idea (always shown; pairs with a collapsible full proof) ===== */
+div.proof-idea {
+  border-left: 3px solid #d9a441;
+  background: #fdf6e9;
+  padding: 0.6em 1em;
+  margin: 1.2em 0 1.8em;
+  border-radius: 0 4px 4px 0;
+}
+div.proof-idea::before {
+  content: "Idea";
+  display: block;
+  font-weight: 700;
+  font-size: 0.78em;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #a9761a;
+  margin-bottom: 0.3em;
+}
+div.proof-idea > p:last-child { margin-bottom: 0; }
+
+/* ===== Collapsible full proof (reuses the proof look) ===== */
+details.proof {
+  border-left: 3px solid #b8b8b8;
+  background: #f7f7f7;
+  padding: 0.6em 1em;
+  margin: 1.2em 0 1.8em;
+  border-radius: 0 4px 4px 0;
+}
+details.proof > summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: #555;
+  list-style: none;
+}
+details.proof > summary::-webkit-details-marker { display: none; }
+details.proof > summary::before { content: "\25B8\00A0"; color: #888; }
+details.proof[open] > summary::before { content: "\25BE\00A0"; }
+details.proof[open] > summary { margin-bottom: 0.6em; }
+details.proof[open]::after {
+  content: "\220E";
+  display: block;
+  text-align: right;
+  color: #888;
+}
+details.proof > :last-child { margin-bottom: 0; }
+
+/* ===== Quarto crossref environments (#thm-, #lem-, #cor-, #exm-, #def-, ...) =====
+   Quarto gives ALL of them class "theorem"; subtypes add .example/.definition/etc.
+   Base style = theorem family (blue); examples get a distinct colour below.
+   The "Theorem 1"/"Example 1" label is supplied by Quarto in .theorem-title. */
 div.theorem {
   border-left: 3px solid #2780e3;
   background: #f0f6fd;
@@ -44,7 +93,53 @@ div.theorem {
   margin: 1.2em 0 1.8em;
   border-radius: 0 4px 4px 0;
 }
+div.theorem .theorem-title {
+  display: block;
+  font-weight: 700;
+  font-size: 0.78em;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #1f5fab;
+  margin-bottom: 0.3em;
+}
 div.theorem > p:last-child { margin-bottom: 0; }
+
+/* Examples: distinct colour so they don't read as theorems */
+div.theorem.example {
+  border-left-color: #8e6bbf;
+  background: #f5f1fb;
+}
+div.theorem.example .theorem-title { color: #6f4fa0; }
+
+/* ===== Informal statement (plain-language box) ===== */
+div.informal {
+  border-left: 3px solid #5fa388;
+  background: #eef6f2;
+  padding: 0.6em 1em;
+  margin: 1.2em 0 1.8em;
+  border-radius: 0 4px 4px 0;
+}
+div.informal::before {
+  content: "In words";
+  display: block;
+  font-weight: 700;
+  font-size: 0.78em;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #3f7a63;
+  margin-bottom: 0.3em;
+}
+div.informal > p:last-child { margin-bottom: 0; }
+
+/* ===== Tighter gap between consecutive boxed environments ===== */
+:is(div.theorem, div.informal, div.proof-idea, div.proof, details.proof)
+  + :is(div.theorem, div.informal, div.proof-idea, div.proof, details.proof) {
+  margin-top: 0.6em;
+}
+:is(div.theorem, div.informal, div.proof-idea, div.proof, details.proof):has(
+  + :is(div.theorem, div.informal, div.proof-idea, div.proof, details.proof)) {
+  margin-bottom: 0.6em;
+}
 
 /* ===== Headings ===== */
 h2 {
@@ -60,6 +155,13 @@ h6 {
   text-transform: uppercase;
   letter-spacing: 0.03em;
   color: #555;
+}
+/* Keep inline math in headings un-transformed: text-transform/letter-spacing
+   would otherwise capitalize and spread MathJax glyphs (e.g. $n$ -> "N"). */
+h6 .math,
+h1 .math, h2 .math, h3 .math, h4 .math, h5 .math {
+  text-transform: none;
+  letter-spacing: normal;
 }
 </style>
 ```

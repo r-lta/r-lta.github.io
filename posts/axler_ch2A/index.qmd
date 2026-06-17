@@ -2,6 +2,7 @@
 title: "Span and linear independence"
 description: "Span, linear independence, and the Steinitz exchange lemma — an augmented summary of Axler's LADR §2.A."
 date: "2026-06-03"
+date-modified: "2026-06-17"
 categories: ["mathematics", "linear-algebra", "ladr"]
 execute:
     echo: true
@@ -20,7 +21,7 @@ $$\text{span}(v_1,\cdots,v_n)=\{a_1v_1+\cdots+a_nv_n:a_i\in\mb{F}\}.$$
 
 If a set's span is equal to the original vector space $V$, then we say that the set **spans** $V$. So $\hat{i},\hat{j},\hat{k}$ spans $\mathbb{R}^3$.
 
-:::{#exm-}
+:::{#exm-fn-spanning}
 The vector space $\mb{F}^n$ is spanned by the vectors
 
 $$(1,0,\cdots,0),(0,1,\cdots,0),\cdots,(0,0,\cdots,1).$$
@@ -29,7 +30,9 @@ $$(1,0,\cdots,0),(0,1,\cdots,0),\cdots,(0,0,\cdots,1).$$
 
 It is easy to check that a span is always a subspace. Furthermore, it is the smallest subspace containing $v_1,\cdots,v_n$, because closure requires other such subspaces to contain at least $\text{span}(v_1,\cdots,v_n)$.
 
-Note that $\{av:a\in\mb{F}\}$ is a subspace for each vector $v$. The span of a set is the sum of such subspaces for each vector of the set.
+Note that $\{av:a\in\mb{F}\}$ is a subspace for any vector $v$. So we can also view the span as
+
+$$\text{span}(v_1,\cdots,v_n)=\{av_1\}+\cdots+\{av_n\}.$$
 
 #### Finite and infinite dimension
 We say that a vector space is **finite-dimensional** if it is spanned by a finite set of its vectors. It is called **infinite-dimensional** if it is not.
@@ -39,7 +42,13 @@ A set of vectors $v_1,\cdots,v_n$ is **linearly independent** if
 
 $$a_1v_1+\cdots+a_nv_n=0$$
 
-always implies that $a_1=\cdots=a_n=0$. In other words, we have linear independence when the sum of the subspaces $\{av_i:a\in\mb{F}\}$ is direct. The set is **linearly dependent** if it is not linearly independent.
+always implies that $a_1=\cdots=a_n=0$. The set is **linearly dependent** if it is not linearly independent.
+
+The linear independence condition means the zero vector is uniquely decomposed in the subspace sum
+
+$$\{av_1\}+\cdots+\{av_n\}.$$
+
+As we have seen, this implies that the sum is direct. 
 
 Here are some observations regarding linear independence.
 
@@ -48,7 +57,7 @@ Here are some observations regarding linear independence.
 - Any set consisting of a single non-zero vector is linearly independent.
 - Any set consisting of two vectors that are not scalar multiples of each other is linearly independent.
 
-:::{#exm-}
+:::{#exm-dependence-t}
 Let's consider whether the three vectors
 
 $$
@@ -69,30 +78,76 @@ We can find that $a_1=2/3$, $a_2=1/3$ and $t=2$ provides the linear combination 
 :::
 
 #### Uniqueness of decomposition
-If $v_1,\cdots,v_n$ is linearly independent, then every vector $v$ in its span is uniquely decomposable as 
+:::{#thm-unique-decomposition}
+Suppose that $v_1,\cdots,v_n$ is linearly independent. Then for every $v\in\text{span}(v_1,\cdots,v_n)$, there is a unique set of scalars $a_1,\cdots,a_n$ such that
 
 $$v=a_1v_1+\cdots+a_nv_n.$$
 
-:::{.proof}
+:::
+
+:::{.informal}
+For a linearly independent set of vectors, every vector in its span has a unique "coordinate" with respect to these vectors.
+:::
+
+:::{.proof-idea}
+As we have done for the analogous result with direct sum, we may consider $v_1-v_2$ where $v_1$ and $v_2$ are two decompositions of the same vector.
+
+Alternatively, we may recall the relationship between linear independence and direct sum.
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
 We have seen that $v_1,\cdots,v_n$ is linearly independent when the sum of $\{av_i:a\in\mb{F}\}$ is direct. So there is exactly one way to write each
 
 $$v\in \{av_1:a\in\mb{F}\}\oplus\cdots\oplus\{av_n:a\in\mb{F}\}=\text{span}(v_1,\cdots,v_n)$$
 
 as a sum $v=a_1v_1+\cdots+a_nv_n$.
-::: 
+
+</details>
 
 #### Preservation of linear independence
 ###### Multiplication
-Suppose that $v_1,\cdots,v_n$ is linearly independent. For any $\lambda\neq0$, a linear combination of $\lambda v_1,\cdots,\lambda v_n$ is also a linear combination of $v_1,\cdots,v_n$. Therefore, $\lambda v_1,\cdots,\lambda v_n$ also has to be linearly independent. Linear independence is preserved under scalar multiplication.
+:::{#thm-li-scalar}
+The linear independence of a set of vectors is preserved under a (non-zero) scalar multiplication of the vectors.
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
+Any non-trivial decomposition of $0$ in terms of $\lambda v_1,\cdots,\lambda v_n$ must lead to a non-trivial decomposition in terms of $v_1,\cdots,v_n$. As the latter does not exist, neither does the former.
+
+</details>
 
 ###### Addition
-If $v_1,\cdots,v_n$ and $w_1,\cdots,w_n$ are two linearly independent sets, it does *not* follow that $v_1+w_1,\cdots,v_n+w_n$ is also linearly independent. While there are more complex examples, the trivial case is when $w_i=-v_i$. So linear independence is not preserved under vector addition.
+:::{#thm-li-addition}
+If $v_1,\cdots,v_n$ and $w_1,\cdots,w_n$ are two linearly independent sets, it does *not* follow that 
+
+$$v_1+w_1,\cdots,v_n+w_n$$
+
+is also linearly independent.
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
+While there are more complex cases, the simplest example is $w_i=-v_i$. 
+
+</details>
 
 #### Redundancy under linear dependence
-A set of vectors is linearly independent if and only if none of its vectors is in the span of the others. If a vector is in the span of the others, it is redundant in the sense that the same span is retained after its removal.
+:::{#thm-li-redundancy}
+A set of vectors is linearly independent if and only if none of its vectors is in the span of the others.
+:::
 
-:::{.proof}
-If a set is linearly dependent, then by definition, there exist $a_1,\cdots,a_n\in\mb{F}$ not all zero such that
+:::{.informal}
+If a vector is in the span of the others, it is redundant in the sense that the same span is retained after its removal. So a set is linearly independent if and only if every one of its vectors "enlarges" the span.
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
+Suppose that $v_1,\cdots,v_n$ is linearly dependent. By definition, there exist $a_1,\cdots,a_n\in\mb{F}$ not all zero such that
 
 $$a_1v_1+\cdots+a_nv_n=0.$$
 
@@ -106,25 +161,40 @@ Conversely, suppose that (without loss of generality) $v_n$ is in the span of $v
 
 $$a_1v_1+\cdots+a_{n-1}v_{n-1}=v_n,$$
 
-and this implies
+This implies
 
-$$a_1v_1+\cdots+a_{n-1}v_{n-1}-v_n=0.$$
+$$a_1v_1+\cdots+a_{n-1}v_{n-1}-v_n=0,$$
 
-So adding a redundant vector to a set makes it linearly dependent.
-:::
+showing that $v_1,\cdots,v_n$ is linearly dependent.
 
-If a linearly independent set $v_1,\cdots,v_n$ becomes dependent under the inclusion of a vector $w$, then that $w$ must have been in the span of the initial set.
+</details>
 
-If we start from some linearly independent $v_1,\cdots, v_n$ and sequentially extend the set by appending any
+From this result, we note the following pieces of "practical advice".
 
-$$v_{j+1}\notin\text{span}(v_1,\cdots,v_j),$$
+- If a linearly independent set $v_1,\cdots,v_n$ becomes dependent under the inclusion of a vector $w$, then that $w$ must have been in the span of $v_1,\cdots,v_n$.
 
-then the resulting set is still linearly independent.
+- If a linearly independent set $v_1,\cdots, v_n$ is extended by appending some
+
+    $$v_{n+1}\notin\text{span}(v_1,\cdots,v_n),$$
+
+    then the resulting set is still linearly independent.
 
 #### Steinitz exchange lemma
-Here is a strange fact about spanning sets $U$ and linearly independent sets $W$. No matter what $U$ and $W$ are, it is possible to exchange the vectors of $U$ for the vectors of $W$ such that the modified $U$ still spans $V$. From the definitions alone, this sounds quite unlikely.
+:::{#thm-steinitz}
+Let $V$ be a finite-dimensional vector space, and let $U$ and $W$ be two finite sets of vectors in $V$ such that $U$ spans $V$ while $W$ is linearly independent. Then it is possible to exchange the vectors of $U$ for the vectors of $W$ one-for-one such that the modified $U$ still spans $V$.
+:::
 
-:::{.proof}
+:::{.proof-idea}
+The redundancy of vectors is a fully "symmetric" relation: we have
+
+$$v=a_1v_1+\cdots+a_nv_n\implies v_1=\frac{1}{a_1}v+\frac{a_2}{a_1}v_2+\cdots+\frac{a_n}{a_1}v_n$$
+
+as long as $a_1\neq0$. Use this fact to exchange the vectors while keeping the span.
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
 Let $W=\{w_1,\cdots,w_m\}$ be linearly independent, and let $U=\{u_1,\cdots,u_n\}$ span $V$. We will sequentially substitute in the vectors of $W$ for those of $U$, starting with $w_1\in W$. 
 
 Since $U$ spans $V$, there exist $a_i$s such that
@@ -133,38 +203,50 @@ $$w_1=a_1u_1+\cdots+a_nu_n.$$
 
 As a vector of a linearly independent set, $w_1$ is not zero, and so not all $a_i$s are zero. Let $a_j$ be a non-zero element. Then we can express $u_j$ as
 
-$$u_j=\frac{1}{a_j}w_1-\frac{a_1}{a_j}u_1-\cdots-\frac{a_n}{a_j}u_n.$$
+$$u_j=\frac{1}{a_j}w_1-\frac{a_1}{a_j}u_1-\cdots-\frac{a_{j-1}}{a_j}u_{j-1}-\frac{a_{j+1}}{a_j}u_{j+1}-\cdots-\frac{a_n}{a_j}u_n.$$
 
-So $w_1,u_1,\cdots,u_{j-1},u_{j+1},\cdots,u_n$ span $V$. (The table has turned for $u_j$, so to say.) 
+So $w_1,u_1,\cdots,u_{j-1},u_{j+1},\cdots,u_n$ span $V$.
 
-Time for the inductive step. Suppose that $w_1,\cdots,w_k,u_1,\cdots,u_{n-k}$ span $V$, where $k<m$. (For simplicity, we have re-indexed the $u_i$s.) 
+Time for the inductive step. Suppose that $w_1,\cdots,w_k,u_1,\cdots,u_{n-k}$ spans $V$, where $k<m$. (For simplicity, we have re-indexed the $u_i$s.) 
 
 We *must* have at least one un-substituted $u_i$ remaining, because otherwise $w_{k+1}$ would be in the span of $\{w_1,\cdots,w_k\}$, contradicting the assumption that $W$ is linearly independent. 
 
-Furthermore, the linear independence of $W$ also means that at least one of the $a'_i$s must be non-zero in the equation
+Furthermore, the linear independence of $W$ also means that at least one of the $b_i$s must be non-zero in the equation
 
-$$w_{k+1}=a_1w_1+\cdots+a_kw_k+a'_1u_1+\cdots+a'_{n-k}u_{n-k}.$$
+$$w_{k+1}=a_1w_1+\cdots+a_kw_k+b_1u_1+\cdots+b_{n-k}u_{n-k}.$$
 
-As before, this means that we can substitute in $w_{k+1}$.
+As before, this means that we can substitute in $w_{k+1}$ for one of the $u_i$s.
 
 So we can continue exchanging a $w_i$ for a $u_j$ while keeping the span-ness of the modified set, until the entirety of $W$ is placed inside $U$. (As mentioned, the $u_i$s cannot run out if $W$ is linearly independent.)
-:::
+
+</details>
 
 This result is called the **Steinitz exchange lemma**^[The mathematician Steinitz has no relation to the chess player Steinitz as far as I can tell.]. 
 
+:::{#thm-li-bounded-by-spanning}
 There are several corollaries of this proof, one of which is that a linearly independent subset of $V$ is never larger than *any* spanning set of $V$.
+:::
 
 #### Subspaces of finite-dimensional vector space
+:::{#thm-findim-subspace}
 Here is a corollary of the above corollary: a finite-dimensional vector space does not have an infinite-dimensional subspace.
+:::
 
-:::{.proof}
+:::{.proof-idea}
+Given any subspace $U$, grow a linearly independent subset from the vectors of $U$ until the span fills $U$.
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
 Let $U$ be a subspace of a finite-dimensional $V$. We wish to construct a spanning set $S$ of $U$ that is linearly independent. So repeat the following steps, starting with $S=\emptyset$:
 
 1. Find an element $u$ of $U$ that is not in the span of $S$.
-2. Append $u$ to $S$, which retains its linearly independence.
+2. Append $u$ to $S$, which retains its linear independence.
 
-This process cannot continue forever, because $S$ cannot be larger than the spanning sets of $V$, some of which are finite. So we must have $\text{span}(S)=U$ after a finite number of steps. Therefore, $U$ is finite-dimensional.
-:::
+This process cannot continue forever, because $S$ cannot be larger than the spanning sets of $V$, some of which are finite. So we must have $\text{span}(S)=U$ after a finite number of steps, or otherwise we have a contradiction. Therefore, $U$ is finite-dimensional.
+
+</details>
 
 ## Polynomials
 A function $f:\mb{F}\to\mb{F}$ is a **polynomial** if there exist coefficients $a_0,a_1,\cdots,a_n\in\mb{F}$ such that
@@ -176,5 +258,4 @@ for all $x\in\mb{F}$. The **degree** of $f$ is the largest $m$ such that $a_m$ i
 #### Space of polynomials
 We can check that the set $\mathcal{P}(\mb{F})$ of all polynomials with coefficients in $\mb{F}$ is a subspace of $\mb{F}^\mb{F}$. Furthermore, the set $\mathcal{P}_n(\mb{F})\subset\mathcal{P}(\mb{F})$ of all polynomials with degree no greater than $n$ is also a subspace.
 
-$\mathcal{P}_n(\mb{F})$ is finite-dimensional, because it is spanned by the functions $1,x,\cdots,x^n$. $\mathcal{P}(\mb{F})$ is infinite-dimensional, because any finite subset has some maximum degree $m$, and does not contain $x^{m+1}\in\mathcal{P}(\mb{F})$.
-
+$\mathcal{P}_n(\mb{F})$ is finite-dimensional, because it is spanned by the functions $1,x,\cdots,x^n$. $\mathcal{P}(\mb{F})$ is infinite-dimensional, because any finite subset has some maximum degree $m$, and so its span does not contain $x^{m+1}\in\mathcal{P}(\mb{F})$.

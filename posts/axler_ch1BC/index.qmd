@@ -2,6 +2,7 @@
 title: "Vector space"
 description: "Vector spaces, subspaces, and subspace sums including direct sums — an augmented summary of Axler's LADR §1.B–1.C."
 date: "2026-06-03"
+date-modified: "2026-06-17"
 categories: ["mathematics", "linear-algebra", "ladr"]
 execute:
     echo: true
@@ -12,25 +13,23 @@ execute:
 This is an augmented summary of Sections 1.B and 1.C of [Linear Algebra Done Right](https://linear.axler.net/index.html) by Sheldon Axler.
 
 ## Vector space
-Suppose a set $S$ has "addition" defined on its elements, and also "multiplication" defined with elements of an external set $E$ (that returns an element of $S$). Then $S$ is called a **vector space** if it is an Abelian group with respect to the addition, and three requirements hold with respect to the multiplication:
+Suppose a set $V$ has **vector addition** $+:V\times V\to V$ defined on its elements, along with **scalar multiplication** $\cdot:\mb{F}\times V\to V$ defined with another set $\mb{F}$. For $V$ to be a **vector space**, it must form an Abelian group with respect to vector addition, while the following three requirements hold with respect to scalar multiplication:
 
-- It is associative with $E$'s internal multiplication: $(e_1e_2)s=e_1(e_2s)$.
-- The multiplicative identity of $E$, denoted $1$, is also an identity for scalar multiplication: $1s=s$.
-- The distributive property holds, i.e. $e(s_1+s_2)=es_1+es_2$ and $(e_1+e_2)s=e_1s+e_2s$. 
+- It is associative with $\mb{F}$'s internal multiplication: $(a_1a_2)v=a_1(a_2v)$.
+- The multiplicative identity of $\mb{F}$, denoted $1$, is also an identity for scalar multiplication: $1v=v$.
+- The distributive property holds, i.e. $a(v_1+v_2)=av_1+av_2$ and $(a_1+a_2)v=a_1v+a_2v$. 
 
-Addition and multiplication are defined for $E$ because it is a **field**. We will not define what a field is here. Let's just think of the real and complex numbers as concrete examples of a field.
+Addition and multiplication are defined for $\mb{F}$ because it must be a **field**. $\mathbb{R}$ and $\mathbb{C}$ are concrete examples of fields.
 
-If $S$ is a vector space over $E$ as above, then the elements of $S$ are called **vectors** while the elements of $E$ are called **scalars**. (We will now write $V$ for a generic vector space, and $\mb{F}$ for the associated field.)
-
-:::{#exm-}
+:::{#exm-trivial-space}
 The empty set $\emptyset$ over some field is not a vector space, because it has no additive identity. The smallest vector space is the **trivial vector space** $\{0\}$.
 :::
 
-:::{#exm-}
+:::{#exm-fn}
 For some field $\mb{F}$, $\mb{F}^n$ denotes the set of all length-$n$ sequences of elements of $\mb{F}$. If we define vector addition and scalar multiplication in an element-wise manner, we can show that $\mb{F}^n$ is a vector space over $\mb{F}$. (Furthermore, the set $\mb{F}^\infty$ of *infinite* sequences is also a vector space over $\mb{F}$.)
 :::
 
-:::{#exm-}
+:::{#exm-function-space}
 Let $\mb{F}^S$ be the set of all functions from a set $S$ to $\mb{F}$. Define the sum of two functions as the function that evaluates at each $x\in S$ as
 
 $$(f+g)(x)=f(x)+g(x).$$
@@ -64,16 +63,33 @@ The uniqueness of the inverse implies that $-(-v)=v$, because $v$ is the only ve
 ###### Obtaining zero from scalar multiplication
 The scalar multiplication on a vector acts rather like multiplication between real numbers. For example, it is not too difficult to prove that $0v=0$ and $a0=0$. 
 
-In fact, $a=0$ or $v=0$ are the only cases in which you can obtain the zero vector by scalar multiplication. The proof depends on a familiar property of fields.
-
-::: {.proof}
-Suppose that $av=0$. If $a\neq0$, dividing by $a$ leads to $v=0$. So either $a=0$ or $v=0$.
+:::{#thm-scalar-zero}
+In fact, $a=0$ or $v=0$ are the only cases where you can obtain the zero vector by scalar multiplication.
 :::
 
-###### Inverse as scalar multiplication
-Another "obvious" property is $(-1)v=-v$. It looks familiar, but the underlying statement is quite convoluted: "scalar multiplication by the additive inverse of the multiplicative identity of $\mb{F}$ leads to the additive inverse of $v$". 
+:::{.proof-idea}
+If $a\neq0$, then we can divide by $a$.
+:::
 
-:::{.proof}
+<details class="proof">
+<summary>Full proof</summary>
+
+Suppose that $av=0$. If $a\neq0$, dividing by $a$ leads to $v=0$. So either $a=0$ or $v=0$.
+
+</details>
+
+###### Inverse as scalar multiplication
+:::{#thm-neg-one}
+Another "obvious" property that we can prove is $(-1)v=-v$.
+:::
+
+:::{.informal}
+This equation looks familiar, but the underlying statement is quite convoluted: "scalar multiplication by the additive inverse of the multiplicative identity of $\mb{F}$ leads to the additive inverse of $v$". 
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
 Since we have
 
 $$
@@ -81,19 +97,20 @@ $$
 $$
 
 we see that $(-1)v$ is the (unique) additive inverse of $v$.
-:::
+
+</details>
 
 ## Subspace
 Let's now think about subsets of $V$ that are vector spaces in their own right. These are called the **subspaces** of $V$. (Unfortunately, the motivations for defining this concept will not be forthcoming yet.) 
 
-If someone brings us a subset $U\subseteq V$, we need not check through all vector space axioms to verify that $U$ is a subspace of $V$. Since we inherit addition and scalar multiplication from $V$, we only have to verify that 
+If someone brings us a subset $U\subseteq V$, we need not check through every vector space axiom to verify that $U$ is a subspace of $V$. Since we inherit addition and scalar multiplication from $V$, we only have to verify that 
 
-1. $U$ is closed under the inherited addition and scalar multiplication^[Previously, closure was not mentioned for vector addition, because we assumed that such binary operations map to the same set by definition.].
+1. $U$ is closed under the inherited addition and scalar multiplication^[Previously, closure was not mentioned for vector addition, because we assumed that these binary operations map to the same set by definition.].
 2. $0\in U$. 
 
 It is easy to show that the vector space axioms are satisfied for $U$ once these two properties hold.
 
-:::{#exm-}
+:::{#exm-r3-subspaces}
 The subspaces of $\mathbb{R}^3$ include lines and planes through the origin. In fact, along with $\{0\}$ and $\mathbb{R}^3$, these comprise the *only* subspaces of $\mathbb{R}^3$. This is an interesting result, but we cannot prove it just yet.
 
 As an illustration, consider the subset
@@ -105,22 +122,54 @@ This is not closed under addition because both $(1,1,0)$ and $(0,0,1)$ are in th
 
 #### Intersection and union of subspaces
 ###### Intersection
-Suppose that $U_1$ and $U_2$ are subspaces of $V$. Then their intersection is also a subspace of $V$. 
 
-:::{.proof}
-Let $u,u'\in U_1\cap U_2$. By the closures of $U_1$ and $U_2$, we have $u+u'\in U_1$ and $u+u'\in U_2$ respectively. Therefore, we have $u+u'\in U_1\cap U_2$, and so $U_1\cap U_2$ is closed under addition. 
-
-Analogous reasoning shows that it is closed under multiplication as well. 
-
-Finally, both $U_1$ and $U_2$ contain $0$ because they are subspaces. Therefore, $U_1\cap U_2$ satisfies the conditions to be a subspace.
+::: {#thm-subspace-intersection}
+Suppose that $U_1$ and $U_2$ are subspaces of $V$. Then their intersection is also a subspace of $V$.
 :::
 
-Furthermore, we can see that the same argument generalises to intersections of any finite number of subspaces. It also works for intersections of countably infinite number of subspaces.
+:::{.informal}
+An intersection of two subspaces is always another subspace.
+
+This is trivial to prove, but the result is quite surprising if we think about it. It means that we can find a smaller closed subset within a closed subset, by intersecting with a different closed subset. 
+:::
+
+:::{.proof-idea}
+Vectors in $U_1\cap U_2$ are closed within $U_1$ and $U_2$ separately. 
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
+Let $u,u'\in U_1\cap U_2$. By the closures of $U_1$ and $U_2$, we have $u+u'\in U_1$ and $u+u'\in U_2$ respectively. Therefore, we have $u+u'\in U_1\cap U_2$, and so $U_1\cap U_2$ is closed under addition. 
+
+Analogous reasoning shows that it is closed under scalar multiplication as well. 
+
+Finally, both $U_1$ and $U_2$ contain $0$ because they are subspaces. Therefore, $U_1\cap U_2$ satisfies the conditions to be a subspace.
+
+</details>
+
+Furthermore, we can see that the same argument generalises to intersections of any finite number of subspaces. It also works for intersections of a countably infinite number of subspaces.
 
 ###### Union
-What about the union of subspaces $U_1$ and $U_2$? In the trivial case where $U_1\subseteq U_2$, we have $U_1\cup U_2=U_2$, so we do obtain a subspace. But it is not a subspace when one subspace does not contain the other.
+What about the union of subspaces $U_1$ and $U_2$? In the trivial case where $U_1\subseteq U_2$, we have $U_1\cup U_2=U_2$, so we do obtain a subspace. However,
 
-:::{.proof}
+::: {#thm-subspace-union}
+$U_1\cup U_2$ is not a subspace when one subspace does not contain the other.
+:::
+
+:::{.informal}
+A union of two subspaces is never a subspace except in the trivial case.
+
+This is also surprising. It means that we cannot combine two closed subsets to create a larger closed subset, no matter what these subsets are. 
+:::
+
+:::{.proof-idea}
+The sum of two vectors lying in the symmetric difference escapes the union.
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
 If one subspace does not contain the other, then there exist
 
 $$
@@ -130,48 +179,85 @@ $$
 If $u_1+u_2=u'_2$ for some $u'_2\in U_2$, then $u_1\in U_2$ by the closure of $U_2$, which is a contradiction. So we have $u_1+u_2\notin U_1$, and an analogous reasoning shows that $u_1+u_2\notin U_2$. 
 
 Therefore, we find that $u_1+u_2\notin U_1\cup U_2$, and so $U_1\cup U_2$ is not closed under addition.
-:::
+
+</details>
 
 ## Subspace sum
-Suppose that $U_1,\cdots,U_n$ are subspaces of a vector space. We define the their **sum** as the set
+Suppose that $U_1,\cdots,U_n$ are subspaces of a vector space. We define their **sum** as the set
 
 $$U_1+\cdots+U_n=\{u_1+\cdots+u_n:u_i\in U_i\}.$$
 
 (This is yet another unmotivated definition.) This is also a vector space, as we may easily check.
 
-:::{#exm-}
-If $U$ and $V$ are the "$x$- and $y$-axes" respectively, then $U+V$ is the "$x$-$y$ plane". That is, if $U$ and $V$ are subspaces of $\mb{F}^3$ where
+:::{#exm-axis-sum}
+If $U$ and $W$ are the "$x$- and $y$-axes" respectively, then $U+W$ is the "$x$-$y$ plane". That is, if $U$ and $W$ are subspaces of $\mb{F}^3$ where
 
-$$U=\{(x,0,0):x\in\mb{F}\}\quad\text{and}\quad V=\{(0,y,0):y\in\mb{F}\},$$
+$$U=\{(x,0,0):x\in\mb{F}\}\quad\text{and}\quad W=\{(0,y,0):y\in\mb{F}\},$$
 
 then we see that their sum is given by
 
-$$U+V=\{(x,y,0):x,y\in\mb{F}\}.$$
+$$U+W=\{(x,y,0):x,y\in\mb{F}\}.$$
 
 :::
 
 #### "Size" of subspace sum
-As it turns out, it is the *smallest* subspace^[This terminology is misleading, because this is not a matter of cardinality, but rather that of inclusion.] containing the $U_i$s, in the sense that $U_1+\cdots+U_n\subseteq W$ for any other subspace $W$ containing the $U_i$s. 
+:::{#thm-sum-smallest}
+The sum of $U_1,\cdots,U_n$ is the *smallest* subspace^[This terminology is misleading, because this is not a matter of cardinality, but rather that of inclusion.] that contains the $U_i$s, in the sense that 
 
-:::{.proof}
-This is almost definitional: any subspace containing the $U_i$s must be closed under the addition of their elements, and so must *at least* contain the elements of $U_1+\cdots+U_n$.
+$$U_1+\cdots+U_n\subseteq W$$ 
+
+for any other subspace $W$ containing them. 
 :::
+
+<details class="proof">
+<summary>Full proof</summary>
+
+This is almost definitional: any subspace containing the $U_i$s must be closed under the addition of their elements, and so must *at least* contain the elements of $U_1+\cdots+U_n$.
+
+</details>
 
 #### Subspace sum as binary operation
 Here are some properties of the subspace sum, viewed as a binary operation on the subspaces of $V$.
 
 ###### Idempotence
+:::{#thm-sum-idempotent}
+The subspace sum is idempotent.
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
 Consider
 
 $$U+U=\{u+u':u,u'\in U\}.$$
 
-By the closure of $U$, we have $U+U\subseteq U$. Meanwhile, $U\subseteq U+U$ because $0+u\in U+U$ for all $u\in U$. Therefore, we have $U+U=U$; in other words, the subspace sum is *idempotent*.
+By the closure of $U$, we have $U+U\subseteq U$. Meanwhile, $U\subseteq U+U$ because $0+u\in U+U$ for all $u\in U$. Therefore, we have $U+U=U$.
+
+</details>
 
 ###### Commutativity
-Since vector addition is commutative, the set of all sums $u+v$ is equal to the set of all sums $v+u$. So the subspace sum is commutative: $U+V=V+U$.
+:::{#thm-sum-commutative}
+The subspace sum is commutative.
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
+Since vector addition is commutative, the set of all sums $u+v$ is equal to the set of all sums $v+u$.
+
+</details>
 
 ###### Associativity
-Both $(U_1+U_2)+U_3$ and $U_1+(U_2+U_3)$ correspond to the same set of all sums $u_1+u_2+u_3$, because vector addition is associative. So the subspace sum is associative.
+:::{#thm-sum-associative}
+The subspace sum is associative.
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
+Both $(U_1+U_2)+U_3$ and $U_1+(U_2+U_3)$ correspond to the same set of all sums $u_1+u_2+u_3$, because vector addition is associative.
+
+</details>
 
 ###### Additive identity
 $\{0\}$ is a subspace of any vector space, and it is the identity for the subspace sum because
@@ -184,12 +270,29 @@ $$
 Since $U\subseteq U+W$, we can obtain $\{0\}$ from the vector addition only as $\{0\}+\{0\}$. In other words, only $\{0\}$ has an additive inverse, namely itself.
 
 ###### Cancellation property
-The cancellation property does not hold for the subspace sum. Consider $V=\mathbb{R}^2$ and let $U$ be the horizontal line through the origin. Then for any non-horizontal pair of lines $U_1$ and $U_2$ that go through the origin, we have $U_1+U=U_2+U$.
+:::{#thm-sum-cancellation}
+The cancellation property does not hold for the subspace sum. 
+:::
+
+:::{.informal}
+We cannot move from $U_1+W=U_2+W$ to $U_1=U_2$, however tempting it is (especially considering that the converse is trivially true).
+:::
+
+:::{.proof-idea}
+We can find a counterexample in $\mathbb{R}^2$.
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
+Consider $V=\mathbb{R}^2$ and let $U$ be the horizontal line through the origin. Then for any non-horizontal pair of lines $U_1$ and $U_2$ that go through the origin, we have $U_1+U=U_2+U$.
+
+</details>
 
 #### Direct sum
-The vectors of a subspace sum may not uniquely decompose into the constituent subspaces, i.e. there may be multiple elements of $U_1\times\cdots\times U_n$^[This is the Cartesian product.] that lead to the same sum. 
+The vectors of a subspace sum may not uniquely decompose into the constituent subspaces, i.e. there may be multiple elements of $U_1\times\cdots\times U_n$ that lead to the same sum. 
 
-:::{#exm-}
+:::{#exm-nonunique-sum}
 Consider the subspaces of $\mathbb{R}^3$ given by
 
 $$
@@ -202,23 +305,35 @@ $$
 Then we have $U_1+U_2=\mathbb{R}^3$, but every vector in $\mathbb{R}^3$ can be reached in infinitely different ways by adjusting the second entries of the summands. 
 :::
 
-If every element *is* uniquely decomposable, then we say that the sum is a **direct sum**, and write $\oplus$ instead $+$.
+If every element *is* uniquely decomposable, then we say that the sum is a **direct sum**, and write $\oplus$ instead $+$. In other words, for every $w\in U_1+\cdots+U_n$, there is exactly one $(u_1,\cdots,u_n)\in U_1\times\cdots\times U_n$ that satisfies $w=u_1+\cdots+u_n$.
 
-:::{#exm-}
-If $U$ and $V$ are subspaces of $\mb{F}^4$ with
+:::{#exm-direct-sum}
+If $U$ and $W$ are subspaces of $\mb{F}^4$ with
 
-$$U=\{(w,x,0,0):w,x\in\mb{F}\}\quad\text{and}\quad V=\{(0,0,y,z):y,z\in\mb{F}\},$$
+$$U=\{(w,x,0,0):w,x\in\mb{F}\}\quad\text{and}\quad W=\{(0,0,y,z):y,z\in\mb{F}\},$$
 
-then we see that $\mb{F}^4=U\oplus V$ because every vector $(w,x,y,z)\in\mb{F}^4$ can be uniquely decomposed as
+then we see that $\mb{F}^4=U\oplus W$ because every vector $(w,x,y,z)\in\mb{F}^4$ can be uniquely decomposed as
 
 $$u+v=(w,x,0,0)+(0,0,y,z).$$
 
 :::
 
 ###### Direct sum check
-How can we verify that a sum is direct, considering that this requires *every* vector of the sum to be uniquely decomposable? As it turns out, we only have to check that this property holds for a *single* vector, namely $0$.
+:::{#thm-direct-zero-check}
+A subspace sum is direct if the zero vector is uniquely decomposable.
+:::
 
-:::{.proof}
+:::{.informal}
+From the definition alone, the directness of a sum seems impossible to check, because the unique decomposition property needs to hold for *every* vector of the vector space. But it turns out that we only need to check this for a single vector, which is a great relief.
+:::
+
+:::{.proof-idea}
+Consider $v_1-v_2$ when $v_1$ and $v_2$ are the two decompositions of the same vector.
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
 Suppose that $0$ is uniquely decomposable as a sum $u_1+\cdots+u_n$. We know what this unique decomposition looks like, namely 
 
 $$0=0+\cdots+0\in U_1+\cdots+U_n.$$ 
@@ -232,14 +347,27 @@ where $u_i,u'_i\in U_i$. This implies that
 $$(u_1-u'_1)+\cdots+(u_n-u'_n)=0,$$
 
 where $u_i-u'_i\in U_i$. By the unique decomposition of $0$, this implies that $u_i=u'_i$ for each $i$. So two decompositions of the same vector must always be equal.
-:::
+
+</details>
 
 Of course, the uniqueness of the decomposition of $0$ must be supplied elsewhere.
 
 ###### Direct sum check for two subspaces
-If we are dealing with a sum of *two* subspaces, we can establish the directness of the sum by verifying that their intersection contains only $0$.
+:::{#thm-trivial-intersection-implies-direct}
+The sum of two subspaces is direct if their intersection contains only $0$.
+:::
 
-:::{.proof}
+:::{.informal}
+If we are dealing with a sum of two subspaces, then we can determine that their sum is direct simply by looking at their intersection.
+:::
+
+:::{.proof-idea}
+$u+w=0$ implies that $u,w\in U\cap W$.
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
 Suppose that $U$ and $W$ are subspaces with $U\cap W=\{0\}$, and let $u+w$ be a decomposition of $0$ into $u\in U$ and $w\in W$.
 
 Then we have the following implication:
@@ -247,9 +375,10 @@ Then we have the following implication:
 $$u+w=0\implies u=-w\implies u,w\in U\cap W\implies u=w=0.$$
 
 By the previous result, $U+W$ is a direct sum.
-:::
 
-:::{#exm-}
+</details>
+
+:::{#exm-even-odd}
 Consider $\mathbb{R}^\mathbb{R}$, the set of all real-valued functions on $\mathbb{R}$. Let $U_e$ and $U_o$ be subsets of even and odd functions respectively. Since every $f:\mathbb{R}\to\mathbb{R}$ can be written as a sum of even and odd parts as
 
 $$f(x)=\frac{1}{2}(f(x)+f(-x))+\frac{1}{2}(f(x)-f(-x)),$$
@@ -257,13 +386,35 @@ $$f(x)=\frac{1}{2}(f(x)+f(-x))+\frac{1}{2}(f(x)-f(-x)),$$
 we have $\mathbb{R}^\mathbb{R}=U_e+U_o$. The sum is direct because the only function that is both even and odd is the zero function.
 :::
 
+:::{#thm-direct-implies-trivial-intersection}
 The converse direction also holds: $U\cap W=\{0\}$ whenever $U+W$ is a direct sum. 
-
-:::{.proof}
-Suppose that $U+W$ is a direct sum, and let $v$ be an arbitrary vector in $U\cap W$. Since $U\cap W$ is a subspace, we have $-v\in U\cap W$. 
-
-As such, $v+(-v)$ is an decomposition of $0$ into $v\in U$ and $-v\in W$. Since $U+W$ is direct, this implies that $v=-v=0$.
 :::
 
+:::{.proof-idea}
+$v+(-v)=0$ is a decomposition of $0$.
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
+Suppose that $U+W$ is a direct sum, and let $v$ be an arbitrary vector in $U\cap W$. Since $U\cap W$ is a subspace, we have $-v\in U\cap W$. 
+
+As such, $v+(-v)$ is a decomposition of $0$ into $v\in U$ and $-v\in W$. Since $U+W$ is direct, this implies that $v=-v=0$.
+
+</details>
+
 ###### Cancellation property
-In our example above with $V=\mathbb{R}^2$, we see that $U_1+U$ and $U_2+U$ are both direct sums. So the cancellation property still doesn't hold when the sum is direct. 
+:::{#thm-direct-cancellation}
+The cancellation property still fails to hold when the sum is direct.
+:::
+
+:::{.informal}
+We cannot move from $U_1\oplus W=U_2\oplus W$ to $U_1=U_2$, despite the unique decomposition in a direct sum (which may raise our hopes of cancellation).
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
+In our counterexample against the cancellation property of the subspace sum, we see that $U_1+U$ and $U_2+U$ are both direct sums as the lines only intersect at the origin.
+
+</details>
