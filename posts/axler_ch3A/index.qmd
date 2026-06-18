@@ -2,7 +2,7 @@
 title: "Linear maps"
 description: "Linear maps, the vector space L(U,W), and products of linear maps — an augmented summary of Axler's LADR §3.A."
 date: "2026-06-03"
-date-modified: "2026-06-06"
+date-modified: "2026-06-18"
 categories: ["mathematics", "linear-algebra", "ladr"]
 execute:
     echo: true
@@ -15,14 +15,14 @@ This is an augmented summary of Section 3.A of [Linear Algebra Done Right](https
 ## Linear map
 A function $T:V\to W$ between vector spaces is called a **linear map** if it satisfies two properties:
 
-- It is *additive* in that it commutes with vector addition: $T(u+v)=Tu+Tv$.
-- It is *homogeneous* in that it commutes with scalar multiplication: $T(\lambda v)=\lambda Tv$.
+1. It is *additive* in that it commutes with vector addition: $T(u+v)=Tu+Tv$.
+2. It is *homogeneous* in that it commutes with scalar multiplication: $T(\lambda v)=\lambda Tv$.
 
-:::{#exm-}
+:::{#exm-zero-identity}
 The trivial example is the **zero map** $0$, which maps all vectors to the zero vector: $0v=0$^[Now there are three uses of the symbol "$0$", for the vector, the scalar, or the map.]. There is also the **identity map** $I$ that maps each vector to itself.
 :::
 
-:::{#exm-}
+:::{#exm-diff-integral}
 Because of how differentiation works for sums and scalar multiples of functions, the map $D\in\mathcal{L}(\mathcal{P}(\mathbb{R}),\mathcal{P}(\mathbb{R}))$ given by
 
 $$Dp=p'$$
@@ -30,7 +30,7 @@ $$Dp=p'$$
 is linear. Additionally, a definite integral is a linear map from $\mathcal{P}(\mathbb{R})$ to $\mathbb{R}$.
 :::
 
-:::{#exm-}
+:::{#exm-matrix-form}
 Consider an arbitrary linear map $T:\mb{F}^n\to\mb{F}^m$. Denoting the $i$th standard basis by $e_i$, there exist scalars $a_{j,i}$ such that each standard basis vector of $\mb{F}^n$ is mapped to a linear combination of the standard basis of $\mb{F}^m$ as
 
 $$Te_i=\sum_{j=1}^ma_{j,i}e_j=(a_{1,i},\cdots,a_{m,i}).$$
@@ -50,44 +50,81 @@ $$
 :::
 
 #### Linear map for 1-dimensional space
+:::{#thm-1d-scalar}
 For a 1-dimensional vector space $V$, any linear map $T:V\to V$ is a multiplication by some scalar.
+:::
 
-:::{.proof}
-Let $v'$ be any non-zero vector in $V$. Then $v'$ is a basis of $V$, so there is $\lambda\in\mb{F}$ such that $Tv'=\lambda v'$. For any $av'\in V$, we have
+:::{.proof-idea}
+Every vector in $V$ is a scalar multiple of some non-zero $v\in V$, and $T$ is homogeneous.
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
+Let $v'$ be any non-zero vector in $V$. Then $v'$ is a basis of $V$, so there is $\lambda\in\mb{F}$ such that $Tv'=\lambda v'$. For any $av'\in V$, the homogeneity property of $T$ leads to
 
 $$T(av')=aTv'=a(\lambda v')=\lambda(av'),$$
 
 and so $Tv=\lambda v$ for all $v\in V$.
-:::
+
+</details>
 
 #### Mapping zero
-Additivity implies that all linear maps send zero vectors to zero vectors:
+:::{#thm-maps-zero}
+All linear maps send zero vectors to zero vectors.
+:::
+
+:::{.proof-idea}
+Use additivity.
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
+By the additivity property of $T$, we have
 
 $$T0=T(0+0)=T0+T0\implies T0=0.$$
 
+</details>
+
 #### Linear independence under mapping
-A corollary of this fact is that, if $Tv_1,\cdots,Tv_n$ is linearly independent, then so is $v_1,\cdots,v_n$.
-
-:::{.proof}
-If the scalars are such that $a_1v_1+\cdots+a_nv_n=0$, then we have
-
-$$0=T(a_1v_1+\cdots+a_nv_n)=a_1Tv_1+\cdots+a_nTv_n.$$
-
-Therefore, $a_i=0$ by the linear independence of $Tv_1,\cdots,Tv_n$.
+:::{#thm-preimage-independence}
+If $Tv_1,\cdots,Tv_n$ is linearly independent, then so is $v_1,\cdots,v_n$.
 :::
 
-The converse does not hold; that is, a linearly independent set of vectors may not be sent to another linearly independent set under a linear map. For example, the zero map sends any set of vectors to the linearly dependent set $\{0\}$. A less trivial cases involves the vectors
+:::{.informal}
+We cannot send a linearly dependent set of vectors to a linearly independent set by a linear map. So there is a restriction as to what linear maps can do. 
+:::
+
+:::{.proof-idea}
+If a linear combination vanishes, so does its image by the previous result.
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
+Suppose that $Tv_1,\cdots,Tv_n$ is linearly independent, and the scalars are such that $a_1v_1+\cdots+a_nv_n=0$. Then we have
+
+$$0=T(a_1v_1+\cdots+a_nv_n)=a_1Tv_1+\cdots+a_nTv_n,$$
+
+and so $a_i=0$ by the linear independence of $Tv_1,\cdots,Tv_n$.
+
+</details>
+
+The converse does not hold; that is, a linearly independent set of vectors may not be sent to another linearly independent set under a linear map. For example, the zero map sends any set of vectors to the linearly dependent set $\{0\}$. A less trivial case involves the vectors
 
 $$(1,0,0),(0,1,0),(1,1,1)$$
 
 and the projection linear map $T:(x,y,z)\mapsto(x,y)$. So *even after* removing the zero vectors in the image, linear maps do not "preserve" linear independence.
 
-The contrapositive of the above result is that linear maps always send linearly dependent sets of vectors to linearly dependent sets. So if $u_1,\cdots,u_n$ is linearly dependent and $w_1,\cdots,w_n$ is not, then there is no linear map that satisfies $Tu_i=w_i$.
-
 ###### Impossible maps
-More generally, if $u_1,\cdots,u_n$ is linearly dependent and $W$ is not trivial, there *always* exists a set $w_1,\cdots,w_n\in W$ such that no linear maps satisfy $Tu_i=w_i$.
+:::{#thm-impossible-maps}
+If $u_1,\cdots,u_n$ is linearly dependent and $W$ is not trivial, there *always* exists a set $w_1,\cdots,w_n\in W$ such that no linear maps satisfy $Tu_i=w_i$.
 
-:::{.proof}
+(From the previous theorem, we know that this result holds if $\dim W\geq n$, by setting the $w_i$s to be linearly independent.)
+:::
+
+:::{.proof-idea}
 By linear dependence, there exist $a_i$ not all zero such that
 
 $$a_1u_1+\cdots+a_nu_n=0.$$
@@ -97,23 +134,42 @@ So *all* linear maps $T:U\to W$ must satisfy
 $$0=T(a_1u_1+\cdots+a_nu_n)=a_1Tu_1+\cdots+a_nTu_n=a_1w_1+\cdots+a_nw_n,$$
 
 and our job is to find $w_i$s that fails this. 
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
 
 The choice is quite obvious. Without loss of generality, let $a_1$ be a non-zero scalar. Let $w_1$ be a non-zero vector of $W$, and set all other $w_i$s to be the zero vector. Then the above expression reduces to 
 
 $$0=a_1w_1.$$ 
 
 This is impossible because both $a_1$ and $w_1$ are not zero, and so $a_1w_1$ cannot be zero.
-:::
+
+</details>
 
 #### Mapping basis
-Consider two vector spaces $U$ and $W$, where $U$ is finite-dimensional. Let $u_1,\cdots,u_n$ be a basis of $U$. Then for *any* set of vectors $w_1,\cdots,w_n$ in $W$, there exists a linear map $T$ such that $Tu_i=w_i$. 
+:::{#thm-basis-map-exists}
+Consider two vector spaces $U$ and $W$, where $U$ is finite-dimensional. Let $u_1,\cdots,u_n$ be a basis of $U$. Then for *any* set of vectors $w_1,\cdots,w_n$ in $W$, there exists a linear map $T:U\to W$ such that $Tu_i=w_i$.
+:::
 
-:::{.proof}
+:::{.informal}
+Unlike with a linearly dependent set, a suitable linear map can send a linearly independent set of vectors to an arbitrary set of vectors in the image.
+
+(Although we wrote that $u_1,\cdots,u_n$ is a *basis* of $U$, nothing hangs on $u_1,\cdots,u_n$ spanning $U$, other than the domain of $T$.)
+:::
+
+:::{.proof-idea}
+Given that $Tu_i=w_i$, there is only one definition of $T:U\to W$ that makes sense.
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
 We need to first define a map from $U$ to $W$, and then show that this map is linear. Expressing each vector of $U$ as $u=a_1u_1+\cdots+a_nu_n$, we may define $T$ as
 
 $$Tu=T(a_1u_1+\cdots+a_nu_n)=a_1w_1+\cdots+a_nw_n.$$
 
-This is well-defined because the decomposition of $u$ into a linear combination of $u_1,\cdots,u_n$ is unique. Clearly, $Tu_i=w_i$ is satisfied.
+This is well-defined because the linear independence of $u_1,\cdots,u_n$ guarantees that $a_1,\cdots,a_n$ are uniquely given. Clearly, $Tu_i=w_i$ is satisfied.
 
 We have to check that $T$ is linear. Let
 
@@ -136,26 +192,40 @@ T(u+u')&=T((a_1+a'_1)u_1+\cdots+(a_n+a'_n)u_n)\\
 $$
 
 which verifies that $T$ is additive. Similarly, we can show that $T$ is homogeneous.
+
+</details>
+
+:::{#thm-basis-map-unique}
+The linear map $T$ defined above is the *only* linear map from $U$ to $W$ that satisfies $Tu_i=w_i$.
 :::
 
-Is this $T$ the *only* linear map from $U$ to $W$ that satisfies $Tu_i=w_i$? Yes. 
+<details class="proof">
+<summary>Full proof</summary>
 
-:::{.proof}
-Suppose that $T:U\to W$ is a linear map such that $Tu_i=w_i$. Then the action of such $T$ on any $a_1u_1+\cdots+a_nu_n\in U$ must be given by
+Suppose that $T:U\to W$ is a linear map such that $Tu_i=w_i$. Then by additivity and homogeneity, the action of such $T$ on any $a_1u_1+\cdots+a_nu_n\in U$ must be given by
 
-$$T(a_1u_1+\cdots+a_nu_n)=a_1Tu_1+\cdots+a_nTu_n=a_1w_1+\cdots+a_nw_n,$$
+$$T(a_1u_1+\cdots+a_nu_n)=a_1Tu_1+\cdots+a_nTu_n=a_1w_1+\cdots+a_nw_n.$$
 
-which is exactly the linear map defined above.
-:::
+This is exactly the linear map defined above.
+
+</details>
 
 In summary, we have seen that a linear map is *specifiable* by its action on a basis of its domain, and *uniquely* so.
 
 ###### Extending a linear map
-If $U$ is a proper subspace of $V$ and $S:U\to W$ is a linear map, we may wonder if $S$ can be extended to a linear map from $V$ to $W$. That is, can we find $T:V\to W$ such that $T$ coincides with $S$ for the vectors in $U$? (Since this is trivially true when $S$ is a zero map, let us suppose that it is non-zero.)
+Suppose that $U$ is a proper subspace of $V$, and $S:U\to W$ is a linear map. We may wonder if $S$ can be extended to a linear map $T:V\to W$, such that $Su=Tu$ for all $u\in U$. This is obviously possible if $S$ is the zero map, so let us suppose that $S\neq0$.
 
+:::{#thm-extension-zero-fails}
 Our first idea might be to send all vectors in $V-U$ to the zero vector. Unfortunately, this is not a linear map.
+:::
 
-:::{.proof}
+:::{.proof-idea}
+Consider $u+v$ where $u\in U$ is not mapped to $0$ while $v\in V-U$ is.
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
 Since $S$ is not a zero map, we can find $u\in U$ such that $Su\neq 0$. Let $v$ be a vector in $V-U$, and let us consider $u+v\in V$.
 
 If $u+v\in U$, then we have $v\in U$, which is a contradiction. Therefore, $u+v\in V-U$ as well. 
@@ -165,17 +235,27 @@ Now, let $T$ be an extension of $S$ with $Tx=0$ for all $x\in V-U$. Then we have
 $$Tu+Tv=Tu\neq0,$$
 
 violating additivity. Therefore, $T$ is not a linear map.
+
+</details>
+
+:::{#thm-extension-exists}
+Despite the above result, there does exist an extension of $S$.
 :::
 
-So what can we do? If $V$ is finite-dimensional, we may use the extension of basis to extend the linear map. As it turns out, we just had to send the component basis vectors to zero, not the whole vectors.
+:::{.proof-idea}
+As it turns out, we just had to send the additional basis vectors to zero, not the whole vectors.
+:::
 
-:::{.proof}
+<details class="proof">
+<summary>Full proof</summary>
+
 Let $u_1,\cdots,u_n$ be a basis of $U$, and suppose that appending $v_1,\cdots,v_m$ to the set makes it a basis of $V$. We know that specifying the images of the basis vectors completely specifies a linear map, so let us define a linear map $T$ as 
 
 $$Tu_i=Su_i\quad\text{and}\quad Tv_i=0.$$ 
 
 This satisfies $Tu=Su$ for all $u\in U$. 
-:::
+
+</details>
 
 Actually, we could have chosen any vector as $Tv_i$, not just the zero vector.
 
@@ -195,18 +275,24 @@ where $\lambda\in\mb{F}$. We can easily show that $\mathcal{L}(U,W)$ is a vector
 ###### Infinite dimensions
 As a vector space, we can speak of the dimension of $\mathcal{L}(U,W)$. (Let's not think too hard about what the basis looks like for now.) 
 
+:::{#thm-luw-infinite}
 $\mathcal{L}(U,W)$ is always infinite-dimensional whenever $W$ is infinite-dimensional and $U\neq\{0\}$ is finite-dimensional.
+:::
 
-:::{.proof}
+:::{.proof-idea}
 How do we even show that a vector space is infinite-dimensional, i.e. that no finite basis exists for it? Because a basis cannot be smaller than a linearly independent set, we can construct an infinite linearly independent set $T_1,T_2,\cdots$ of linear maps in $\mathcal{L}(U,W)$, by which we mean a set where $T_1,\cdots,T_n$ is linearly independent for all $n$^[In fact, we haven't defined linear independence for an infinite set of vectors before. We cannot define it as "scalars all zero if infinite sum is zero", because we haven't defined what an infinite sum of vectors means. So here, we are really *defining* what linear independence means for such sets. Note that this also implies that every finite subset of $T_1,T_2,\cdots$ is linearly independent: to see why, consider the sequence $T_1,\cdots,T_n$ that contains all vectors of the subset.].
+:::
 
-Let $w_1,w_2,\cdots$ be an infinite linearly independent set in $W$. (This can be constructed by choosing as $i$th element a vector outside the span of the first $i-1$ vectors.) Let $u_1,\cdots u_m$ be a basis of $U$. Then we may define a sequence of linear maps $T_i:U\to W$ as
+<details class="proof">
+<summary>Full proof</summary>
+
+Let $w_1,w_2,\cdots$ be an infinite linearly independent set in $W$. (This can be constructed by choosing as the $i$th element a vector outside the span of the first $i-1$ vectors.) Let $u_1,\cdots,u_m$ be a basis of $U$. Then we may define a sequence of linear maps $T_i:U\to W$ as
 
 $$
-T_iu_1=w_i\quad\text{and}\quad T_iu_j=0\text{ for }j=2,3,\cdots.
+T_iu_1=w_i\quad\text{and}\quad T_iu_j=0\text{ for }j=2,\cdots,m.
 $$
 
-Now consider the subset $T_1,\cdots,T_n$, and suppose that $b_1T_1+\cdots+b_nT_n=0$. Then for any vector $u=au_1$ where $a$ is non-zero, we must have 
+Now consider the subset $T_1,\cdots,T_n$, and suppose that $b_1T_1+\cdots+b_nT_n=0$. Then for $u=au_1$ where $a$ is non-zero, we must have 
 
 $$
 \begin{aligned}
@@ -216,8 +302,9 @@ $$
 \end{aligned}
 $$
 
-By the linear independence of the $w_i$s, this implies that the $b_i$s are all zero. Therefore, $T_1,\cdots,T_n$ is linearly independent for any $n$, and $\mathcal{L}(U,W)$ is infinite-dimensional.
-:::
+By the linear independence of the $w_i$s, this implies that the $b_i$s are all zero. Therefore, $T_1,\cdots,T_n$ is linearly independent for any $n$, and so $\mathcal{L}(U,W)$ is infinite-dimensional.
+
+</details>
 
 #### Product of linear maps
 We call the composition of linear maps as their **product**. So if $T\in\mathcal{L}(U,V)$ and $S\in\mathcal{L}(V,W)$, then their product $ST\in\mathcal{L}(U,W)$ acts as
@@ -227,9 +314,13 @@ $$(ST)u=S(Tu).$$
 Like all function compositions, this product is associative. Also, we can show that the linear map product distributes over the linear map addition. 
 
 ###### Failure of commutativity
+:::{#thm-product-noncommutative}
 The product is clearly not commutative when different vector spaces are involved. But even for operators (map of a vector space to itself), commutativity fails if $\dim V\geq 2$.
+:::
 
-:::{.proof}
+<details class="proof">
+<summary>Full proof</summary>
+
 Let $v_1$ and $v_2$ be two linearly independent vectors of $V$, i.e. non-zero vectors that are not scalar multiples of each other. Let $T:V\to V$ be any linear map that satisfies 
 
 $$Tv_1=0\quad\text{and}\quad Tv_2=v_1,$$
@@ -239,4 +330,5 @@ and let $S:V\to V$ be any linear map that satisfies
 $$Sv_1=v_2\quad\text{and}\quad Sv_2=v_1.$$
 
 Then we have $(TS)v_1=v_1$ but $(ST)v_1=0$, so $TS\neq ST$.
-:::
+
+</details>

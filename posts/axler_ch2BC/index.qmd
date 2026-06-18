@@ -2,7 +2,7 @@
 title: "Bases and dimensions"
 description: "Bases, dimension, and the dimension formula for subspace sums — an augmented summary of Axler's LADR §2.B–2.C."
 date: "2026-06-03"
-date-modified: "2026-06-05"
+date-modified: "2026-06-18"
 categories: ["mathematics", "linear-algebra", "ladr"]
 execute:
     echo: true
@@ -15,71 +15,149 @@ This is an augmented summary of Sections 2.B and 2.C of [Linear Algebra Done Rig
 ## Basis
 We have come across linearly independent sets and spanning sets. What if a set is linearly independent *and* spans $V$? Then it is called a **basis** of $V$.
 
-:::{#exm-}
+:::{#exm-standard-basis}
 The **standard basis** of $\mb{F}^n$ consists of the vectors
 
 $$(1,0,\cdots,0),(0,1,\cdots,0),\cdots,(0,0,\cdots,1).$$
 
 :::
 
-:::{#exm-}
+:::{#exm-trivial-basis}
 The basis of $\{0\}$ is the empty set.
 :::
 
 #### Unique decomposition under basis
-$v_1,\cdots,v_n$ is a basis of $V$ if and only if every vector of $V$ can be uniquely decomposed as its linear combination.
+:::{#thm-basis-unique}
+The set of vectors $v_1,\cdots,v_n$ forms a basis of $V$ if and only if every $v\in V$ can be uniquely represented as
 
-:::{.proof}
-If $v_1,\cdots,v_n$ is a basis of $V$, then the set spans $V$ and so *every* vector of $V$ can be written as *some* linear combination. These combinations are unique, as is the case for the span of any linearly independent set.
+$$v=a_1v_1+\cdots+a_nv_n.$$
+
+:::
+
+:::{.informal}
+Every vector has one, and only one, set of coordinates in a basis.
+:::
+
+:::{.proof-idea}
+Recall that linear independence implies unique decomposition of the vectors in the span.
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
+Suppose that the set $v_1,\cdots,v_n$ is a basis of $V$. Then the set spans $V$ and so *every* vector of $V$ can be written as *some* linear combination. As the set is linearly independent, these combinations are unique.
 
 Suppose every vector of $V$ can be uniquely decomposed as a linear combination of $v_1,\cdots,v_n$. Tautologically, the set spans $V$. As $0\in V$ is uniquely decomposed, the set is also linearly independent. So $v_1,\cdots,v_n$ is a basis.
-:::
+
+</details>
 
 From the subspace sum point of view, if $v_1,\cdots,v_n$ is a basis of $V$, then
 
-$$\{a_1v_1\}\oplus\cdots\oplus\{a_nv_n\}=V.$$
+$$\{av_1\}\oplus\cdots\oplus\{av_n\}=V.$$
 
 #### Making basis
 ###### From spanning set
+:::{#thm-basis-from-spanning}
 We can obtain a basis from *any* spanning set by pruning the set.
+:::
 
-:::{.proof}
+:::{.proof-idea}
+Sequentially remove redundant vectors.
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
 Suppose that $U$ is a spanning set. If it is not linearly independent, then there is a redundant vector in the set whose removal does not affect the span. Remove it. 
 
 We can repeat until the modified set is linearly independent. Since a set with a single non-zero vector is always linearly independent, so the process terminates before reaching the linearly dependent $\{0\}$. 
 
 When we achieve linear independence, the set still spans $V$, and is therefore a basis.
+
+</details>
+
+:::{#thm-basis-exists}
+As a corollary, we can show that every finite-dimensional vector space always has a basis.
 :::
 
-If we know that a vector space is finite-dimensional, that means that it has a finite spanning set, from which we can create a basis by pruning. So a finite-dimensional vector space always has a basis. 
+<details class="proof">
+<summary>Full proof</summary>
+
+If we know that a vector space is finite-dimensional, that means that it has a finite spanning set, from which we can create a basis by pruning.
+
+</details>
 
 ###### From linearly independent set
-Does this result hold from the other direction? That is, can we grow *any* linearly independent set into a basis? Yes, as long as $V$ is finite-dimensional. Recall the proof of the statement that a subspace of a finite-dimensional vector space is also finite. The procedure we used there will yield a basis if we start from a linearly independent set.
+Does this result hold from the other direction? It does, as long as the space is finite-dimensional.
 
-#### Decomposing a vector space into a direct sum
-Suppose that $U$ is a subspace of a finite-dimensional $V$. Then there always exists another subspace $W$ such that $V=U\oplus W$.
-
-:::{.proof}
-At first, we might panic and think that we should subtract $U$ from $V$ somehow. But recall that we already know of a direct sum decomposition of $V$, namely in terms of its basis. We can obtain a basis of $V$ by extending a basis $u_1,\cdots,u_m$ of $U$. Suppose that we append $w_1,\cdots,w_n$ to this set to form a basis of $V$. Then we have
-
-$$
-V=\{a_1u_1\}\oplus\cdots\oplus\{a_mu_m\}\oplus\{a'_1w_1\}\oplus\cdots\oplus\{a'_nw_n\}=U\oplus W,
-$$
-
-where $W=\{a'_1w_1\}\oplus\cdots\oplus\{a'_nw_n\}$.
+:::{#thm-basis-from-independent}
+*Any* linearly independent set in a finite-dimensional space can be extended to form a basis.
 :::
 
-Being a direct sum---and as we can check directly---the intersection of $U$ and $W$ is trivial.
+:::{.proof-idea}
+Utilise the same method as the proof that a subspace of a finite-dimensional vector space is also finite. 
+:::
 
-This **complement subspace** $W$ depends on the basis chosen, and so is not unique. This connects to the fact that the direct sum does not cancel. Again, if $V$ is $\mathbb{R}^2$ and $U$ is some line through the origin, $W$ can be any line through the origin not equal to $U$. 
+<details class="proof">
+<summary>Full proof</summary>
+
+Suppose that we have a linearly independent set of vectors $v_1,\cdots,v_n$. If its span is not equal to $V$, we may append to the set a vector not in the span. Then the extended set is still linearly independent. 
+
+This process must terminate before the set becomes larger than a spanning set of $V$. So after a number of steps, the span must be equal to $V$, at which point the extended set both is linearly independent and spans $V$.
+
+</details>
+
+So instead of pruning a spanning set, we can also find a basis by growing the empty set.
+
+#### Decomposing a vector space into a direct sum
+:::{#thm-complement-exists}
+Suppose that $U$ is a subspace of a finite-dimensional $V$. Then there always exists another subspace $W$ such that $V=U\oplus W$.
+:::
+
+:::{.informal}
+Every subspace has a "direct sum buddy" (although this buddy is not unique), which is a "maximally different" subspace (i.e. only intersects at $0$) such that the pair adds up to the full space. 
+:::
+
+:::{.proof-idea}
+At first, we might panic and think that we should subtract $U$ from $V$ somehow. But recall that we already know of a direct sum decomposition of $V$, namely in terms of its basis.
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
+Let $u_1,\cdots,u_m$ be a basis of $U$. This basis exists because every subspace of a finite-dimensional space is also finite-dimensional, and every finite-dimensional space has a basis.
+
+Let us extend this set with $w_1,\cdots,w_n$ to form a basis of $V$. Then we have
+
+$$
+V=\{au_1\}\oplus\cdots\oplus\{au_m\}\oplus\{aw_1\}\oplus\cdots\oplus\{aw_n\}=U\oplus W,
+$$
+
+where $W=\{aw_1\}\oplus\cdots\oplus\{aw_n\}$. 
+
+</details>
+
+This subspace $W$ is called a **complement subspace** of $U$. As it depends on the basis chosen, it is not unique. (This connects to the fact that the direct sum does not cancel.) For example, if $V=\mathbb{R}^2$ and $U$ is some line through the origin, then the complement subspace $W$ can be any line through the origin not equal to $U$. 
 
 #### Basis for direct sum
+:::{#thm-direct-sum-basis}
 Suppose that $V=U\oplus W$, where $u_1,\cdots,u_m$ and $w_1,\cdots,w_n$ are bases of $U$ and $W$ respectively. Then the union of the two bases is a basis of $V$.
+:::
 
-:::{.proof}
+:::{.informal}
+We can form a basis of $V$ by a "divide and conquer" approach, by finding the bases for the direct summands and taking their union.
+:::
+
+:::{.proof-idea}
+If the decomposition into the proposed basis is not unique, then neither is the decomposition into the direct summands. 
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
 Let $v\in V$. We need to show that a decomposition into the union exists, and that it is unique.
 
-Existence: Since $V=U+W$, we always have $v=u+w$ for some $u\in U$ and $w\in W$. As a basis spans its subspace, there exist $a_1,\cdots, a_n$ and $b_1,\cdots, b_n$ be such that $u=a_1u_1+\cdots+a_mu_m$ and $w=b_1w_1+\cdots+b_nw_n$. Therefore, we have
+Existence: Since $V=U+W$, we always have $v=u+w$ for some $u\in U$ and $w\in W$. As a basis spans its subspace, there exist $a_1,\cdots, a_m$ and $b_1,\cdots, b_n$ such that $u=a_1u_1+\cdots+a_mu_m$ and $w=b_1w_1+\cdots+b_nw_n$. Therefore, we have
 
 $$v=a_1u_1+\cdots+a_mu_m+b_1w_1+\cdots+b_nw_n.$$
 
@@ -111,26 +189,29 @@ a_1u_1+\cdots+a_mu_m\neq a'_1u_1+\cdots+a'_mu_m\\
 $$ 
 
 then there are two distinct ways in which $v$ can be decomposed in the form $u+w$. This contradicts the directness of $U+W$. So the first pair must sum to the same $u$, and the second pair to the same $w$. By the linear independence of the $u_i$s and the $w_i$s, this implies $a_i=a'_i$ and $b_i=b'_i$. 
-:::
+
+</details>
 
 ## Dimension
 By the Steinitz exchange lemma, we saw that a spanning set is never smaller than a linearly independent set. So if a basis does exist, then all the other bases of $V$ must have the same cardinality. Otherwise, a basis *qua* linearly independent set will be larger than another basis *qua* spanning set.
 
 This unique cardinality of the bases is called the **dimension** of the vector space, and is denoted $\dim V$.
 
-:::{#exm-}
+:::{#exm-dim-fn-pn}
 The dimensions of $\mb{F}^n$ and $\mathcal{P}_n(\mb{F})$ are $n$ and $n+1$ respectively.
 :::
 
-:::{#exm-}
+:::{#exm-dim-complex}
 The dimension of $\mathbb{R}^2$ over $\mathbb{R}$ is 2. However, the dimension of $\mathbb{C}$ over $\mathbb{C}$ is 1, even though $\mathbb{C}$ over $\mathbb{R}$ is isomorphic to $\mathbb{R}^2$ over $\mathbb{R}$.
 :::
 
 #### Dimension and linearly independent/spanning sets
-The existence of a linearly independent set in $V$ provides a lower bound for $\dim V$. Likewise, a spanning set provides an upper bound.
+:::{#thm-dim-bounds}
+The size of a linearly independent set in $V$ is a lower bound for $\dim V$. Likewise, the size of a spanning set is an upper bound for $\dim V$.
+:::
 
-:::{#exm-}
-Suppose that $v_1,\cdots,v_n$ is linearly independent set in $V$. Let $w$ be an arbitrary vector in $V$ and define $u_i=v_i-w$ with
+:::{#exm-dim-shift}
+Suppose that $v_1,\cdots,v_n$ is a linearly independent set in $V$. Let $w$ be an arbitrary vector in $V$ and define $u_i=v_i-w$ with
 
 $$U=\text{span}(u_1,\cdots,u_n).$$
 
@@ -157,13 +238,22 @@ Let us consider the trivial subspace $\{0\}$. We might think that $0$ is a basis
 
 #### Dimension as limits to cardinality
 ###### For linearly independent sets
-A linearly independent set of size $\dim V$ is a basis of $V$.
-
-:::{.proof}
-If it does not span $V$, then we can add to the set a vector not in the span, and the set will remain linearly independent. So there will be a linearly independent set larger than a spanning set (namely, a basis), which is a contradiction. So all such linearly independent sets span $V$ and so are bases.
+:::{#thm-independent-dim-basis}
+Any linearly independent set of size $\dim V$ is a basis of $V$.
 :::
 
-:::{#exm-}
+:::{.proof-idea}
+This set should not be grow-able.
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
+If it does not span $V$, then we can add to the set a vector not in the span, and the set will remain linearly independent. So there will be a linearly independent set larger than a spanning set (namely, a basis), which is a contradiction. So all such linearly independent sets span $V$ and so are bases.
+
+</details>
+
+:::{#exm-poly-constraint-basis}
 We wish to show that a basis of
 
 $$U=\{p\in\mathcal{P}_4(\mb{F}):p(x_1)=p(x_2)\}$$
@@ -180,10 +270,10 @@ $$a_1+a_2(x-x_1)(x-x_2)+a_3(x-x_1)^2(x-x_2)+a_4(x-x_1)^3(x-x_2)=0,$$
 
 the scalar $a_4$ has to vanish to eliminate $x^4$, so $a_3$ in turn has to vanish to eliminate $x^3$, and so on.
 
-Now, it is unnecessary to show that the set spans $U$ to show that it is a basis of $U$. Because $U\neq \mathcal{P}_4(\mb{F})$, we have $\dim U<5$ (see below). Since we have found a linearly independent set of 4 vectors, the only possibility is that $\dim U=4$, with this set being a basis of $U$.
+Now, it is unnecessary to show that the set spans $U$ to show that it is a basis of $U$. Because $U\neq \mathcal{P}_4(\mb{F})$, we have $\dim U<5$ (see @thm-full-dim-subspace). Since we have found a linearly independent set of 4 vectors, the only possibility is that $\dim U=4$, with this set being a basis of $U$.
 :::
 
-:::{#exm-}
+:::{#exm-degree-basis}
 The above argument for showing linear independence can be generalised. Consider any set
 
 $$p_0,p_1,\cdots,p_n\in\mathcal{P}(\mb{F})$$
@@ -192,16 +282,40 @@ where $p_i$ has degree $i$. The analogous argument shows the set to be linearly 
 :::
 
 ###### For spanning sets
-A spanning set of cardinality $\dim V$ is a basis of $V$.
-
-:::{.proof}
-If it is linearly dependent, we can remove a vector from the set so that the set still spans $V$. Then there is a spanning set smaller than a linearly independent set (namely, a basis), which is a contradiction. So all such spanning sets are linearly independent and thereby are bases.
+:::{#thm-spanning-dim-basis}
+Any spanning set of cardinality $\dim V$ is a basis of $V$.
 :::
 
-###### Subspace with same dimension
-Suppose that $U$ is a subspace of $V$ with $\dim U=\dim V$. Then $U=V$ because a basis of $U$ is also a basis of $V$.
+:::{.proof-idea}
+This set should not be prune-able.
+:::
 
-:::{#exm-}
+<details class="proof">
+<summary>Full proof</summary>
+
+If it is linearly dependent, we can remove a vector from the set so that the set still spans $V$. Then there is a spanning set smaller than a linearly independent set (namely, a basis), which is a contradiction. So all such spanning sets are linearly independent and thereby are bases.
+
+</details>
+
+###### Subspace with same dimension
+:::{#thm-full-dim-subspace}
+If $U$ is a subspace of $V$ with $\dim U=\dim V$, then we have $U=V$.
+:::
+
+:::{.informal}
+If we find that a subspace has the same number of basis vectors as $V$, we know that this subspace is just $V$.
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
+If $\dim U=\dim V$, then a basis $u_1,\cdots,u_n$ of $U$ is also a basis of $V$. Therefore,
+
+$$\text{span}(u_1,\cdots,u_n)=U=V.$$
+
+</details>
+
+:::{#exm-r3-classification}
 We are now at a position to show that the only subspaces of $\mathbb{R}^3$ are what they are. The basis for a subspace $U$ has 3 linearly independent vectors at most, because $\dim\mathbb{R}^3=3$. So the possibilities are
 
 - $\dim U=0$: $U=\{0\}$.
@@ -213,9 +327,26 @@ We are now at a position to show that the only subspaces of $\mathbb{R}^3$ are w
 
 #### Dimension of a subspace sum
 ###### Sum of two subspaces
-Let's consider the sum $U_1+U_2$ (not necessarily direct), where $U_1$ and $U_2$ are subspaces of a finite-dimensional $V$. Is its dimension expressible in terms of those of the constituent subspaces? It is, in a very familiar expression.
+Let's consider the sum $U_1+U_2$ (not necessarily direct), where $U_1$ and $U_2$ are subspaces of a finite-dimensional $V$. Is its dimension expressible in terms of those of the constituent subspaces? Yes, and with a rather familiar expression.
 
-:::{.proof}
+:::{#thm-dim-sum-formula}
+The dimension of $U_1+U_2$ is given by
+
+$$\dim (U_1+U_2)=\dim U_1+\dim U_2-\dim (U_1\cap U_2).$$
+
+:::
+
+:::{.informal}
+The dimension of $U_1+U_2$ has the same form as the inclusion-exclusion principle (which describes the size of the union of two sets).
+:::
+
+:::{.proof-idea}
+Extend a basis of $U_1\cap U_2$ to bases of $U_1$ and $U_2$.
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
 An intersection of subspaces is also a subspace, so let $y_1,\cdots,y_n$ be a basis of $U_1\cap U_2$. This set is a linearly independent subset of $U_1$, and can be grown into a basis of $U_1$. Let us call the corresponding additions as $x_1,\cdots,x_m$. Likewise, the vectors added while growing the set into a basis of $U_2$ will be called $z_1,\cdots,z_p$.
 
 We will show that
@@ -234,9 +365,9 @@ $$c_1z_1+\cdots+c_pz_p=d_1y_1+\cdots+d_ny_n.$$
 
 Plugging it in above, we have
 
-$$a_1x_1+\cdots+a_mx_m+(b_1-d_1)y_1+\cdots+(b_n-d_n)y_n=0.$$
+$$a_1x_1+\cdots+a_mx_m+(b_1+d_1)y_1+\cdots+(b_n+d_n)y_n=0.$$
 
-By the linear independence of $x_1,\cdots,x_m,y_1,\cdots,y_n$, this implies that the $a_i$s are zero. Similarly, the $c_i$s are zero. Finally, we are left with 
+By the linear independence of $x_1,\cdots,x_m,y_1,\cdots,y_n$, this implies that the $a_i$s are zero. In an analogous manner, we can find that the $c_i$s are zero. Finally, we are left with 
 
 $$b_1y_1+\cdots+b_ny_n=0,$$
 
@@ -246,11 +377,9 @@ Therefore, the above-mentioned set is a basis of $U_1+U_2$, and we have
 
 $$\dim (U_1+U_2)=\dim U_1+\dim U_2-\dim (U_1\cap U_2).$$
 
-:::
+</details>
 
-This looks like the inclusion-exclusion principle, which describes the cardinality of the union of two sets.
-
-:::{#exm-}
+:::{#exm-dim-direct-check}
 Suppose that $U+W=V$, with $\dim U=3$, $\dim W=5$ and $\dim V=8$. Then we immediately know that $V=U\oplus W$, because the above formula shows that $\dim(U\cap W)=0$, which in turn implies $U\cap W=\{0\}$.
 :::
 
@@ -260,10 +389,15 @@ Does the analogy to the inclusion-exclusion principle hold for 3 subspaces? That
 $$
 \begin{aligned}
 \dim(U_1+U_2+&U_3)=\dim U_1+\dim U_2+\dim U_3\\
-&-\dim (U_1\cap U_2)-\dim (U_2\cap U_3)-\dim (U_1\cap U_3)+\dim(U_1\cap U_2\cap U_3)
+&-\dim (U_1\cap U_2)-\dim (U_2\cap U_3)-\dim (U_1\cap U_3)+\dim(U_1\cap U_2\cap U_3)?
 \end{aligned}
 $$
 
+:::{#thm-dim-three-fails}
+The analogue of the inclusion-exclusion principle generally does not hold for the sum of three subspaces.
+:::
+
+:::{.proof-idea}
 The analogous 3-set inclusion-exclusion principle expression is obtained by applying the 2-set expression repeatedly, so let's try doing that for the dimension sum:
 
 $$
@@ -274,23 +408,43 @@ For an analogous derivation to go through, we need the following distributivity 
 
 $$U_1\cap(U_2+U_3)=U_1\cap U_2+U_1\cap U_3.$$
 
-Is this true? Intuitively, we can imagine a scenario where $U_2+U_3$ contains $U_1$ but both $U_1\cap U_2$ and $U_1\cap U_3$ are trivial subspaces, in which case the sum afterwards is "too late". An example of this is provided by any three distinct lines through the origin on $\mathbb{R}^2$. We can check that this example breaks the proposed formula for $\dim(U_1+U_2+U_3)$, because the LHS is 2 and the RHS is 3. 
+Is this true? Intuitively, we can imagine a scenario where $U_2+U_3$ contains $U_1$ but both $U_1\cap U_2$ and $U_1\cap U_3$ are trivial subspaces, in which case the sum afterwards is "too late". 
+:::
+
+An example of this is provided by any three distinct lines through the origin on $\mathbb{R}^2$. We can check that this example breaks the proposed formula for $\dim(U_1+U_2+U_3)$, because the LHS is 2 and the RHS is 3. 
 
 ###### General inequality
+:::{#thm-dim-sum-inequality}
 While there is no general expression for the dimension of a sum of $n$ subspaces, at least we have the inequality
 
 $$\dim(U_1+\cdots+U_n)\leq\dim U_1+\cdots+\dim U_n.$$
+:::
 
+:::{.proof-idea}
 This can be inductively shown with the two-subspace-sum formula.
+:::
 
 ###### Direct sum
+:::{#thm-dim-direct-sum}
+For finite subspaces $U_1,\cdots,U_n$ that form a direct sum, we have
+
+$$\dim(U_1\oplus\cdots\oplus U_n)=\dim U_1+\cdots+\dim U_n.$$
+
+:::
+
+:::{.informal}
+We can find the dimension of $V$ by a divide-and-conquer approach if we have a direct sum decomposition (which is really just a corollary of @thm-direct-sum-basis).
+:::
+
+:::{.proof-idea}
 Previously, we showed that the union of the bases of $U$ and $W$ is a basis of $U\oplus W$. So when we have a direct sum, then we have the equality
 
 $$\dim U\oplus W=\dim U+\dim W.$$
 
-The proof is straightforwardly generalisable to any number of direct-sum subspaces, so
+The result for an arbitrary number of subspaces follows by induction.
+:::
 
-$$\dim U_1\oplus\cdots\oplus U_n=\dim U_1+\cdots+\dim U_n.$$
+
 
 [^1]: This result can be used to show that differentiation as a linear map on polynomials is surjective. Let $D$ be any linear map from $\mathcal{P}(\mathbb{R})$ to $\mathcal{P}(\mathbb{R})$ with the property $\deg Dp=(\deg p)-1$ (of which the differentiation map is one). Then $Dx,Dx^2,\cdots,Dx^{n+1}$ spans $\mathcal{P}_n(\mathbb{R})$, so for any $p\in\mathcal{P}_n(\mathbb{R})$, there exist coefficients such that
 
