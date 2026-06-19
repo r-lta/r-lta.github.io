@@ -2,7 +2,7 @@
 title: "Matrices"
 description: "The matrix of a linear map, rank normal form, and matrix addition and multiplication from the linear-map viewpoint — an augmented summary of Axler's LADR §3.C."
 date: "2026-06-05"
-date-modified: "2026-06-06"
+date-modified: "2026-06-19"
 categories: ["mathematics", "linear-algebra", "ladr"]
 execute:
     echo: true
@@ -38,7 +38,7 @@ $$
 
 This matrix represents $T$ *with respect to* this pair of basis. The number of rows (vertical height) of this matrix corresponds to the dimension of the codomain $W$, while the number of columns (horizontal width) corresponds to the dimension of the domain $V$.
 
-:::{#exm-}
+:::{#exm-matrix-differentiation}
 Consider the differentiation map $D:\mathcal{P}_3(\mathbb{R})\to\mathcal{P}_2(\mathbb{R})$. We wish to find the corresponding matrix with respect to the standard bases for $\mathcal{P}_3(\mathbb{R})$ and $\mathcal{P}_2(\mathbb{R})$. 
 
 As the $n$th standard basis vector $x^{n-1}$ maps to $(n-1)x^{n-2}$ under $D$, the $n$th column (tracking how the $n$th basis vector is transformed by $D$) will contain $n-1$ at the $(n-1)$th entry. So the matrix is
@@ -109,23 +109,38 @@ Let $A$ be an $m\times n$ matrix. Then
 - $A_{\cdot,j}$ denotes the $m\times 1$ matrix (column matrix) consisting of the $j$th column of $A$. 
 
 #### Minimum number of non-zero entries
+:::{#thm-min-nonzero-entries}
 Suppose that $V$ and $W$ are finite-dimensional and $T:V\to W$. Then for any choice of bases for $V$ and $W$, the corresponding matrix for $T$ has at least $\dim\im\ T$ non-zero entries.
+:::
 
-:::{.proof}
-For $\dim V-\dim\ker T$ (the dimension of the kernel complement) to be equal to $d$, it is necessary (but not sufficient) to map *at least* $d$ basis vectors to a non-zero vector. (It is not sufficient because combinations of the vectors could be mapped to zero.) This, in turn, requires *at least* $d$ non-zero entries in the matrix of $T$, as we can see from the definition of matrix. 
+:::{.proof-idea}
+Keeping a basis vector alive under $T$ requires a non-zero entry in the matrix of $T$.
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
 
 The rank-nullity theorem states that
 
-$$\dim\im\ T=\dim V-\dim\ker T,$$
+$$\dim\im\ T=\dim V-\dim\ker T.$$
 
-and so we need at least $\dim\im\ T$ non-zero entries in the matrix.
-:::
+For $\dim V-\dim\ker T$ (the dimension of a kernel complement) to be equal to $d$, we must map $d$ basis vectors to a non-zero vector. As we can see from the definition of a matrix, this requires at least $d$ non-zero entries in the matrix of $T$. 
+
+</details>
 
 ###### Rank normal form
-Let $V$ and $W$ be finite-dimensional. There exist bases in $V$ and $W$ such that $\mathcal{M}(T)$ actually does contain exactly $\dim\im\ T$ non-zero entries, namely $1$ in the first $\dim\im\ T$ diagonal entries.
+:::{#thm-rank-normal-form}
+Let $V$ and $W$ be finite-dimensional. There exist bases of $V$ and $W$ with respect to which the matrix of $T$ contains exactly $\dim\im\ T$ non-zero entries, namely $1$ in the first $\dim\im\ T$ diagonal entries.
+:::
 
-:::{.proof}
-Let $w_1,\cdots,w_n$ be a basis of $\im\ T$, and let $v_1,\cdots,v_n$ be vectors in $V$ such that $Tv_i=w_i$. Then we know that $v_1,\cdots,v_n$ is linearly independent.
+:::{.proof-idea}
+Consider the pre-image of a basis of $W$.
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
+Let $w_1,\cdots,w_n$ be a basis of $\im\ T$, and let $v_1,\cdots,v_n$ be vectors in $V$ such that $Tv_i=w_i$. Then we know that $v_1,\cdots,v_n$ is linearly independent, because $w_1,\cdots,w_n$ is.
 
 In addition, let $v'_1,\cdots,v'_m$ be a basis of $\ker T$, where $m+n=\dim V$ by the rank-nullity theorem. Since
 
@@ -145,23 +160,30 @@ Let $w_1,\cdots,w_n,w'_1,\cdots,w'_{n'}$ be an extension of the $w_i$s to a basi
 $$v_1,\cdots,v_n,v'_1,\cdots,v'_m\quad\text{and}\quad w_1,\cdots,w_n,w'_1,\cdots,w'_{n'}$$
 
 has the requisite form.
-:::
+
+</details>
 
 #### Matrix for rank one linear maps
+:::{#thm-rank-one-matrix}
 For a linear map $T\in\mathcal{L}(V,W)$ between finite-dimensional vector spaces, we have $\dim\im\ T=1$ if and only if there are bases of $V$ and $W$ such that every entry of $\mathcal{M}(T)$ is 1.
+:::
 
-:::{.proof}
-Suppose that $\dim\im\ T=1$, and let $w$ be a non-zero vector in $\im\ T$ (which would span $\im\ T$). Then for any basis $v_1,\cdots,v_n$ of $V$, we have
+:::{.proof-idea}
+This requires a "division of labour" between the basis of $V$ and the basis of $W$. The former ensures that every basis vector of $V$ is mapped to the same $w\in W$, while the latter resolves this $w$ into $w_1+\cdots+w_m$.
 
-$$Tv_i=\lambda_iw.$$
+For the first task, kernel vectors can be used to enlarge the basis while keeping the image lean. For the second task, force $w=w_1+\cdots+w_m$ by the definition of the basis.
+:::
 
-But if all entries of $\mathcal{M}(T)$ are $1$, then we require
+<details class="proof">
+<summary>Full proof</summary>
 
-$$Tv_1=\cdots=Tv_n=w_1+\cdots+w_m,$$
+Suppose that $\dim\im\ T=1$, and let $w$ be a non-zero vector in $\im\ T$. As $w$ spans $\im\ T$, we have
 
-where $w_1,\cdots,w_m$ is a basis of $W$. So there is a "division of labour" here: the basis of $V$ ensure that $\lambda_1=\cdots=\lambda_n=1$, while the basis of $W$ should be such that $w$ is resolved into $w_1+\cdots+w_m$.
+$$Tv_i=\lambda_iw$$
 
-For the first part, we just have to find a basis in which $Tv_i\neq 0$. Let $v\in V$ be a non-zero vector not in $\ker T$, which exists because $\dim\ker T=n-1$ by the rank-nullity theorem. We have to extend it to a basis of $V$ while avoiding any vectors in $\ker T$. So let $k_1,\cdots,k_{n-1}$ be a basis of $\ker T$. Then we have
+for some $\lambda_1,\cdots,\lambda_n\in\mb{F}$, where $v_1,\cdots,v_n$ is a basis of $V$.
+
+Let $v\in V$ be a non-zero vector not in $\ker T$, which exists because $\dim\ker T=n-1$ by the rank-nullity theorem. We have to extend it to a basis of $V$ while avoiding any vectors in $\ker T$. So let $k_1,\cdots,k_{n-1}$ be a basis of $\ker T$. Then we have
 
 $$
 \begin{aligned}
@@ -170,7 +192,7 @@ $$
 \end{aligned}
 $$
 
-But this implies that $a_1k_1+\cdots+a_{n-1}k_{n-1}$ is a scalar multiple of $v\in V-\ker T$, which is only possible if that scalar is $0$. The linear independence of the $k_i$s implies $a_1=\cdots=a_{n-1}=0$, which subsequently leads to $a=0$. Therefore,
+But this implies that $a_1k_1+\cdots+a_{n-1}k_{n-1}$ is a scalar multiple of $v\in V-\ker T$, which is only possible if that scalar is $0$. The linear independence of the $k_i$s implies $a_1=\cdots=a_{n-1}=0$, which subsequently leads to $a=0$. Therefore, the set
 
 $$v,v+k_1,\cdots,v+k_{n-1}$$
 
@@ -180,7 +202,7 @@ $$T(v+k_i)=Tv\neq0$$
 
 as required.
 
-For the second part, let $w'_1,\cdots,w'_{m-1}$ be a basis of a complement $U$ of $\im\ T$. Then the set
+Now, let $w'_1,\cdots,w'_{m-1}$ be a basis of a complement $U$ of $\im\ T$. Then the set
 
 $$w'_1,\cdots,w'_{m-1},w-(w'_1+\cdots+w'_{m-1})$$
 
@@ -196,7 +218,7 @@ So we have found the bases of $V$ and $W$ such that
 
 $$Tv_1=\cdots=Tv_n=w_1+\cdots+w_m.$$
 
-Now conversely, suppose that there exist bases such that $\mathcal{M}(T)$ has all-$1$ entries. Then
+Conversely, suppose that there exist bases such that $\mathcal{M}(T)$ has all-$1$ entries. Then
 
 $$Tv_j=w_1+\cdots+w_m=w$$
 
@@ -206,45 +228,7 @@ $$Tv=a_1Tv_1+\cdots+a_nTv_n=(a_1+\cdots+a_n)w.$$
 
 Therefore, $\im\ T$ is spanned by $w$, which means that $\dim\im\ T=1$.
 
-<!-- For the forward direction, our job is twofold: to find a basis $v_1,\cdots,v_n$ of $V$ such that
-
-$$Tv_i=w$$
-
-for all $i=1,\cdots,n$, and to find a basis $w_1,\cdots,w_m$ of $W$ such that
-
-$$w=w_1+\cdots+w_m.$$
-
-For the first task, we will set $w$ to be any non-zero vector in $\im\ T$. Let $v_1$ be such that $Tv_1=w$. Let $k_1,\cdots,k_{n-1}$ be the basis of $\ker T$, which has dimension of $n-1$ by the rank-nullity theorem. Let us construct $v_2,\cdots,v_n$ as
-
-$$v_i=v_1+k_{i-1},$$
-
-so that $Tv_i=w$. Now suppose that
-
-$$
-\begin{aligned}
-0&=a_1v_1+a_2v_2+\cdots+a_nv_n\\
-&=(\sum_{i=1}^na_i)v_1+a_2k_1+\cdots+a_nk_{n-1}.
-\end{aligned}
-$$
-
-Then applying $T$ on both sides leads to $\sum_{i=1}^na_i=0$, which in turn leads to $a_2=\cdots=a_n=0$ by the linear independence of the $k_i$s. Finally, we have $a_1=0$. Therefore, the $v_i$s are linearly independent vectors of size $\dim V$, and is thereby a basis of $V$. 
-
-Moving on to the second task, let us start with $w$ and extend it to a basis of $W$, obtaining $w,w'_2,\cdots,w'_m$. From this, let us define
-
-$$
-w_i=
-\begin{cases}
-w-w'_2-\cdots-w'_m&\text{if }i=1\\
-w'_i&\text{otherwise}
-\end{cases}
-$$
-
-such that $w_1+\cdots+w_m=w$. If we have
-
-$$0=a_1w_1+\cdots+a_mw_m=a_1w+(a_2-a_1)w'_2+\cdots+(a_m-a_1)w'_m,$$
-
-then we have $a_1=0$ and subsequently $a_2=\cdots=a_m=0$ by the linear independence of $w,w'_2,\cdots,w'_m$. So the $w_i$s form a basis of $W$, as required.   -->
-:::
+</details>
 
 #### Matrix addition and multiplication
 Given two linear maps $S,T\in\mathcal{L}(V,W)$ with
@@ -281,12 +265,22 @@ By an analogous reasoning, we define the scalar multiplication of a matrix as el
 ###### Linear map and vector space
 From the above definitions of addition and multiplication, we can conclude two things.
 
+:::{#thm-matrices-vector-space}
 First, if we define $\mb{F}^{m,n}$ to be the set of all $m\times n$ matrices, then we can verify that $\mb{F}^{m,n}$ forms a vector space under the operations defined above.
+:::
 
+:::{#thm-matrix-map-linear}
 Second, $\mathcal{M}$ can be viewed as a linear map from $\mathcal{L}(V,W)$ to $\mb{F}^{m,n}$, since additivity and homogeneity hold by the definitions of the operations.
+:::
 
 ###### Dimension of $\mb{F}^{m,n}$
-It is trivial to show that the set of all $m\times n$ matrix units (which has $1$ in a single entry and $0$ everywhere else) is a basis of $\mb{F}^{m,n}$. So $\dim\mb{F}^{m,n}=mn$. 
+:::{#thm-dimension-matrices}
+The dimension of $\mb{F}^{m,n}$ is given by $mn$.
+:::
+
+:::{.proof-idea}
+Consider the $m\times n$ matrix units, which has $1$ in a single entry and $0$ everywhere else.
+:::
 
 #### Matrix multiplication
 Consider the linear maps $T:U\to V$ and $S:V\to W$, where the dimensions of $U$, $V$ and $W$ are $m$, $n$, and $p$ respectively. Then their product acts on the basis vectors of $U$ as
@@ -320,7 +314,11 @@ $$
 We define this to be the matrix product $\mathcal{M}(S)\mathcal{M}(T)$. Of course, this is identical to what we find through the usual algorithmic computation of $\mathcal{M}(S)\mathcal{M}(T)$.
 
 ###### Properties of matrix multiplication
-From the definition, it is possible (but tedious) to check that the matrix multiplication satisfies the associativity and distribution (over matrix addition) laws. However, matrix mutliplication is famously non-commutative. 
+:::{#thm-matrix-mult-properties}
+From the definition, it is possible (but tedious) to check that the matrix multiplication satisfies the associativity and distributivity properties. 
+:::
+
+However, matrix multiplication is famously non-commutative.
 
 ###### Different ways to view matrix multiplication
 Let us now think about matrix product $AB$ in of itself (where $A$ and $B$ have shapes $m\times n$ and $n\times p$ respectively), detached from its origins as the coordinates of a linear map product.
