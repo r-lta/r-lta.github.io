@@ -1,0 +1,519 @@
+---
+title: "Polynomials"
+description: "Unique coefficients and the division algorithm, zeros and factorisation, the fundamental theorem of algebra, and factorisation over ℂ and ℝ — an augmented summary of Axler's LADR Chapter 4."
+date: "2026-04-30"
+date-modified: "2026-06-23"
+categories: ["mathematics", "linear-algebra", "ladr"]
+execute:
+    echo: true
+---
+
+{{< include ../../_macros.qmd >}}
+
+This is an augmented summary of Chapter 4 of [Linear Algebra Done Right](https://linear.axler.net/index.html) by Sheldon Axler.
+
+For this chapter, we assume that $\mb{F}$ is $\mathbb{R}$ or $\mathbb{C}$ (although we have not considered alternatives anyway).
+
+Recall that a map $p:\mb{F}\to\mb{F}$ is a **polynomial** (an element of $\mathcal{P}(\mb{F})$) if its action can be described as
+
+$$p(z)=a_0+a_1z+\cdots+a_nz^n$$
+
+for all $z\in\mb{F}$, where $a_0,\cdots,a_n$ are some elements in $\mb{F}$.
+
+## Non-subspaces of polynomials
+:::{#thm-degree-m-not-subspace}
+The subset of $\mathcal{P}(\mb{F})$ given by
+
+$$\{0\}\cup\{p\in\mathcal{P}(\mb{F}):\deg p=m\}$$
+
+is not a subspace of $\mathcal{P}(\mb{F})$.
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
+The subset is not closed under addition. A simple example is given by
+
+$$(x^2+x)-x^2=x.$$
+
+</details>
+
+:::{#thm-even-degree-not-subspace}
+By the same reasoning,
+
+$$\{0\}\cup\{p\in\mathcal{P}(\mb{F}):\deg p\text{ is even}\}$$
+
+is not a subspace of $\mathcal{P}(\mb{F})$.
+:::
+
+## Two uniqueness results for polynomials
+#### Coefficients
+:::{#thm-coefficients-unique}
+Each polynomial is uniquely specified by the coefficients. In other words, two polynomials with different coefficients are always distinct.
+:::
+
+:::{.proof-idea}
+Similarly to the decomposition of a vector in a direct sum or a linearly independent set, we only have to check that the zero polynomial is uniquely representable.
+
+Equivalently, we can show that a polynomial with a non-zero coefficient is never zero. The intuition is that the graph of any non-zero polynomial diverges to infinity as the argument becomes large, because the leading term ends up dominating.
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
+Let us first show that
+
+$$0=a_0+a_1z+\cdots+a_nz^n$$
+
+implies $a_0=\cdots=a_n=0$. To do so, we will prove the contrapositive.
+
+Suppose that there is at least one non-zero coefficient, and let $m$ be the largest index such that $a_m\neq 0$. We are done if we show the existence of $z$ such that
+
+$$|a_mz^m|>|a_0+a_1z+\cdots+a_{m-1}z^{m-1}|,$$
+
+because that implies
+
+$$-a_mz^m\neq a_0+a_1z+\cdots+a_{m-1}z^{m-1}\implies a_0+a_1z+\cdots+a_mz^m\neq0.$$
+
+To do so, note that for $z>1$, we have
+
+$$
+\begin{aligned}
+|a_0+a_1z+\cdots+a_{m-1}z^{m-1}|&\leq|a_0|+|a_1z|+\cdots+|a_{m-1}z^{m-1}|\\
+&=(|a_0\frac{1}{z^{m-1}}|+|a_1\frac{1}{z^{m-2}}|+\cdots+|a_{m-1}|)z^{m-1}\\
+&<(|a_0|+|a_1|+\cdots+|a_{m-1}|)z^{m-1}.
+\end{aligned}
+$$
+
+So we are looking for $z>1$ such that
+
+$$|a_m|z^m\geq (|a_0|+|a_1|+\cdots+|a_{m-1}|)z^{m-1}\implies z\geq\frac{|a_0|+|a_1|+\cdots+|a_{m-1}|}{|a_m|}.$$
+
+The two requirements can be satisfied if we set
+
+$$z=\frac{|a_0|+|a_1|+\cdots+|a_{m-1}|}{|a_m|}+1.$$
+
+Therefore, $a_m\neq0$ for some $m\leq n$ implies that
+
+$$a_0+a_1z+\cdots+a_nz^n\neq 0.$$
+
+By contraposition, if $a_0+a_1z+\cdots+a_nz^n=0$, then we have $a_0=a_1=\cdots=a_n=0$.
+
+Now, suppose that there are two polynomials such that
+
+$$a_0+a_1z+\cdots+a_nz^n=a'_0+a'_1z+\cdots+a'_nz^n$$
+
+for all $z\in\mb{F}$. This means that
+
+$$(a_0-a'_0)+(a_1-a'_1)z+\cdots+(a_n-a'_n)z^n=0,$$
+
+so our result shows that the two polynomials are identical: $a_i=a'_i$ for all $i=0,\cdots,n$.
+
+</details>
+
+#### Quotient and remainder
+:::{#thm-division-algorithm}
+For any $p,d\in\mathcal{P}(\mb{F})$ ($d$ for *denominator*), there exist unique $q,r\in\mathcal{P}(\mb{F})$ ($q$ for *quotient*, $r$ for *remainder*) with $\deg r<\deg d$ such that $p=qd+r$.
+:::
+
+:::{.proof-idea}
+We can show that the map $T(q,r)=qd+r$, where $q$ and $r$ are polynomials of appropriate degrees, is injective and surjective on the space of all polynomials of degree $p$.
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
+If $\deg p<\deg d$, we see that the desired polynomials are $q=0$ and $r=p$.
+
+So suppose that $\deg p\geq \deg d$. When we multiply polynomials of degrees $m$ and $n$, we obtain a polynomial of degree $m+n$. So to obtain a polynomial of $\deg p$ through $p=qd+r$ where $\deg r<\deg d$, we see that $q$ has to be a polynomial of degree $\deg p-\deg d$.
+
+So consider the map 
+
+$$T:\mathcal{P}_{\deg p-\deg d}(\mb{F})\times\mathcal{P}_{\deg d-1}(\mb{F})\to\mathcal{P}_{\deg p}(\mb{F})$$ 
+
+defined as $T(q,r)=qd+r$. This is a valid map because $\deg(qd+r)\leq\deg p$. It is trivial to check that $T$ is a linear map.
+
+To establish the sought existence and uniqueness, we need to prove that $T$ is surjective and injective, respectively. Since $\deg qd$ is always at least $\deg d$ as long as $q\neq 0$ (while $\deg r<\deg d$), if we have $qd+r=0$, then $qd=r=0$ for otherwise $qd=-r$ is not possible. In other words, $\ker T=\{0\}$ and so $T$ is injective.
+
+Because of how the dimension of a product of vector spaces works, the dimension of the domain of $T$ is given by
+
+$$\dim(\mathcal{P}_{\deg p-\deg d}(\mb{F}))+\dim(\mathcal{P}_{\deg d-1}(\mb{F}))=(\deg p-\deg d+1)+\deg d=\deg p+1.$$
+
+As $T$ is injective, the rank-nullity theorem shows this to be equal to the dimension of $T$'s image. But since
+
+$$\dim \mathcal{P}_{\deg p}(\mb{F})=\deg p+1,$$
+
+we see that $T$ is surjective, as required.
+
+Therefore, the decomposition $p=qd+r$ is unique when $r$ is restricted to $\deg r<\deg d$.
+
+</details>
+
+This is called the **division algorithm**, although we are not interested in the algorithm itself, but rather just in the existence and uniqueness statements that underlie it.
+
+:::{#exm-quotient-by-multiples}
+Let $p$ be a non-zero polynomial of degree $n$, and define the subspace $U=\{pq:q\in\mathcal{P}(\mb{F})\}$ of $\mathcal{P}(\mb{F})$.
+
+Let $r_s$ denote the remainder of $s$ when "divided" by $p$, so that $\deg r_s<\deg p$. Let us define a map $T:\mathcal{P}(\mb{F})/U\to \mathcal{P}_{n-1}(\mb{F})$ as $T(s+U)=r_s$. Through the division algorithm, we may check that it is well-defined and linear.
+
+For any $r\in\mathcal{P}_{n-1}(\mb{F})$, we have $T(r+U)=r$ and so $T$ is surjective. On the other hand, if we have $r_s=0$, then $s$ is of the form $pq$ and so $s\in U$. This implies that $\ker T=U$, which means that $T$ is injective.
+
+Since $T$ is an isomorphism, we have
+
+$$\dim(\mathcal{P}(\mb{F})/U)=\dim\mathcal{P}_{n-1}(\mb{F})=\deg p.$$
+
+Because the set $1+U,x+U,\cdots,x^{n-1}+U$ spans $\mathcal{P}(\mb{F})/U$ and is of the right size, it is a basis of $\mathcal{P}(\mb{F})/U$.
+:::
+
+## Zeros of polynomial
+A **zero** of a polynomial $p\in\mathcal{P}(\mb{F})$ is an element $\lambda\in\mb{F}$ such that $p(\lambda)=0$.
+
+#### Zero and factorisation
+A polynomial $s$ is a **factor** of another polynomial $p$ if there is a polynomial $q$ such that $p=sq$.
+
+:::{#thm-zero-iff-factor}
+$\lambda$ is a zero of $p$ if and only if $z-\lambda$ is a factor of $p$.
+:::
+
+:::{.proof-idea}
+For the converse direction, use the division algorithm to extract $z-\lambda$.
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
+If $z-\lambda$ is a factor of $p$, then
+
+$$p(z)=(z-\lambda)s(z)$$
+
+for some polynomial $s$ and so $p(\lambda)=0$.
+
+Conversely, suppose that $p(\lambda)=0$ holds. By the division algorithm, we know there exist a unique pair of polynomial $q$ and constant polynomial $r$ such that
+
+$$p(z)=(z-\lambda)q(z)+r.$$
+
+We just have to show that $r=0$, but this is the case because
+
+$$0=p(\lambda)=0q(\lambda)+r=r.$$
+
+</details>
+
+#### Maximum number of zeros
+:::{#thm-max-zeros}
+A non-constant polynomial $p$ has at most $\deg p$ zeros.
+:::
+
+:::{.proof-idea}
+Prove by induction on the degree of $p$. For the inductive step, use the previous result.
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
+We will proceed by induction on the degree of $p$.
+
+Suppose that $\deg p=1$. Then $p(z)=a_0+a_1z$ where $a_1\neq0$. If $z$ is a zero of $p$, then
+
+$$0=a_0+a_1z\implies z=-\frac{a_0}{a_1}.$$
+
+Therefore, $p$ has a single zero located at $-a_0/a_1$.
+
+Assume that a polynomial of degree $k-1$ has at most $k-1$ zeroes, and let $p$ be a polynomial of degree $k$. If $\lambda$ is a zero of $p$, then we know that $p$ can be factorised as
+
+$$p(z)=(z-\lambda)q(z)$$
+
+where $q$ is a polynomial of degree $k-1$ and thereby has $k-1$ zeros.
+
+Suppose that $p(z)=0$. Due to the zero-product property, this implies that either $z-\lambda=0$ or $q(z)=0$. The first possibility gives a single zero, while the second gives at most $k-1$ zeros. So $p$ has at most $k$ zeros.
+
+By the principle of induction, the property holds for polynomials of arbitrary degree.
+
+</details>
+
+###### Polynomial of degree $n$ is specifiable by $n+1$ points
+:::{#thm-points-determine-polynomial}
+Suppose that $z_1,\cdots,z_{n+1}\in\mb{F}$ are distinct, and let $w_1,\cdots,w_{n+1}\in\mb{F}$. Then there is a unique polynomial $p\in\mathcal{P}_n(\mb{F})$ such that $p(z_i)=w_i$.
+:::
+
+:::{.proof-idea}
+Show that the map between polynomials of degree $n$ and its evaluations at $n+1$ points is injective and surjective.
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
+Consider the evaluation map $T:\mathcal{P}_n(\mb{F})\to\mb{F}^{n+1}$ given by
+
+$$Tp=(p(z_1),\cdots,p(z_{n+1})).$$
+
+Suppose that $p(z_1)=\cdots=p(z_{n+1})=0$, which means that $z_1,\cdots,z_{n+1}$ are zeros of $p$. But since a non-constant polynomial of degree $n$ has at most $n$ zeroes, this means that $p$ is the zero polynomial. Therefore, we have $\ker T=\{0\}$. 
+
+By the rank-nullity theorem, this implies
+
+$$\dim\im\ T=\dim\mathcal{P}_n(\mb{F})-\dim\ker T=n+1.$$
+
+Since $\dim\mb{F}^{n+1}=n+1$, this shows $T$ to be surjective.
+
+The injectivity and surjectivity of $T$ shows that, for any $w_1,\cdots,w_{n+1}$, there is a unique polynomial of degree $n$ that evaluates to these values at $z_1,\cdots,z_{n+1}$.
+
+</details>
+
+## Fundamental theorem of algebra
+:::{#thm-fundamental-theorem-algebra}
+The **fundamental theorem of algebra** states that every non-constant polynomial in $\mathcal{P}(\mathbb{C})$ has at least one zero.
+:::
+
+:::{.proof-idea}
+We will not prove it here because it requires the use of analysis.
+:::
+
+Note that this statement is not true when restricted to real numbers: for example, $p(x)=x^2+1$ has no real zeros.
+
+## Factorising polynomials in $\mathcal{P}(\mathbb{C})$
+:::{#thm-factorisation-complex}
+Every non-constant polynomial $p$ in $\mathcal{P}(\mathbb{C})$ can be uniquely factorised as a product of degree-1 polynomials as
+
+$$
+p(z)=c(z-\lambda_1)\cdots(z-\lambda_n)
+$$
+
+where $c,\lambda_1,\cdots,\lambda_n\in\mathbb{C}$.
+:::
+
+:::{.informal}
+Any complex polynomial can be "fully factorised" in terms of its zeros.
+:::
+
+:::{.proof-idea}
+Show existence by induction on the degree of $p$, then show uniqueness by the zero-product property.
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
+We will first show the existence of such factorisation by induction. For $\deg p=1$, the assertion is trivially true.
+
+Assume that every polynomial of degree $k-1$ can be factorised in the required manner. Consider an arbitrary polynomial $p$ of degree $k$. By the fundamental theorem of algebra, it has a zero at some location $\lambda$. Then $p$ can be factorised as
+
+$$p(z)=(z-\lambda)q(z)$$
+
+where $q$ has degree $k-1$. But this implies that $p$ can be factorised in the required manner, along with $q$.
+
+By the principle of induction, this factorisation property holds for polynomials of arbitrary degree.
+
+Now suppose that there are two ways to factorise a polynomial $p$ in this form, such that
+
+$$c(z-\lambda_1)\cdots(z-\lambda_n)=c(z-\tau_1)\cdots(z-\tau_n)$$
+
+where $n$ is the degree of $p$. The coefficient $c$ has to be the same on both sides, because that is equal to the coefficient of the leading term. 
+
+From the left expression, we see that $\lambda_1$ is a zero of $p$. Then one of the $\tau_i$'s must be equal to $\lambda_1$, for otherwise the product will not be zero. In this manner, every $\lambda_i$ must correspond to a $\tau_i$. 
+
+By the same argument, every $\tau_i$ must correspond to a $\lambda_i$. Therefore, the $\lambda_i$s and the $\tau_i$s must match one-to-one, and the two expressions must be equal. So the expression of a polynomial in this factorised manner must be unique.
+
+</details>
+
+#### Constructing polynomials with particular zeros
+We have seen that a polynomial of degree $n$ can have at most $n$ zeros. As it turns out, for any $\lambda_1,\cdots,\lambda_m\in\mb{F}$ where $m\leq n$, there exists a polynomial of degree $n$ whose zeros are exactly located at $\lambda_1,\cdots,\lambda_m$ and no more. Here is an example:
+
+$$(z-\lambda_1)^{n-m+1}(z-\lambda_2)\cdots(z-\lambda_m).$$
+
+#### Polynomials with real coefficients
+:::{#thm-real-coeff-conjugate-zeros}
+Suppose that $p$ is a polynomial in $\mathcal{P}(\mathbb{C})$ whose coefficients are all real. Then its zeros come in pairs: if $\lambda$ is a zero, then so is $\overline{\lambda}$.
+:::
+
+:::{.proof-idea}
+Consider the complex conjugate of the entire equation: $\overline{p(\lambda)}=0$.
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
+Consider a polynomial
+
+$$p(z)=a_0+a_1z+\cdots+a_nz^n$$
+
+where $a_i\in\mathbb{R}$, and let $\lambda\in\mathbb{C}$ be a zero of $p$. Then we have
+
+$$
+\begin{gather}
+0=a_0+a_1\lambda+\cdots+a_n\lambda^n\\
+\implies 0=a_0+a_1\overline{\lambda}+\cdots+a_n\overline{\lambda^n}=a_0+a_1\overline{\lambda}+\cdots+a_n\overline{\lambda}^n,
+\end{gather}
+$$
+
+where we use the property $\overline{zw}=\overline{z}\ \overline{w}$. Therefore, we see that $\overline{\lambda}$ is also a zero of $p$.
+
+</details>
+
+## Factorising polynomials in $\mathcal{P}(\mathbb{R})$
+#### Quadratic polynomial
+:::{#thm-quadratic-factorisation}
+Let $b,c\in\mathbb{R}$. Then there exist $\lambda_1,\lambda_2\in\mathbb{R}$ such that
+
+$$x^2+bx+c=(x-\lambda_1)(x-\lambda_2)$$
+
+if and only if $b^2\geq4c$.
+:::
+
+:::{.proof-idea}
+For the converse direction, complete the square to force $x^2+bx+c$ into the desired form.
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
+Suppose that there exist $\lambda_1,\lambda_2\in\mathbb{R}$ such that
+
+$$x^2+bx+c=(x-\lambda_1)(x-\lambda_2)=x^2-(\lambda_1+\lambda_2)x+\lambda_1\lambda_2.$$
+
+Then we have
+
+$$
+\begin{aligned}
+b^2-4c&=(\lambda_1+\lambda_2)^2-4\lambda_1\lambda_2\\
+&=\lambda_1^2-2\lambda_1\lambda_2+\lambda_2^2\\
+&=(\lambda_1-\lambda_2)^2\\
+&\geq0
+\end{aligned}
+$$
+
+as required. 
+
+Conversely, suppose that $b^2\geq 4c$. Note that completing the square gives us
+
+$$x^2+bx+c=(x+\frac{b}{2})^2+c-\frac{b^2}{4}.$$
+
+As the initial inequality leads to $b^2/4-c\geq 0$, we can continue as
+
+$$
+\begin{aligned}
+x^2+bx+c&=(x+\frac{b}{2})^2-(\frac{b^2}{4}-c)\\
+&=(x+\frac{b}{2}-\sqrt{\frac{b^2}{4}-c})(x+\frac{b}{2}+\sqrt{\frac{b^2}{4}-c}).
+\end{aligned}
+$$
+
+So we have the desired factorisation with
+
+$$\lambda_1=\frac{b}{2}+\sqrt{\frac{b^2}{4}-c}\quad\text{and}\quad\lambda_2=\frac{b}{2}-\sqrt{\frac{b^2}{4}-c},$$
+
+where both are real.
+
+</details>
+
+#### General polynomial
+:::{#thm-factorisation-real}
+A non-constant polynomial $p\in\mathcal{P}(\mathbb{R})$ has a unique factorisation of the form
+
+$$p(x)=c(x-\lambda_1)\cdots(x-\lambda_n)(x^2+b_1x+c_1)\cdots(x^2+b_mx+c_m)$$
+
+where $c,\lambda_i,b_i,c_i\in\mathbb{R}$ and $b_i^2< 4c_i$ for all $i$.
+:::
+
+:::{.proof-idea}
+At each step of the factorisation, either the zero is real (leading to a quadratic factor) or non-real complex (leading to a linear factor).
+
+But after each step, we should ensure that the as-yet-unfactored polynomial still has real coefficients, which can be derived after showing that it always takes on real values.
+
+The uniqueness of the factorisation is a consequence of the analogous uniqueness for $\mathcal{P}(\mathbb{C})$.
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
+Let us view $p$ as a polynomial in $\mathcal{P}(\mathbb{C})$. First, suppose that the zeros $\lambda_1,\cdots,\lambda_k$ of $p$ are all real. Then $p$ can be uniquely factored as
+
+$$p(z)=c(z-\lambda_1)\cdots(z-\lambda_k)$$
+
+by the unique factorisation of polynomials in $\mathcal{P}(\mathbb{C})$, and we are done. 
+
+So suppose that $p$ has a non-real zero $\lambda$, in which case we know that $\overline{\lambda}$ is also a zero of $p$. Subsequently, we have
+
+$$
+\begin{aligned}
+p(x)&=(x-\lambda)(x-\overline{\lambda})q(x)\\
+&=(x^2-(\lambda+\overline{\lambda})x+\lambda\overline{\lambda})q(x)\\
+&=(x^2-2(\text{Re}\ \lambda)x+|\lambda|^2)q(x),
+\end{aligned}
+$$
+
+where $\deg q=\deg p-2$. Because $|\lambda|^2>(\text{Re}\ \lambda)^2$, we have
+
+$$4|\lambda|^2>4(\text{Re}\ \lambda)^2=(2(\text{Re}\ \lambda))^2$$
+
+and so the quadratic factor in the above expression satisfies our requirement.
+
+We may then factor out $(x-\lambda')(x-\overline{\lambda'})$ from $q(x)$ if $q(x)$ has a non-real zero, or otherwise completely factorise $q$ into the factors of real zeros. If the former is the case, we can repeat this process.
+
+If the process does not terminate (by obtaining a polynomial with real zeros only), we will either end up with a degree-1 or degree-2 polynomial $q'(x)$. If we have the former---with $q'(x)=x-a$---we obtain a real zero $a$ from this polynomial. If we have the latter---with $q'(x)=x^2+bx+c$---either $b^2\geq 4c$ and we obtain two real roots, or we simply append $x^2+bx+c$ to the factorisation.
+
+However, for this argument to go through, the coefficients of $q(x)$ must be real. To verify this, note that the value of $q(x)$ is given by
+
+$$q(x)=\frac{p(x)}{x^2-2(\text{Re}\ \lambda)x+|\lambda|^2},$$ 
+
+for all $x\in\mathbb{R}$. Since both the numerator and denominator are always real, so is the value of $q(x)$.
+
+The real-ness of $q(x)$ implies
+
+$$0=\text{Im}\ q(x)=\text{Im}\ a_0+(\text{Im}\ a_1)x+\cdots+(\text{Im}\ a_{n-2})x^{n-2}.$$
+
+We know that a zero polynomial like this is only possible with $\text{Im}\ a_0=\cdots=\text{Im}\ a_{n-2}=0$. Therefore, the coefficients of $q(x)$ are real, and the sought factorisation does exist.
+
+To show that this factorisation is unique, we only need to note that the quadratic polynomials can be further factorised if we are working in $\mathcal{P}(\mathbb{C})$. So if this factorisation is not unique, the uniqueness of the degree-1 factorisation for polynomials in $\mathcal{P}(\mathbb{C})$ will be violated. 
+
+</details>
+
+:::{#thm-odd-degree-real-zero}
+By looking at the above factorisation process, we can see that polynomials of odd order always have at least one real zero. 
+:::
+
+## Obtaining polynomials with real coefficients
+#### From complex conjugate
+:::{#thm-conjugate-product-real}
+For any $p\in\mathcal{P}(\mathbb{C})$, the polynomial
+
+$$q(z)=p(z)\overline{p(\overline{z})}$$
+
+has real coefficients. 
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
+This is because
+
+$$
+\begin{aligned}
+p(z)\overline{p(\overline{z})}&=(a_0+a_1z+\cdots+a_nz^n)\overline{(a_0+a_1\overline{z}+\cdots+a_n\overline{z^n})}\\
+&=(a_0+a_1z+\cdots+a_nz^n)(\overline{a_0}+\overline{a_1}z+\cdots+\overline{a_n}z^n)\\
+&=\sum_{i=0}^n\sum_{j=0}^n(a_iz^i)(\overline{a_j}z^j)\\
+&=\sum_{k=0}^n|a_k|^2z^{2k}+\sum_{j\neq i}a_i\overline{a_j}z^{i+j}\\
+&=\sum_{k=0}^n|a_k|^2z^{2k}+\sum_{j>i}(a_i\overline{a_j}+a_j\overline{a_i})z^{i+j}\\
+&=\sum_{k=0}^n|a_k|^2z^{2k}+\sum_{j>i}2\text{Re}(a_i\overline{a_j})z^{i+j}.
+\end{aligned}
+$$
+
+</details>
+
+#### From real evaluations at real points
+:::{#thm-real-evaluations-real-coeff}
+Suppose that $p\in\mathcal{P}_n(\mathbb{C})$ is such that $p(x_j)\in\mathbb{R}$ for $n+1$ distinct points $x_0,\cdots,x_n\in\mathbb{R}$. Then the coefficients of $p$ are real.
+:::
+
+:::{.proof-idea}
+This is corollary of "$n+1$ points determine a polynomial of degree $n$".
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
+Previously, we showed that the evaluation map $T:\mathcal{P}_n(\mb{F})\to\mb{F}^{n+1}$ defined as
+
+$$Tp=(p(z_1),\cdots,p(z_{n+1}))$$
+
+is an isomorphism. 
+
+If we take $\mb{F}=\mathbb{R}$, we see that there is a unique $p\in\mathcal{P}_n(\mathbb{R})$ that goes through $p(x_0),\cdots,p(x_n)$. Since we have $\mathcal{P}_n(\mathbb{R})\subseteq \mathcal{P}_n(\mathbb{C})$, this $p$ must also be the unique polynomial of $\mathcal{P}_n(\mathbb{C})$ that goes through these points. 
+
+</details>
