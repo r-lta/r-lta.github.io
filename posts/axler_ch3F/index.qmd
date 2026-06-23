@@ -2,6 +2,7 @@
 title: "Duality"
 description: "Dual spaces, dual bases, the double dual, dual maps, annihilators, and the matrix transpose as the matrix of the dual map — an augmented summary of Axler's LADR §3.F."
 date: "2026-06-06"
+date-modified: "2026-06-23"
 categories: ["mathematics", "linear-algebra", "ladr"]
 execute:
     echo: true
@@ -12,59 +13,110 @@ execute:
 This is an augmented summary of Section 3.F of [Linear Algebra Done Right](https://linear.axler.net/index.html) by Sheldon Axler.
 
 ## Dual space
-Given some vector space $V$ over $\mb{F}$, the space of all linear maps from $V$ to $\mb{F}$---i.e. $\mathcal{L}(V,\mb{F})$---is called the **dual space** $V'$ of $V$. A linear map of this space is called a **linear functional**.
+Given some vector space $V$ over $\mb{F}$, the space of all linear maps from $V$ to $\mb{F}$---i.e. $\mathcal{L}(V,\mb{F})$---is called the **dual space** $V'$ of $V$. A linear map in $\mathcal{L}(V,\mb{F})$ is called a **linear functional**.
 
-Since $\dim\mb{F}=1$, each linear functional is either surjective or zero.
+Since $\dim\mb{F}=1$, each linear functional is either surjective or zero. Also, the rank-nullity theorem shows that the kernel of a linear functional has dimension $\dim V-1$.
 
-:::{#exm-}
+:::{#exm-functional-sends-to-one}
 For finite-dimensional $V$ and *any* non-zero $v\in V$, we can construct a linear functional that sends $v$ to $1$ (after extending $v$ to a basis of $V$).
 :::
 
 #### Dual of product space
-Previously, we showed that $\mathcal{L}(V_1\times\cdots\times V_n,W)$ is isomorphic to $\mathcal{L}(V_1,W)\times\cdots\times\mathcal{L}(V_n,W)$. So with $W=\mb{F}$, we see that the dual of the product space is the product space of the duals, i.e.
-
-$$(V_1\times\cdots\times V_n)'=V'_1\times\cdots\times V'_n.$$
-
-#### Dimension of dual space
-The dimension of the dual space of $V$ is equal to that of $V$.
-
-:::{.proof}
-Before, we saw that $\dim\mathcal{L}(V,W)=(\dim V)(\dim W)$. Here, $\dim\mb{F}=1$, and so we have $\dim V'=\dim V$.
+:::{#thm-dual-of-product}
+$(V_1\times\cdots\times V_n)'$ is isomorphic to $V'_1\times\cdots\times V'_n$.
 :::
 
+:::{.informal}
+The dual of the product space is isomorphic to the product space of the duals.
+:::
+
+:::{.proof-idea}
+This is just a special case of a previous result.
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
+Previously, we showed that $\mathcal{L}(V_1\times\cdots\times V_n,W)$ is isomorphic to $\mathcal{L}(V_1,W)\times\cdots\times\mathcal{L}(V_n,W)$. The result follows if we take $W=\mb{F}$.
+
+</details>
+
+#### Dimension of dual space
+:::{#thm-dim-dual}
+The dimension of $V'$ is equal to that of $V$.
+:::
+
+:::{.proof-idea}
+Recall the expression for the dimension of $\mathcal{L}(V,W)$.
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
+Before, we saw that $\dim\mathcal{L}(V,W)=(\dim V)(\dim W)$. Since $\dim\mb{F}=1$, it follows that 
+
+$$\dim V'=\dim\mathcal{L}(V,\mb{F})=\dim V.$$
+
+</details>
+
 #### Evaluation map
-Given some vectors $v_1,\cdots,v_n$ in finite-dimensional $V$, the corresponding **evaluation map** $\Gamma:V'\to\mb{F}^n$ takes a linear functional and produces its evaluations at each of these vectors:
+Given some vectors $v_1,\cdots,v_n$ in a finite-dimensional $V$, the corresponding **evaluation map** $\Gamma:V'\to\mb{F}^n$ takes a linear functional and produces its evaluations at each of these vectors:
 
 $$\Gamma(\phi)=(\phi(v_1),\cdots,\phi(v_n)).$$
 
-The evaluation map is injective if and only if the evaluated vectors span $V$.
+:::{#thm-evaluation-injective}
+The evaluation map is injective if and only if $\text{span}(v_1,\cdots,v_n)=V$.
+:::
 
-:::{.proof}
-Suppose that $\Gamma$ is injective, i.e. every distinct linear functional sends at least one $v_i$ differently from the others. In other words, the values at $v_1,\cdots,v_n$ specifies $\phi$ uniquely.
+:::{.proof-idea}
+If the span does not cover the entire space, two functionals may "look the same" in terms of the evaluation, while disagreeing outside the span.
 
-So let $w_1,\cdots,w_m$ be a basis of $\text{span}(v_1,\cdots,v_n)$. If $\text{span}(v_1,\cdots,v_n)\neq V$, then we can extend it with $w'_1,\cdots,w'_{p'}$ to form a basis of $V$.
+If the span covers the entire space, then a functional that vanishes at the evaluated vectors must vanish everywhere. 
+:::
 
-If so, two linear functionals can agree on the $w_i$s, and thereby on the $v_i$s, but be different maps because they disagree on the $w'_i$s. Therefore, if $v_1,\cdots,v_n$ does not span $V$, then $\Gamma$ is not injective.
+<details class="proof">
+<summary>Full proof</summary>
 
-Now suppose that $v_1,\cdots,v_n$ does span $V$. If $\phi(v_1)=\cdots=\phi(v_n)=0$, then for any arbitrary
+Suppose that $\Gamma$ is injective. This means that every linear functional in $V'$ sends at least one $v_i$ differently from the others. In other words, the values at $v_1,\cdots,v_n$ specifies $\phi$ uniquely.
 
-$$v=a_1v_1+\cdots+a_nv_n\in V,$$
+Let $w_1,\cdots,w_m$ be a basis of $\text{span}(v_1,\cdots,v_n)$. For contradiction, suppose that $\text{span}(v_1,\cdots,v_n)\neq V$. In that case, we can extend it with $w'_1,\cdots,w'_{p'}$ to form a basis of $V$.
+
+If so, two linear functionals can agree on the $w_i$s, and thereby on the $v_i$s, but be different maps because they disagree on the $w'_i$s. This contradicts the assertion that $\Gamma$ is injective. 
+
+Therefore, if $v_1,\cdots,v_n$ does not span $V$, then $\Gamma$ is not injective.
+
+Now suppose that $v_1,\cdots,v_n$ does span $V$. Let us prune them such that $v_1,\cdots,v_m$ is a basis of $V$ (possibly relabelling the vectors). If we have
+
+$$\phi(v_1)=\cdots=\phi(v_n)=0,$$ 
+
+then for any arbitrary
+
+$$v=a_1v_1+\cdots+a_mv_m\in V,$$
 
 we have
 
-$$\phi(v)=a_1\phi(v_1)+\cdots+a_n\phi(v_n)=0.$$
+$$\phi(v)=a_1\phi(v_1)+\cdots+a_m\phi(v_m)=0.$$
 
-So we find that $\phi=0$, which implies that $\ker\Gamma=0$. Therefore, $\Gamma$ is injective.
+We find that $\phi=0$, which implies that $\ker\Gamma=\{0\}$. So $\Gamma$ is injective.
 
 Hence, $\Gamma$ is injective if and only if $\text{span}(v_1,\cdots,v_n)=V$.
+
+</details>
+
+:::{#thm-evaluation-surjective}
+Furthermore, the evaluation map is surjective if and only if the evaluated vectors are linearly independent.
 :::
 
-Furthermore, the evaluation map is surjective if and only if the evaluated vectors are linearly independent.
+:::{.proof-idea}
+As we saw before, a linearly independent set of vectors can be mapped to anywhere, while there are restrictions on the image of a linearly dependent set.
+:::
 
-:::{.proof}
-Suppose that $v_1,\cdots,v_n$ are linearly independent. Then we can extend it to a basis of $V$.
+<details class="proof">
+<summary>Full proof</summary>
 
-For any $(x_1,\cdots,x_n)\in\mb{F}^n$, we can construct a linear functional $\phi\in V'$ with $\phi(v_i)=x_i$ (while $\phi(v'_i)$ can be arbitrarily set for the other basis vectors $v'_i$). So $\Gamma$ is surjective.
+Suppose that $v_1,\cdots,v_n$ are linearly independent. Then we can extend it with $v'_1,\cdots,v'_m$ to form a basis of $V$.
+
+This linear independence means that, for any $(x_1,\cdots,x_n)\in\mb{F}^n$, a linear functional $\phi\in V'$ can be defined such that $\phi(v_i)=x_i$ (while $\phi(v'_i)$ can be arbitrarily set). So $\Gamma$ is surjective.
 
 Conversely, suppose that $v_1,\cdots,v_n$ are linearly dependent. Then one of its vectors is in the span of the others, so without loss of generality, suppose that
 
@@ -85,7 +137,8 @@ $$(a_2\phi(v_2)+\cdots+a_n\phi(v_n)+\alpha,\phi(v_2),\cdots,\phi(v_n))\notin\im\
 for any $\alpha\neq0$.
 
 Therefore, $\Gamma$ is surjective if and only if $v_1,\cdots,v_n$ are linearly independent.
-:::
+
+</details>
 
 #### Dual basis
 Let $v_1,\cdots,v_n$ be a basis of $V$. The **dual basis** corresponding to this basis is the set $\phi_1,\cdots,\phi_n\in\mathcal{L}(V,\mb{F})$ of linear functionals where each $\phi_i$ is defined through
@@ -94,49 +147,76 @@ $$
 \phi_i(v_j)=
 \begin{cases}
 1&\text{if }i=j\\
-0&\text{otherwise}.
-\end{cases}
+0&\text{otherwise}
+\end{cases}=\delta_{i,j}.
 $$
 
-This set is called a dual *basis* because it is indeed a basis of $V'$.
+:::{#thm-dual-basis-is-basis}
+As the name suggests, a dual basis is indeed a basis of $V'$.
+:::
 
-:::{.proof}
+:::{.proof-idea}
+It suffices to show that a dual basis is linearly independent, as it already has the right size.
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
 Since $\dim V'=n$, we only have to show the linear independence of the functionals. Suppose that
 
 $$a_1\phi_1+\cdots+a_n\phi_n=0.$$
 
-But for
+This means that
 
 $$(a_1\phi_1+\cdots+a_n\phi_n)(v_i)=0$$
 
-to hold, we must have $a_i=0$. As this is the case for all $i=1,\cdots,n$, we see that $a_1=\cdots=a_n=0$. So the $\phi_i$s form a basis of $V'$.
-:::
+holds for each $i=1,\cdots,n$, which implies $a_1=\cdots=a_n=0$. So they are linearly independent, and the $\phi_i$s form a basis of $V'$.
+
+</details>
 
 ###### Coordinates of linear functional in dual basis
-Let $v_1,\cdots,v_n$ be a basis of $V$, and let $\phi_1,\cdots,\phi_n$ be the corresponding dual basis in $V'$. Then for arbitrary functional $\psi\in V'$, we have
+:::{#thm-functional-coordinates-dual}
+With respect to the dual basis of $v_1,\cdots,v_n$, the $i$th coordinate of a linear functional $\psi$ is given by $\psi(v_i)$.
+:::
 
-$$
-\begin{aligned}
-\psi&=a_1\phi_1+\cdots+a_n\phi_n\\
-&=\psi(v_1)\phi_1+\cdots+\psi(v_n)\phi_n,
-\end{aligned}
-$$
+<details class="proof">
+<summary>Full proof</summary>
 
-as a consequence of $\phi_i(v_j)=\delta_{i,j}.$
+Let $\phi_1,\cdots,\phi_n$ be the dual basis of $v_1,\cdots,v_n$. Then for arbitrary functional $\psi\in V'$, we have
+
+$$\psi=a_1\phi_1+\cdots+a_n\phi_n\implies\psi(v_i)=a_i$$
+
+as a consequence of $\phi_i(v_j)=\delta_{i,j}$. Therefore, $\psi$ can be expressed as
+
+$$\psi=\psi(v_1)\phi_1+\cdots+\psi(v_n)\phi_n.$$
+
+</details>
 
 ###### Tuple of linearly independent functionals
-Let $\phi_1,\cdots,\phi_n:V\to\mb{F}$ be linearly independent functionals in $V'$. Then the map $\Phi:V\to\mb{F}^n$ defined as
+:::{#thm-independent-functionals-surjective}
+Let $\phi_1,\cdots,\phi_n$ be linearly independent functionals in $V'$. Then the map $\Phi:V\to\mb{F}^n$ defined as
 
 $$\Phi(v)=(\phi_1(v),\cdots,\phi_n(v))$$
 
 is surjective.
+:::
 
-:::{.proof}
+:::{.informal}
+Linearly independent functionals $\phi_1,\cdots,\phi_n$ are so "unrelated" to each other such that, by going over all $v\in V$, we can obtain every possible combination of $n$ "numbers".
+:::
+
+:::{.proof-idea}
+If $\Phi$ is not surjective, there is a non-trivial linear map $\psi:\mb{F}^n\to\mb{F}$ that has $\im\ \Phi$ as its kernel. But then this $\psi$ is a linear constraint between $\phi_1(v),\cdots,\phi_n(v)$, which contradicts the linear independence of the $\phi_i$s.
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
 For contradiction, suppose that $\im\ \Phi\subset\mb{F}^n$. Let $w_1,\cdots,w_k$ be a basis of $\im\ \Phi$, and extend it with $w'_1,\cdots,w'_{n-k}$ to form a basis of $\mb{F}^n$. Let $\psi_1,\cdots,\psi_k,\psi'_1,\cdots,\psi'_{n-k}:\mb{F}^n\to\mb{F}$ be the dual to this basis. Then we have $\psi'_1(w)=0$ for all $w\in\im\ \Phi$. 
 
-Now, let $e_1,\cdots,e_n$ be the standard basis of $\mb{F}^n$, and let $e'_1,\cdots,e'_n$ be the corresponding dual basis. Then we have 
+Now, let $e_1,\cdots,e_n$ be the standard basis of $\mb{F}^n$, and let $e'_1,\cdots,e'_n$ be the corresponding dual basis. Then we can write 
 
-$$\Phi(v)=\phi_1(v)e_1+\cdots+\phi_n(v)e_n,$$
+$$\Phi(v)=(\phi_1(v),\cdots,\phi_n(v))=\phi_1(v)e_1+\cdots+\phi_n(v)e_n,$$
 
 and the functional $\psi'_1$ can be expressed as
 
@@ -152,35 +232,52 @@ $$
 \end{aligned}
 $$
 
-But this implies that
+But this implies that $\psi'_1(e_1)\phi_1+\cdots+\psi'_1(e_n)\phi_n$ is the zero functional, although the $\psi'_1(e_i)$s not all zero. This contradicts the assertion that the $\phi_i$s are linearly independent. Therefore, $\im\ \Phi=\mb{F}^n$.
 
-$$\psi'_1(e_1)\phi_1+\cdots+\psi'_1(e_n)\phi_n$$
-
-is the zero functional, with the $\psi'_1(e_i)$s not all zero. This contradicts the assertion that the $\phi_i$s are linearly independent. Therefore, $\im\ \Phi=\mb{F}^n$.
-:::
+</details>
 
 ###### Basis corresponding to arbitrary dual basis
-
+:::{#thm-basis-for-dual-basis}
 Let $\phi_1,\cdots,\phi_n$ be a basis of $V'$. Then there always exist basis $v_1,\cdots,v_n$ of $V$ whose dual basis is $\phi_1,\cdots,\phi_n$.
+:::
 
-:::{.proof}
+:::{.informal}
+Any basis of $V'$ is dual to some basis of $V$, like how any basis of $V$ has a dual basis in $V'$.
+:::
+
+:::{.proof-idea}
+Since $(\phi_1(v),\cdots,\phi_n(v))$ ranges over the entire $\mb{F}^n$, we can find $v_i$s such that $\phi_j(v_i)=\delta_{i,j}$.
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
 Since $\phi_1,\cdots,\phi_n$ are linearly independent, we know by the previous result that there exist $v_1,\cdots,v_n$ such that $\phi_i(v_j)=\delta_{i,j}$. We now need to show that these form a basis of $V$.
 
 Since $\dim V=\dim V'$, this set has the right size to be a basis. If we have
 
 $$0=a_1v_1+\cdots+a_nv_n,$$
 
-then acting on both sides by $\phi_i$ shows $a_i=0$, and so the $v_i$s are linearly independent and form a basis of $V$. 
-:::
+then acting on both sides by $\phi_i$ shows $a_i=0$. So the $v_i$s are linearly independent and form a basis of $V$. 
+
+</details>
 
 #### Double dual space
+:::{#thm-double-dual}
 The **double dual space** $V''$ of $V$ is the dual space of $V'$. If $V$ is finite-dimensional, then $\Lambda:V\to V''$ defined as
 
 $$(\Lambda v)(\phi)=\phi(v)$$
 
 for all $v\in V$ and $\phi\in V'$ is an isomorphism between $V$ and $V''$.
+:::
 
-:::{.proof}
+:::{.informal}
+The dual space of $V'$ is not the same space as $V$---after all, it consists of linear maps, not vectors. But if $V$ is finite-dimensional, then they are isomorphic, where the isomorphism sends $v$ to "functionals should evaluate me at $v$". 
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
 Since we have
 
 $$
@@ -228,10 +325,11 @@ $$
 Therefore, we have $\phi'=\Lambda v$, which implies that $\Lambda$ is surjective.
 
 Therefore, $\Lambda$ is an isomorphism.
-:::
+
+</details>
 
 ## Dual map
-Not only do spaces and bases have their duals, but also do linear maps. But this is where it becomes slightly confusing, because the dual space is already construed as consisting of linear maps. As it were, the dual map is a linear map *between linear maps* of vectors.
+Not only do spaces and bases have their duals, but so do linear maps. But this is where it becomes slightly confusing, because the dual space is already construed as consisting of linear maps. As it were, the dual map is a linear map *between linear maps* of vectors.
 
 For a linear map $T:V\to W$, its **dual map** $T':W'\to V'$ sends each functional $\phi\in W'$ to
 
@@ -245,7 +343,7 @@ Anyway, the following properties are trivial to show, where $S$ and $T$ are appr
 - $(\lambda T)'=\lambda T'$
 - $(ST)'=T'S'$
 
-:::{#exm-}
+:::{#exm-dual-identity}
 The dual map $I'\in\mathcal{L}(V')$ of the identity map $I$ on $V$ acts as
 
 $$I'(\phi)=\phi\circ I$$
@@ -259,9 +357,17 @@ which means that $I'(\phi)=\phi$ and $I'$ is the identity map on $V'$.
 
 #### Two canonical isomorphisms
 ###### Isomorphism of subspace dual
+:::{#thm-subspace-dual-iso}
 Let $U$ be a subspace of $V$, and let $i:U\to V$ be the inclusion map (in which case $i':V'\to U'$). If $V$ is finite-dimensional, then $\tilde{i'}$ is an isomorphism between $V'/U^0$ and $U'$.
+:::
 
-:::{.proof}
+:::{.informal}
+The dual space of $U$ is isomorphic to the dual space of $V$ quotiented by the annihilator of $U\subseteq V$.
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
 By the first isomorphism theorem, we know that $\tilde{i'}$ is an isomorphism between $V'/\ker i'$ and $\im\ i'$. So we only need to prove that $\ker i'=U^0$ and $\im\ i'=U'$.
 
 As for the first requirement, we have
@@ -281,12 +387,21 @@ $$
 $$
 
 where $\phi$ is taken to be a linear functional on $V$. Therefore, $\phi=i'(\phi)$ and so $\phi\in\im\ i'$. This implies $U'\subseteq\im\ i'$ and hence $U'=\im\ i'$.
-:::
+
+</details>
 
 ###### Isomorphism of annihilator
+:::{#thm-annihilator-iso}
 Let $U$ be a subspace of $V$, and let $\pi:V\to V/U$ be a quotient map. Then $\pi':(V/U)'\to V'$ is an isomorphism between $(V/U)'$ and $U^0$. 
+:::
 
-:::{.proof}
+:::{.informal}
+The annihilator of $U$ is isomorphic to the dual space of $V/U$.
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
 Again, the first isomorphism theorem shows that $\pi'$ is an isomorphism between $(V/U)'/\ker\pi'$ and $\im\ \pi'$. So it suffices to show that $\ker\pi'=\{0\}$ and $\im\ \pi'=U^0$.
 
 If $\pi'(\phi_1)=\pi'(\phi_2)$ for some $\phi_1,\phi_2\in(V/U)'$, then we have for any $v\in V$
@@ -319,7 +434,8 @@ Suppose that $\phi\in U^0$. We have $\phi\in\im\ \pi'$ if there exists $\psi\in(
 $$\phi=\pi'(\psi)=\psi\circ\pi.$$
 
 But we have found earlier that such $\psi$ exists when $U\subseteq\ker\phi$. As $\phi$ is an annihilator of $U$, this requirement holds, and so $U^0\subseteq \im\ \pi'$. Therefore, we have $U^0=\im\ \pi'$.
-:::
+
+</details>
 
 ## Annihilator
 Now let's move on to something that seems rather unrelated to dual maps. For a subspace $U\subseteq V$, its **annihilator** $U^0\subseteq V'$ is the set of linear functionals that sends all $u\in U$ to zero:
@@ -331,71 +447,112 @@ Alternatively, the annihilator can be described as a set of $\phi\in V'$ such th
 An annihilator is a subspace of $V'$, as we may quickly check.
 
 #### Annihilator of subspace sum
-If $U$ and $W$ are subspaces of $V$, then $(U+W)^0=U^0\cap W^0$. 
+:::{#thm-annihilator-sum}
+If $U$ and $W$ are subspaces of $V$, then $(U+W)^0=U^0\cap W^0$.
+:::
 
-:::{.proof}
+:::{.informal}
+The annihilator of the sum is the intersection of the annihilators, which makes sense. To annihilate all $u+w$s, we must annihilate all $u$s and $w$s separately.
+:::
+
+:::{.proof-idea}
+If $\phi$ annihilates $U$ and $W$, then it must annihilate $U+W$. If it doesn't, then it must have a "blind spot".
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
 If $\phi\in U^0\cap W^0$, then we have $\phi\in U^0$ and $\phi\in W^0$. So
 
 $$\phi(u+w)=\phi(u)+\phi(w)=0+0=0$$
 
 for all $u\in U$ and $w\in W$, which means $\phi\in(U+W)^0$.
 
-Instead suppose that $\phi\notin U^0\cap W^0$, and without loss of generality, suppose that $\phi\notin U^0$. Then there exist $u\in U$ such that $\phi(u)\neq 0$. So while $u+0\in U+W$, we have $\phi(u+0)\neq0$. Therefore, $\phi\notin(U+W)^0$.
+Instead suppose that $\phi\notin U^0\cap W^0$, and without loss of generality, suppose that $\phi\notin U^0$. Then there exists $u\in U$ such that $\phi(u)\neq 0$. 
+
+So while $u+0\in U+W$, we have $\phi(u+0)\neq0$. Therefore, $\phi\notin(U+W)^0$.
 
 This implies that $(U+W)^0=U^0\cap W^0$.
-:::
+
+</details>
 
 #### Dimension of annihilator
-We may recall that, for a subspace $U$ of finite-dimensional $V$, we have the equality
-
-$$\dim U + \dim V/U=\dim V.$$
-
-Annihilators give us another equality of this sort, namely
+:::{#thm-dim-annihilator}
+If $U$ is a subspace of a finite-dimensional $V$, then
 
 $$\dim U + \dim U^0=\dim V.$$
 
-(Of course, $V/U$ consists of affine subsets of $V$, while $U^0$ consists of linear functionals of $V$.)
+:::
 
-:::{.proof}
-An annihilator is a linear functional of $V$ that leads to the zero map when its domain is restricted to $U$. So it is the kernel of the restriction map
+:::{.informal}
+Recall that, for a subspace $U$ of finite-dimensional $V$, we have the equality
 
-$$
-\begin{gather}
-r:\mathcal{L}(V,\mb{F})\to\mathcal{L}(U,\mb{F})\\
-r(\phi)=\phi|_U.
-\end{gather}
-$$
+$$\dim U + \dim V/U=\dim V.$$
 
-Since $r$ is surjective, the rank-nullity theorem gives us
+Now we see that $\dim U^0=\dim V/U$.
+:::
+
+:::{.proof-idea}
+An annihilator of $U$ becomes a zero map when restricted to $U$, so $U^0$ can be viewed as a kernel.
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
+$U^0$ is the kernel of the restriction map $r:\mathcal{L}(V,\mb{F})\to\mathcal{L}(U,\mb{F})$ defined as $r(\phi)=\phi|_U$. Since $r$ is surjective, the rank-nullity theorem gives us
 
 $$\dim U^0=\dim\ker r=\dim\mathcal{L}(V,\mb{F})-\dim\mathcal{L}(U,\mb{F})=\dim V-\dim U$$
 
 as required.
-:::
 
-A corollary of this is that $U^0=V'$ if and only if $U$ is trivial, and $U^0$ is trivial if and only if $U=V$.
+</details>
+
+A corollary of this is that $U$ is trivial if and only if $U^0=V'$, while $U^0$ is trivial if and only if $U=V$.
 
 #### Condition for one annihilator to contain another
-Suppose that $V$ is finite-dimensional, and $U,W\subseteq V$ are subspaces. Then $U\subseteq W$ if and only if $W^0\subseteq U^0$.
-
-:::{.proof}
-Suppose that $U\subseteq W$. Then any annihilator of $W$ will annihilator $U$, and so $W^0\subseteq U^0$.
-
-Suppose that $W^0\subseteq U^0$. Let $w_1,\cdots,w_n$ be a basis of $W$. For contradiction, suppose there exists $u\in U-W$. Then $w_1,\cdots,w_n,u$ is linearly independent, and we can extend it to a basis. 
-
-Subsequently, we can define $\phi:V\to\mb{F}$ such that it sends all the $w_i$s to zero but not $u$. This annihilates $W$ but not $U$, which is a contradiction. Therefore, all vectors in $U$ are contained in $W$.
+:::{#thm-annihilator-containment}
+Suppose that $V$ is finite-dimensional, while $U$ and $W$ are subspaces of $V$. Then $U\subseteq W$ if and only if $W^0\subseteq U^0$.
 :::
 
+:::{.informal}
+A subspace contains another subspace if and only if the annihilator of the latter contains that of the former.
+:::
+
+:::{.proof-idea}
+If $U$ is contained in $W$, it is possible to create a functional that annihilates $U$ but not $W$.  
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
+Suppose that $U\subseteq W$. Then any annihilator of $W$ will annihilate $U$, and so $W^0\subseteq U^0$.
+
+Suppose that $W^0\subseteq U^0$. Let $w_1,\cdots,w_n$ be a basis of $W$. For contradiction, suppose there exists $u\in U-W$. Then the set $w_1,\cdots,w_n,u$ is linearly independent, and we can extend it to a basis of $U$.
+
+Subsequently, we can define $\phi:V\to\mb{F}$ such that it sends all the $w_i$s to zero but not $u$. This annihilates $W$ but not $U$, which is a contradiction. Therefore, all vectors in $U$ are contained in $W$.
+
+</details>
+
 #### What becomes annihilated by annihilator
+:::{#thm-double-annihilator-subspace}
 Suppose $V$ is finite-dimensional and $U$ is a subspace of $V$. Then $U$ can be characterised as
 
 $$U=\{v\in V:\phi(v)=0\text{ for all }\phi\in U^0\},$$
 
 i.e. the set of vectors that becomes annihilated when acted upon by any annihilator of $U$.
+:::
 
-This condition clearly holds for the vectors in $U$, so this really amounts to saying that no other vectors are annihilated by $U^0$ except the vectors in $U$.
+:::{.informal}
+It is trivially true that $\phi(u)=0$ for all $u\in U$, so this really amounts to saying that no other vectors are annihilated by $U^0$ except the vectors in $U$.
+:::
 
-:::{.proof}
+:::{.proof-idea}
+Given the dimension of the annihilator, the dimension of the annihilated is fixed.
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
 Let $u_1,\cdots,u_n$ be a basis for $U$. Suppose there exists $w\notin U$ such that $\phi(w)=0$ for all $\phi\in U^0$. 
 
 Let $W$ be the subspace spanned by $u_1,\cdots,u_n,w$. Then we have $\dim W^0=\dim U^0$, while $\dim W=\dim U+1$. Since
@@ -403,19 +560,31 @@ Let $W$ be the subspace spanned by $u_1,\cdots,u_n,w$. Then we have $\dim W^0=\d
 $$\dim V=\dim U+\dim U^0=\dim W+\dim W^0,$$
 
 we have a contradiction, and so no such $w$ exists.
-:::
+
+</details>
 
 #### Annihilator of annihilated
+:::{#thm-double-annihilator-functionals}
 Suppose $V$ is finite-dimensional and $\Gamma$ is a subspace of $V'$. Then $\Gamma$ can be characterised as
 
-$$\Gamma=\{v\in V:\phi(v)=0\text{ for all }\phi\in \Gamma\}^0,$$
+$$\Gamma=\{v\in V:\phi(v)=0\text{ for all }\phi\in \Gamma\}^0.$$
 
-i.e. the annihilator of the set of vectors annihilated by the functionals in $\Gamma$.
+:::
 
-:::{.proof}
+:::{.informal}
+Suppose we have a subspace of functionals, and find the vectors that become annihilated by these functionals. Then no functionals outside this subspace annihilates these vectors.
+:::
+
+:::{.proof-idea}
+Show that the two subspaces have the same dimension, by considering a map that evaluates each vector at the basis functionals of $\Gamma$.
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
 For brevity, let us denote the set on the right as $U^0$. Tautologically, a functional $\phi\in\Gamma$ will annihilate the vectors annihilated by $\phi\in\Gamma$, and so $\Gamma\subseteq U^0$.
 
-We will show that $\dim U^0=\dim\Gamma$, thereby completing the proof. Let $\phi_1,\cdots,\phi_n$ be a basis of $\Gamma$, and define a map $M:V'\to\mb{F}^n$ as
+We will show that $\dim U^0=\dim\Gamma$, thereby completing the proof. Let $\phi_1,\cdots,\phi_n$ be a basis of $\Gamma$ (where $n=\dim\Gamma$), and define a map $M:V\to\mb{F}^n$ as
 
 $$Mv=(\phi_1(v),\cdots,\phi_n(v)).$$
 
@@ -425,34 +594,44 @@ If $v\in\ker M$, then $\phi_1(v)=\cdots=\phi_n(v)=0$ and so $\phi(v)=0$ for all 
 
 If $v\in U$, then $\phi(v)=0$ for all $\phi\in\Gamma$, which includes the functionals $\phi_1,\cdots,\phi_n$. Therefore, $U\subseteq \ker M$.
 
-So we have $U=\ker M$. Furthermore, since $\phi_1,\cdots\phi_n$ are linearly independent, so $M$ is surjective. Then the rank-nullity theorem gives us
+So we have $U=\ker M$. Furthermore, since $\phi_1,\cdots\phi_n$ are linearly independent, $M$ is surjective by a previous result. Then the rank-nullity theorem gives us
 
-$$\dim V'=\dim\ker M+\dim\im M=\dim U+\dim \Gamma.$$
+$$\dim V=\dim\ker M+\dim\im\ M=\dim U+\dim \Gamma.$$
 
-Since $\dim V=\dim U^0+\dim U$ and $\dim V=\dim V'$, this implies $\dim U^0=\dim\Gamma$ as required. 
+Since $\dim V=\dim U^0+\dim U$, this implies $\dim U^0=\dim\Gamma$ as required.
 
-:::
+</details>
 
 #### Some equalities
 Now we have 4 equalities that we can prove in succession, although only the third one is memorable.
 
 ###### Kernel of dual map is annihilator of image of vector map
+:::{#thm-kernel-dual-map}
 That is, $\ker T'=(\im\ T)^0$ where $T:V\to W$.
+:::
 
-:::{.proof}
+<details class="proof">
+<summary>Full proof</summary>
+
 A linear functional $\phi\in W'$ is in $\ker T'$ if and only if 
 
 $$0=T'(\phi)=\phi\circ T.$$
 
 This means that we have $0=\phi(Tv)$ for all $Tv\in\im\ T$. So $\phi\in\ker T'$ if and only if $\phi\in(\im\ T)^0$.
-:::
+
+</details>
 
 ###### Dimension of kernel of dual map in terms of three other dimensions
+:::{#thm-dim-kernel-dual}
 If $V$ and $W$ are finite-dimensional, then
 
 $$\dim\ker T'=\dim\ker T+\dim W-\dim V.$$
 
-:::{.proof}
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
 By the previous two results, we have
 
 $$
@@ -463,12 +642,17 @@ $$
 $$
 
 Since $\dim\im\ T=\dim V-\dim\ker T$ by the rank-nullity theorem, the desired equality follows.
-:::
+
+</details>
 
 ###### Images of vector map and dual map have same dimension
+:::{#thm-rank-dual-equal}
 That is, $\dim\im\ T'=\dim\im\ T$ where $V$ and $W$ are finite-dimensional.
+:::
 
-:::{.proof}
+<details class="proof">
+<summary>Full proof</summary>
+
 The rank-nullity theorem and the previous result gives us
 
 $$
@@ -480,18 +664,19 @@ $$
 $$
 
 where we also used $\dim W=\dim W'$ in the second line. Then the desired equality follows from another use of the rank-nullity theorem.
-:::
+
+</details>
 
 A corollary of this is that $T'=0$ if and only if $T=0$.
 
 ###### Image of dual map is annihilator of vector map
-That is,
+:::{#thm-image-dual-map}
+That is, $\im\ T'=(\ker T)^0$, which is a "mirror image" of what we proved earlier.
+:::
 
-$$\im\ T'=(\ker T)^0,$$
+<details class="proof">
+<summary>Full proof</summary>
 
-which is a "mirror image" of what we proved earlier.
-
-:::{.proof}
 The proof here is a bit different from the others. First, let $\phi\in V'$ be a functional in $\im\ T'$. Then there exists $\psi\in W'$ such that $T'(\psi)=\phi$. For any $v\in\ker T$, we have
 
 $$\phi(v)=(T'(\psi))(v)=\psi(Tv)=\psi(0)=0,$$
@@ -509,12 +694,20 @@ $$
 
 But we saw previously that $\dim V-\dim\ker T=\dim(\ker T)^0$, so we find that $\im\ T'$ and $(\ker T)^0$ have the same dimension, as required.
 
-:::
+</details>
 
 #### Injectivity and surjectivity
-Perhaps intuitively for something called a "dual map", $T$ is surjective (resp. injective) if and only if $T'$ is injective (resp. surjective).
+:::{#thm-dual-injective-surjective}
+$T$ is surjective (resp. injective) if and only if $T'$ is injective (resp. surjective).
+:::
 
-:::{.proof}
+:::{.informal}
+Perhaps intuitively for something called a "dual map", the injection of one is equivalent to the surjection of the other.
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
 Both proofs involve the previous results at appropriate places. 
 
 $T$ is surjective and $\im\ T=W$.
@@ -532,14 +725,28 @@ $\iff$ $\dim(\ker T)=0$.
 $\iff$ $\dim(\ker T)^0=\dim V'$ and $(\ker T)^0=V'$.
 
 $\iff$ $\im\ T'=V'$ and $T'$ is surjective.
-:::
+
+</details>
 
 #### Dimension of intersection of kernels
+:::{#thm-dim-intersection-kernels}
 If $V$ is finite-dimensional and $\phi_1,\cdots,\phi_n\in V'$ are linearly independent, then
 
 $$\dim(\ker\phi_1\cap\cdots\cap\ker\phi_n)=\dim V-n.$$
 
-:::{.proof}
+:::
+
+:::{.informal}
+Each linearly independent linear functional leaves a "different dimension" of the vector space alive.
+:::
+
+:::{.proof-idea}
+The intersection of the kernels of $\phi_1,\cdots,\phi_n$ is annihilated by any $\phi_i$, and it turns out that the annihilator of this intersection is spanned by $\phi_1,\cdots,\phi_n$.
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
 First, note that
 
 $$
@@ -548,9 +755,11 @@ $$
 \end{aligned}
 $$
 
-We conjecture that $\phi_1,\cdots,\phi_n$ form a basis of $(\ker\phi_1\cap\cdots\cap\ker\phi_n)^0$.
+We conjecture that $\phi_1,\cdots,\phi_n$ form a basis of $(\ker\phi_1\cap\cdots\cap\ker\phi_n)^0$. 
 
-For each $v\in\bigcap_{i=1}^n\ker\phi_i$, we do have $\phi_i(v)=0$, and so $\phi_i\in(\bigcap_{i=1}^n\ker\phi_i)^0$. The $\phi_i$s are linearly independent by the problem statement, so we only have to check that they span $(\bigcap_{i=1}^n\ker\phi_i)^0$.
+Firstly, we see that the $\phi_i$s do lie inside this annihilator, because they annihilate any vector in the intersection of their kernels.
+
+The $\phi_i$s are linearly independent by the problem statement, so we only have to check that they span $(\bigcap_{i=1}^n\ker\phi_i)^0$.
 
 By an equality shown previously, we have
 
@@ -560,7 +769,7 @@ Now, we can express $\ker\phi_i$ as
 
 $$\ker\phi_i=\{v\in V:\phi(v)=0\text{ for all }\phi\in\Phi_i\},$$
 
-where $\Phi_i=\{\lambda_i\phi_i:\lambda_i\in\mb{F}\}$. Then another result above allows us to obtain
+where $\Phi_i=\{\lambda\phi_i:\lambda\in\mb{F}\}$. Then another result above allows us to obtain
 
 $$
 \begin{aligned}
@@ -574,7 +783,7 @@ So we have
 $$
 \begin{aligned}
 (\bigcap_{i=1}^n\ker\phi_i)^0&=\Phi_1+\cdots+\Phi_n\\
-&=\{\lambda_1\phi_1:\lambda_1\in\mb{F}\}+\cdots+\{\lambda_n\phi_n:\lambda_n\in\mb{F}\}\\
+&=\{\lambda\phi_1:\lambda\in\mb{F}\}+\cdots+\{\lambda\phi_n:\lambda\in\mb{F}\}\\
 &=\{\lambda_1\phi_1+\cdots+\lambda_n\phi_n:\lambda_1,\cdots,\lambda_n\in\mb{F}\},
 \end{aligned}
 $$
@@ -582,7 +791,8 @@ $$
 which means that $\phi_1,\cdots,\phi_n$ do span $(\bigcap_{i=1}^n\ker\phi_i)^0$.
 
 Therefore, $\phi_1,\cdots,\phi_n$ forms a basis of $(\ker\phi_1\cap\cdots\cap\ker\phi_n)^0$, which means that its dimension is $n$ as required.
-:::
+
+</details>
 
 ## Matrix transpose
 Given a $m\times n$ matrix $A$, its **transpose** $A^T$ is the $n\times m$ obtained by interchanging the row and column indices of $A$, i.e.
@@ -592,9 +802,13 @@ $$(A^T)_{i,j}=A_{j,i}.$$
 We can quickly check that ${}^T:\mb{F}^{m,n}\to\mb{F}^{n,m}$ is an isomorphism.
 
 #### Transpose of product
+:::{#thm-transpose-product}
 The transpose of matrix product is the matrix product of transposes. That is, if $A$ and $B$ are $m\times n$ and $n\times p$ matrices respectively, then $(AB)^T=B^TA^T$.
+:::
 
-:::{.proof}
+<details class="proof">
+<summary>Full proof</summary>
+
 For any index of $(AB)^T$, we have
 
 $$
@@ -607,16 +821,26 @@ $$
 $$
 
 which implies $(AB)^T=B^TA^T$ as a whole. 
-:::
+
+</details>
 
 #### Matrix of dual map
 Let $V$ and $W$ be finite-dimensional with dimensions $n$ and $m$ respectively. Let $v_1,\cdots,v_n$ be a basis of $V$, and let $\phi_1,\cdots,\phi_n$ be the corresponding dual basis in $V'$. Let $w_1,\cdots,w_m$ be a basis of $W$, and let $\psi_1\cdots,\psi_m$ be the corresponding dual basis in $W'$. Let $\mathcal{M}(T)$ and $\mathcal{M}(T')$ be the $m\times n$ and $n\times m$ matrix representations of $T:V\to W$ and $T':W'\to V'$ in these bases respectively.
 
-Then the matrix of the dual map is the transpose of the vector map, i.e.
+:::{#thm-matrix-dual-transpose}
+Then the matrix of the dual map is the transpose of the matrix of the original map, i.e.
 
 $$\mathcal{M}(T')=\mathcal{M}(T)^T.$$
 
-:::{.proof}
+:::
+
+:::{.proof-idea}
+Consider the definition of $\mathcal{M}(T')$ and "reveal" each entry by using the basis of $V$.
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
 By the definition of matrix representation, we have
 
 $$T'(\psi_j)=\sum_{i=1}^n\mathcal{M}(T')_{i,j}\phi_i.$$
@@ -637,7 +861,8 @@ T'(\psi_j)(v_k)&=\psi_j(Tv_k)\\
 $$
 
 Therefore, we see that $\mathcal{M}(T')=\mathcal{M}(T)^T$.
-:::
+
+</details>
 
 ## Rank
 #### Row and column ranks
@@ -651,21 +876,23 @@ $$\text{span}(A_{\cdot,1},\cdots,A_{\cdot,n}),$$
 
 which is a subspace of $\mb{F}^{m,1}$.
 
-:::{#exm-}
+:::{#exm-rank-one-outer-product}
 Both the column and row ranks of matrix $A$ are 1 if and only if each row is a scalar multiple of one another, and each column is a scalar multiple of one another. This is the case if and only if there exist $c_1,\cdots,c_m$ and $d_1,\cdots,d_n$ such that $A_{i,j}=c_id_j$.
 :::
 
 ###### Column rank is dimension of image
+:::{#thm-column-rank-image}
 The column rank of $\mathcal{M}(T)$ is the same as $\dim\im\ T$.
+:::
 
-:::{.proof}
-Let $T:V\to W$, and consider its matrix representation $\mathcal{M}(T)$. By how $\mathcal{M}(T)$ is defined, its $i$th column is the matrix representation of $Tv_i$ in the chosen basis of $W$. So the column rank of $\mathcal{M}(T)$ is equal to the dimension of
+<details class="proof">
+<summary>Full proof</summary>
 
-$$\text{span}(\mathcal{M}(Tv_1),\cdots,\mathcal{M}(Tv_n))$$
+Let $T:V\to W$, and consider its matrix representation $\mathcal{M}(T)$. By the definition of $\mathcal{M}(T)$, its $i$th column is the matrix representation of $Tv_i$ in the chosen basis of $W$. 
 
-where $n=\dim V$.
+So the column rank of $\mathcal{M}(T)$ is equal to the dimension of $\text{span}(\mathcal{M}(Tv_1),\cdots,\mathcal{M}(Tv_n))$ where $n=\dim V$.
 
-Now, a vector in $\mathcal{M}(Tv_1),\cdots,\mathcal{M}(Tv_n)$ is just an element of $\mb{F}^{m,1}$ where $m=\dim W$. So there is an isomorphism between $\mathcal{M}(Tv_1),\cdots,\mathcal{M}(Tv_n)$ and $Tv_1,\cdots,Tv_n$, namely the mapping
+But we have an isomorphism between $\text{span}(\mathcal{M}(Tv_1),\cdots,\mathcal{M}(Tv_n))$ and $\text{span}(Tv_1,\cdots,Tv_n)$ in the form of
 
 $$
 \begin{pmatrix}
@@ -673,20 +900,31 @@ a_1\\
 \vdots\\
 a_m
 \end{pmatrix}
-\mapsto a_1w_1+\cdots+a_mw_m.
+\mapsto a_1w_1+\cdots+a_mw_m,
 $$
+
+where $m=\dim W$. (Note that the domain is a subspace of $\mb{F}^{m,1}$, while the image is a subspace of $W$.)
 
 So we have the equality
 
-$$\dim\text{span}(\mathcal{M}(Tv_1),\cdots,\mathcal{M}(Tv_n))=\dim\text{span}(Tv_1,\cdots,Tv_n),$$
+$$\dim\text{span}(\mathcal{M}(Tv_1),\cdots,\mathcal{M}(Tv_n))=\dim\text{span}(Tv_1,\cdots,Tv_n)=\dim\im\ T.$$
 
-but the latter span is $\im\ T$. Therefore, the column rank is equal to $\dim\im\ T$.
-:::
+Therefore, the column rank is equal to $\dim\im\ T$.
+
+</details>
 
 ###### Column and row ranks are equal
+:::{#thm-column-row-rank-equal}
 It turns out that the column rank and row rank of a matrix are always the same, and so we can unambiguously speak of its **rank**.
+:::
 
-:::{.proof}
+:::{.informal}
+This is why we referred to $\dim\im\ T$ as the rank of $T$ earlier.
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
 Any $m\times n$ matrix $A$ can be interpreted as the matrix representation of some $T:V\to W$, where $V$ and $W$ have dimensions $n$ and $m$ respectively. Then we have by the previous result
 
 $$
@@ -699,23 +937,29 @@ $$
 $$
 
 where we used the third of the 4 equalities in the second line. 
-:::
+
+</details>
 
 ###### Matrix of operator
-Let $T$ be an operator of finite-dimensional $V$, and let $\mathcal{M}(T)$ be its matrix representation with respect to two bases of $V$.
+:::{#thm-operator-matrix-invertible}
+Let $T$ be an operator of finite-dimensional $V$, and let $\mathcal{M}(T)$ be its matrix representation with respect to two bases of $V$. Then $T$ is invertible if and only if the columns or the rows of $\mathcal{M}(T)$ either are linearly independent or span $\mb{F}^{n,1}$ or $\mb{F}^{1,m}$ respectively.
+:::
 
-Then we have the following state of affairs:
+<details class="proof">
+<summary>Full proof</summary>
 
 $T$ is invertible.
 
 $\iff$ $T$ is surjective.
 
-$\iff$ $\dim\im T=n$.
+$\iff$ $\dim\im\ T=n$.
 
 $\iff$ The column (row) rank of $\mathcal{M}(T)$ is $n$.
 
 $\iff$ The dimension of the span of the columns (rows) is $n$.
 
-$\iff$ The columns (rows) form a basis of $\mb{F}^{n,1}$.
+$\iff$ The columns (resp. rows) form a basis of $\mb{F}^{n,1}$ (resp. $\mb{F}^{1,m}$).
 
-$\iff$ Being of the right size, the columns (rows) either are linearly independent or span $\mb{F}^{n,1}$.
+$\iff$ Being of the right size, the columns (resp. rows) either are linearly independent or span $\mb{F}^{n,1}$ (resp. $\mb{F}^{1,m}$).
+
+</details>
