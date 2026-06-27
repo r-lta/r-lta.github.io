@@ -15,11 +15,22 @@ This is an augmented summary of Section 3.F of [Linear Algebra Done Right](https
 ## Dual space
 Given some vector space $V$ over $\mb{F}$, the space of all linear maps from $V$ to $\mb{F}$---i.e. $\mathcal{L}(V,\mb{F})$---is called the **dual space** $V'$ of $V$. A linear map in $\mathcal{L}(V,\mb{F})$ is called a **linear functional**.
 
-Since $\dim\mb{F}=1$, each linear functional is either surjective or zero. Also, the rank-nullity theorem shows that the kernel of a linear functional has dimension $\dim V-1$.
+<details class="example">
+<summary>Linear functional on $\mb{F}^n$</summary>
 
-:::{#exm-functional-sends-to-one}
-For finite-dimensional $V$ and *any* non-zero $v\in V$, we can construct a linear functional that sends $v$ to $1$ (after extending $v$ to a basis of $V$).
+The function $\phi:\mb{F}^n\to\mb{F}$ defined as
+
+$$\phi(x_1,\cdots,x_n)=c_1x_1+\cdots+c_nx_n$$
+
+where $c_1,\cdots,c_n\in\mb{F}$ is a linear functional on $\mb{F}^n$.
+
+</details>
+
+:::{#thm-}
+Since $\dim\mb{F}=1$, each linear functional is either surjective or zero.
 :::
+
+Note that, for a finite-dimensional $V$ and any non-zero $v\in V$, we can construct a linear functional that sends $v$ to $1$. 
 
 #### Dual of product space
 :::{#thm-dual-of-product}
@@ -150,6 +161,30 @@ $$
 0&\text{otherwise}
 \end{cases}=\delta_{i,j}.
 $$
+
+<details class="example">
+<summary>Dual basis of standard basis</summary>
+
+Consider the linear functionals $\phi_1,\cdots,\phi_n:\mb{F}^n\to\mb{F}$ where $\phi_i$ extracts the $i$th coordinate: 
+
+$$\phi_i(x_1,\cdots,x_n)=x_i.$$ 
+
+For the standard basis $e_1,\cdots,e_n$, we see that $\phi_i(e_j)=1$ if $i=j$, and $\phi_i(e_j)=0$ otherwise. Therefore, $\phi_1,\cdots,\phi_n$ is the dual basis of $e_1,\cdots,e_n$.
+
+</details>
+
+<details class="example">
+<summary>Dual basis of $(\mathcal{P}_n(\mathbb{R}))'$</summary>
+
+Consider the basis $1,x,\cdots,x^n$ of $\mathcal{P}_n(\mathbb{R})$. Its dual basis is given by $\phi_0,\cdots,\phi_n:\mathcal{P}_n(\mathbb{R})\to\mb{F}$ where
+
+$$\phi_i(p)=\frac{p^{(i)}(0)}{j!}.$$
+
+For the basis $1,x-5,\cdots,(x-5)^n$ (note that it is a linearly independent set of the right size), the corresponding dual basis is
+
+$$\phi_i(p)=\frac{p^{(i)}(5)}{j!}.$$
+
+</details>
 
 :::{#thm-dual-basis-is-basis}
 As the name suggests, a dual basis is indeed a basis of $V'$.
@@ -337,13 +372,17 @@ $$T'(\phi)=\phi\circ T.$$
 
 So from a map $\phi$ of vectors in $W$, we obtain a map $T'(\phi)$ of vectors in $V$ by first sending them to vectors in $W$ through $T$. Why would we want this convoluted concept? Again, patience is needed.
 
-Anyway, the following properties are trivial to show, where $S$ and $T$ are appropriate linear maps.
+:::{#thm-}
+The following properties are trivial to show, where $S$ and $T$ are appropriate linear maps.
 
 - $(S+T)'=S'+T'$
 - $(\lambda T)'=\lambda T'$
 - $(ST)'=T'S'$
+:::
 
-:::{#exm-dual-identity}
+<details class="example">
+<summary>Dual map of identity map</summary>
+
 The dual map $I'\in\mathcal{L}(V')$ of the identity map $I$ on $V$ acts as
 
 $$I'(\phi)=\phi\circ I$$
@@ -353,7 +392,8 @@ for $\phi\in V'$. Then for an arbitrary $v\in V$, we have
 $$I'(\phi)(v)=\phi(Iv)=\phi(v),$$
 
 which means that $I'(\phi)=\phi$ and $I'$ is the identity map on $V'$.
-:::
+
+<\details>
 
 #### Two canonical isomorphisms
 ###### Isomorphism of subspace dual
@@ -444,7 +484,9 @@ $$U^0=\{\phi\in V':\phi(u)=0\text{ for all }u\in U\}.$$
 
 Alternatively, the annihilator can be described as a set of $\phi\in V'$ such that $U\subseteq\ker\phi$.
 
-An annihilator is a subspace of $V'$, as we may quickly check.
+:::{#thm-}
+An annihilator is a subspace of $V'$.
+:::
 
 #### Annihilator of subspace sum
 :::{#thm-annihilator-sum}
@@ -507,7 +549,9 @@ as required.
 
 </details>
 
+:::{#thm-}
 A corollary of this is that $U$ is trivial if and only if $U^0=V'$, while $U^0$ is trivial if and only if $U=V$.
+:::
 
 #### Condition for one annihilator to contain another
 :::{#thm-annihilator-containment}
@@ -618,6 +662,17 @@ A linear functional $\phi\in W'$ is in $\ker T'$ if and only if
 $$0=T'(\phi)=\phi\circ T.$$
 
 This means that we have $0=\phi(Tv)$ for all $Tv\in\im\ T$. So $\phi\in\ker T'$ if and only if $\phi\in(\im\ T)^0$.
+
+</details>
+
+<details class="example">
+<summary>When kernel of dual map is span of linear functional</summary>
+
+Suppose that $\phi$ is a linear functional on $\mathbb{R}^5$ defined as $\phi(p)=p(8)$. Let $T\in\mathcal{L}(\mathcal{P}_5(\mathbb{R}),\mathcal{P}(\mathbb{R}))$ be a map whose dual map $T'$ satisfies $\ker T'=\text{span}(\phi)$. We wish to find $\im\ T$.
+
+Then by the above result, we have $(\im\ T)^0=\text{span}(\phi)$. By a previous result, no other vectors are annihilated by $\text{span}(\phi)$ except those in $\im\ T$. Therefore, a vector is in $\im\ T$ if and only if it lies in the kernel of $\phi$. So we have
+
+$$\im\ T=\{p\in\mathcal{P}_5(\mathbb{R}):p(8)=0\}.$$
 
 </details>
 
@@ -799,7 +854,9 @@ Given a $m\times n$ matrix $A$, its **transpose** $A^T$ is the $n\times m$ obtai
 
 $$(A^T)_{i,j}=A_{j,i}.$$
 
-We can quickly check that ${}^T:\mb{F}^{m,n}\to\mb{F}^{n,m}$ is an isomorphism.
+:::{#thm-}
+The map ${}^T:\mb{F}^{m,n}\to\mb{F}^{n,m}$ is an isomorphism.
+:::
 
 #### Transpose of product
 :::{#thm-transpose-product}
@@ -876,10 +933,6 @@ $$\text{span}(A_{\cdot,1},\cdots,A_{\cdot,n}),$$
 
 which is a subspace of $\mb{F}^{m,1}$.
 
-:::{#exm-rank-one-outer-product}
-Both the column and row ranks of matrix $A$ are 1 if and only if each row is a scalar multiple of one another, and each column is a scalar multiple of one another. This is the case if and only if there exist $c_1,\cdots,c_m$ and $d_1,\cdots,d_n$ such that $A_{i,j}=c_id_j$.
-:::
-
 ###### Column rank is dimension of image
 :::{#thm-column-rank-image}
 The column rank of $\mathcal{M}(T)$ is the same as $\dim\im\ T$.
@@ -937,6 +990,22 @@ $$
 $$
 
 where we used the third of the 4 equalities in the second line. 
+
+</details>
+
+###### Matrix of rank one
+:::{#thm-}
+A matrix has rank one if and only if there exist $c_1,\cdots,c_m$ and $d_1,\cdots,d_n$ such that $A_{i,j}=c_id_j$.
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
+The matrix $A$ has rank one if and only if its row rank is one. The row rank is equal to one if and only if each row is a scalar multiple of a common row. If we designate this common row by $(d_1,\cdots,d_n)$, and the scalar factors of the rows as $c_1,\cdots,c_m$, then the matrix satisfies
+
+$$A_{i,\cdot}=c_id\implies A_{i,j}=c_id_j.$$
+
+(Subsequently, we find that each column is a scalar multiple of the common column $(c_1,\cdots,c_m)$, with the scalar factors given by $(d_1,\cdots,d_n)$. As expected, the column rank is also one.)
 
 </details>
 

@@ -12,6 +12,8 @@ execute:
 
 This is an augmented summary of Section 3.B of [Linear Algebra Done Right](https://linear.axler.net/index.html) by Sheldon Axler.
 
+As in the previous section, we assume that $\mb{F}\in\{\mathbb{R},\mathbb{C}\}$.
+
 ## Kernel and image
 Suppose that $T:V\to W$ is a linear map. Then you can obtain a subspace of $V$ and a subspace of $W$ out of $T$, called the *kernel* and the *image* of the map respectively.
 
@@ -20,9 +22,52 @@ We saw that $T$ must map $0$ to $0$. But it may send other vectors in $V$ to $0$
 
 It is easy to check that $\ker T$ is a subspace of $V$. (For starters, we already saw that $0\in\ker T$.)
 
-:::{#exm-ker-differentiation}
+<details class="example">
+<summary>Kernel of zero map</summary>
+
+The kernel of the zero map $T:V\to W$ is the vector space $V$ itself. 
+
+</details>
+
+<details class="example">
+<summary>Kernel of zero map</summary>
+
+The kernel of the zero map $0:V\to W$ is the vector space $V$ itself. 
+
+</details>
+
+<details class="example">
+<summary>Kernel of map from $\mathbb{C}^3$ to $\mathbb{C}$</summary>
+
+Consider the linear map $\phi:\mathbb{C}^3\to\mathbb{C}$ defined as
+
+$$\phi(z_1,z_2,z_3)=z_1+2z_2+3z_3.$$
+
+Its kernel is given by the subspace
+
+$$\{(z_1,z_2,z_3):z_1+2z_2+3z_3=0\}.$$
+
+</details>
+
+<details class="example">
+<summary>Kernel of differentiation map</summary>
+
 The kernel of the differentiation linear map $D:\mathcal{P}(\mathbb{R})\to\mathcal{P}(\mathbb{R})$ consists of the constant polynomials. 
-:::
+
+</details>
+
+<details class="example">
+<summary>Kernel of backward shift</summary>
+
+Consider the backward shift map $T\in\mathcal{L}(\mb{F}^\infty,\mb{F}^\infty)$ defined as
+
+$$T(x_1,x_2,x_3,\cdots)=(x_2,x_3,\cdots).$$
+
+Its kernel is the subset
+
+$$\{(a,0,0,\cdots):a\in\mb{F}\}.$$
+
+</details>
 
 ###### Injectivity and kernel
 :::{#thm-injective-iff-trivial-kernel}
@@ -45,14 +90,6 @@ $$T(v_1-v_2)=0\implies v_1-v_2\in\ker T\implies v_1-v_2=0\implies v_1=v_2.$$
 Therefore, $T$ is injective.
 
 </details>
-
-:::{#exm-linind}
-Let $v_1,\cdots,v_n\in V$, and define $T\in\mathcal{L}(\mb{F}^n,V)$ as
-
-$$T(z_1,\cdots,z_n)=z_1v_1+\cdots+z_nv_n.$$
-
-Then the linear independence of the $v_i$s is equivalent to the triviality of $\ker T$, and so it occurs if and only if $T$ is injective.
-:::
 
 ###### Kernel complement
 :::{#thm-kernel-complement}
@@ -95,16 +132,48 @@ $$\im\ T=\{Tv:v\in V\}.$$
 
 By the closure of $V$, $\im\ T$ is also closed under addition and multiplication, as we can check. In addition, the flip side of $T0=0$ is that $0\in\im\ T$. Therefore, the image is a subspace of $W$.
 
-:::{#exm-image-differentiation}
+<details class="example">
+<summary>Image of zero map</summary>
+
+The image of the zero map $0:V\to W$ is simply $\{0\}$.
+
+</details>
+
+<details class="example">
+<summary>Image of map from $\mathbb{R}^2$ to $\mathbb{R}^3$</summary>
+
+Consider the linear map $T:\mathbb{R}^2\to\mathbb{R}^3$ defined by
+
+$$T(x,y)=(-2x,3y,2x+y).$$
+
+Its image is given by
+
+$$\{(-2x,3y,2x+y):x,y\in\mathbb{R}\}.$$
+
+</details>
+
+<details class="example">
+<summary>Image of differentiation map</summary>
+
 The image of the differentiation linear map $D:\mathcal{P}_5(\mathbb{R})\to\mathcal{P}_5(\mathbb{R})$ is $\mathcal{P}_4(\mathbb{R})$.
-:::
+
+</details>
 
 ###### Surjectivity and image
 By definition, a linear map $T:V\to W$ is surjective if and only if $\im\ T=W$.
 
-:::{#exm-span-iff-surjective}
-Consider @exm-linind. The $v_i$s span $V$ if and only if $T$ is surjective.
-:::
+<details class="example">
+<summary>Coordinate map</summary>
+
+Let $v_1,\cdots,v_n\in V$, and define the *coordinate map* $T\in\mathcal{L}(\mb{F}^n,V)$ as
+
+$$T(z_1,\cdots,z_n)=z_1v_1+\cdots+z_nv_n.$$
+
+The linear independence of $v_1,\cdots,v_n$ is equivalent to $\ker T=\{0\}$, which in turn is equivalent to the injectivity of $T$.
+
+The span-ness of $v_1,\cdots,v_n$ is equivalent to $\im\ T=V$, in other words the surjectivity of $T$.
+
+</details>
 
 ###### Image of spanning set
 :::{#thm-image-spanning-set}
@@ -153,9 +222,11 @@ then $a_1v_1+\cdots+a_nv_n\in\ker T$. Since $\ker T=\{0\}$ for injections, this 
 </details>
 
 ###### Set of injective/surjective maps
+:::{#thm-}
 The set of injective maps in $\mathcal{L}(V, W)$ does not form a subspace if $\dim V>0$, for then the zero map is not injective.
 
 The set of surjective maps does not form a subspace if $\dim W>0$, for then the zero map is not surjective.
+:::
 
 ###### Set of non-injective maps
 :::{#thm-non-injective-not-subspace}
@@ -326,19 +397,40 @@ $$\dim V=\dim\ker T+\dim\im\ T.$$
 
 </details>
 
-:::{#exm-no-image-equals-kernel}
-There is no linear map $T:\mathbb{R}^5\to\mathbb{R}^5$ with $\im\ T=\ker T$, because that requires 
+<details class="example">
+<summary>Map with same kernel and image</summary>
+
+The linear map $T:\mathbb{R}^4\to\mathbb{R}^4$ defined as
+
+$$T(w,x,y,z)=(0,0,w,x)$$
+
+has the same kernel and image, namely $\{(0,0,a,b):a,b\in\mb{F}\}$.
+
+There is no linear map $T:\mathbb{R}^5\to\mathbb{R}^5$ with $\ker T=\im\ T$, because that requires 
 
 $$5=\dim\ker T+\dim\im\ T=2\dim\ker T.$$
 
-:::
+</details>
 
-:::{#exm-nullity-forces-surjective}
-If a linear map $T$ maps from $\mathbb{R}^8$ to $\mathbb{R}^3$ and $\ker T$ has 5 dimensions, then we immediately know that $T$ is surjective because
+<details class="example">
+<summary>Determining surjectivity from dimensions</summary>
+
+If a linear map $T$ maps from $\mathbb{R}^8$ to $\mathbb{R}^3$ and $\dim\ker T=5$, then we immediately know that $T$ is surjective because
 
 $$\dim\im\ T=\dim \mathbb{R}^8-\dim\ker T=8-5=3$$
 
-:::
+</details>
+
+<details class="example">
+<summary>Impossible kernels</summary>
+
+There cannot exist a linear map from $\mb{F}^5\to\mb{F}^2$ with the kernel
+
+$$\{(x_1,x_2,x_3,x_4,x_5):x_1=3x_2,\ x_3=x_4=x_5\}.$$
+
+The kernel has dimension $2$, so the image must have dimension $5-2=3$, which is larger than that of the codomain.
+
+</details>
 
 #### Corollary for operators
 :::{#thm-operator-sum-direct}
@@ -524,10 +616,30 @@ then this system can be represented as
 $$T(x_1,\cdots,x_n)=(c_1,\cdots,c_m).$$
 
 ###### Homogeneous system
-If $c_i=0$, then we have a **homogeneous** system. We often ask whether there are solutions to this system other than the trivial one $x_i=0$. In the linear map language, there exist non-trivial solutions when $\ker T\neq\{0\}$, in other words when $T$ is non-injective. We saw that it is always non-injective when $n>m$, i.e. when there are more variables than equations.
+If $c_i=0$, then we have a **homogeneous** system. In such cases, we always have the trivial solution with $x_1=\cdots=x_n=0$.
+
+:::{#thm-}
+If there are more variables than equations ($n>m$), there exist non-trivial solutions to this system.
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
+In the linear map language, we are asking whether $\ker T\neq\{0\}$, which is the case if $T$ is non-injective. Previously, we saw that a linear map is never injective if the dimension of the domain is greater than that of the codomain. Since $\dim\mb{F}^p=p$, the condition is satisfied when $n>m$.
+
+</details>
 
 ###### Inhomogeneous system
-On the other hand, we may ask if there exist a combination of the $c_i$s to which no solutions exist. In the linear map language, no solutions exist when $T$ is non-surjective. We have seen that it is always non-surjective when $n<m$, i.e. when there are more equations than variables.
+:::{#thm-}
+Whenever there are more variables than equations ($n<m$), there exists a combination of the $c_i$s to which no solutions exist.
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
+In the linear map language, we have combinations $c_i$ with no solutions when $T$ is non-surjective. We saw that a linear map is never surjective if the dimension of the codomain is greater than that of the domain. Since $\dim\mb{F}^p=p$, the condition is satisfied when $n<m$.
+
+</details>
 
 ## Some early results on linear functionals
 #### As coordinates of linear map
@@ -644,5 +756,18 @@ for some $k\in K$, as we have seen previously. Subsequently, we find
 $$\phi_1(v)=\phi_1\left(k+\frac{\phi_2(v)}{\phi_2(u)}u\right)=\frac{\phi_2(v)}{\phi_2(u)}\phi_1(u)=\frac{\phi_1(u)}{\phi_2(u)}\phi_2(v).$$
 
 As $v$ was arbitrary, we see that $\phi_1(u)/\phi_2(u)$ is the sought constant $c$.
+
+</details>
+
+<details class="example">
+<summary>Non-proportionality when codomain dimension is greater than unity</summary>
+
+Consider the two maps from $\mathbb{R}^3$ to $\mathbb{R}^2$ defined as
+
+$$
+(x_1,x_2,x_3)\mapsto(x_1,0)\quad\text{and}\quad(x_1,x_2,x_3)\mapsto(0,x_1).
+$$
+
+They have the same kernel $\{(0,a,b):a,b\in\mb{F}\}$ but are not proportional to one another.
 
 </details>

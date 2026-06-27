@@ -82,6 +82,35 @@ details.proof[open]::after {
 }
 details.proof > :last-child { margin-bottom: 0; }
 
+/* ===== Collapsible example (descriptive name as summary; purple example look) ===== */
+details.example {
+  border-left: 3px solid #8e6bbf;
+  background: #f5f1fb;
+  padding: 0.6em 1em;
+  margin: 1.2em 0 1.8em;
+  border-radius: 0 4px 4px 0;
+}
+details.example > summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: #6f4fa0;
+  list-style: none;
+}
+details.example > summary::-webkit-details-marker { display: none; }
+details.example > summary::before {
+  content: "\25B8\00A0 Example";
+  display: block;
+  font-weight: 700;
+  font-size: 0.78em;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #8e6bbf;
+  margin-bottom: 0.3em;
+}
+details.example[open] > summary::before { content: "\25BE\00A0 Example"; }
+details.example[open] > summary { margin-bottom: 0.6em; }
+details.example > :last-child { margin-bottom: 0; }
+
 /* ===== Quarto crossref environments (#thm-, #lem-, #cor-, #exm-, #def-, ...) =====
    Quarto gives ALL of them class "theorem"; subtypes add .example/.definition/etc.
    Base style = theorem family (blue); examples get a distinct colour below.
@@ -132,12 +161,12 @@ div.informal::before {
 div.informal > p:last-child { margin-bottom: 0; }
 
 /* ===== Tighter gap between consecutive boxed environments ===== */
-:is(div.theorem, div.informal, div.proof-idea, div.proof, details.proof)
-  + :is(div.theorem, div.informal, div.proof-idea, div.proof, details.proof) {
+:is(div.theorem, div.informal, div.proof-idea, div.proof, details.proof, details.example)
+  + :is(div.theorem, div.informal, div.proof-idea, div.proof, details.proof, details.example) {
   margin-top: 0.6em;
 }
-:is(div.theorem, div.informal, div.proof-idea, div.proof, details.proof):has(
-  + :is(div.theorem, div.informal, div.proof-idea, div.proof, details.proof)) {
+:is(div.theorem, div.informal, div.proof-idea, div.proof, details.proof, details.example):has(
+  + :is(div.theorem, div.informal, div.proof-idea, div.proof, details.proof, details.example)) {
   margin-bottom: 0.6em;
 }
 

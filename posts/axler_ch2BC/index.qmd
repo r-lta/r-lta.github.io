@@ -12,19 +12,56 @@ execute:
 
 This is an augmented summary of Sections 2.B and 2.C of [Linear Algebra Done Right](https://linear.axler.net/index.html) by Sheldon Axler.
 
+As in the previous section, we assume that $\mb{F}\in\{\mathbb{R},\mathbb{C}\}$.
+
 ## Basis
 We have come across linearly independent sets and spanning sets. What if a set is linearly independent *and* spans $V$? Then it is called a **basis** of $V$.
 
-:::{#exm-standard-basis}
-The **standard basis** of $\mb{F}^n$ consists of the vectors
+<details class="example">
+<summary>Standard basis of $\mb{F}^n$</summary>
 
-$$(1,0,\cdots,0),(0,1,\cdots,0),\cdots,(0,0,\cdots,1).$$
+The set of vectors
 
-:::
+$$(1,0,\cdots,0),(0,1,0,\cdots,0),\cdots,(0,\cdots,0,1)\in\mb{F}^n$$
 
-:::{#exm-trivial-basis}
-The basis of $\{0\}$ is the empty set.
-:::
+is linearly independent and spans $\mb{F}^n$. It is called the **standard basis** of $\mb{F}^n$.
+
+</details>
+
+<details class="example">
+<summary>Basis of $\mathcal{P}_n(\mb{F})$</summary>
+
+The set of vectors $1,z,\cdots,z^n$ is linearly independent and spans $\mathcal{P}_n(\mb{F})$, and is thereby a basis of $\mathcal{P}_n(\mb{F})$.
+
+</details>
+
+<details class="example">
+<summary>Non-standard basis of $\mb{F}^2$</summary>
+
+Consider the set $(1,2),(3,5)\in\mb{F}^2$. It is linearly independent because one vector is not a scalar multiple of the other. 
+
+So by the Steinitz exchange lemma, it can be exchanged with the standard basis $(1,0),(0,1)$ while preserving the span of the latter, namely $\mb{F}^2$.
+
+As a linearly independent set that spans $\mb{F}^n$, the set is a basis of $\mb{F}^2$.
+
+</details>
+
+<details class="example">
+<summary>Basis for subspace of $\mb{F}^3$ with linear constraint</summary>
+
+Consider the subspace of $\mb{F}^3$ defined as
+
+$$\{(x,y,z):x+y+z=0\}.$$
+
+Any vector in this subspace can be expressed as 
+
+$$(x,y,-x-y)=(x+y)(1,0,-1)+(-y)(1,-1,0),$$
+
+and the set $(1,0,-1),(1,-1,0)$ is linearly independent because one vector is not a scalar multiple of the other. Therefore, this set is a basis of the subspace.
+
+</details>
+
+By convention, we say that the basis of $\{0\}$ is the empty set, with $\sum_{v\in\emptyset}v=0$.
 
 #### Unique decomposition under basis
 :::{#thm-basis-unique}
@@ -197,44 +234,56 @@ By the Steinitz exchange lemma, we saw that a spanning set is never smaller than
 
 This unique cardinality of the bases is called the **dimension** of the vector space, and is denoted $\dim V$.
 
-:::{#exm-dim-fn-pn}
-The dimensions of $\mb{F}^n$ and $\mathcal{P}_n(\mb{F})$ are $n$ and $n+1$ respectively.
-:::
+Because of our convention where the basis of $\{0\}$ is the empty set, its dimension is $0$. 
 
-:::{#exm-dim-complex}
-The dimension of $\mathbb{R}^2$ over $\mathbb{R}$ is 2. However, the dimension of $\mathbb{C}$ over $\mathbb{C}$ is 1, even though $\mathbb{C}$ over $\mathbb{R}$ is isomorphic to $\mathbb{R}^2$ over $\mathbb{R}$.
-:::
+<details class="example">
+<summary>Dimension for $\mb{F}^n$ and $\mathcal{P}_n(\mb{F})$</summary>
 
-#### Dimension and linearly independent/spanning sets
+We have seen that the $n$ standard basis vectors form a basis of $\mb{F}^n$, and so $\dim\mb{F}^n=n$. 
+
+Meanwhile, $1,z,\cdots,z^n$ forms a basis of $\mathcal{P}_n(\mb{F})$, and so $\dim\mathcal{P}_n(\mb{F})=n+1$.
+
+</details>
+
+<details class="example">
+<summary>Dimensions of $\mathbb{R}^2$ and $\mathbb{C}$</summary>
+
+The dimension of $\mathbb{R}^2$ over $\mathbb{R}$ is $2$, with one basis being $(1,0),(0,1)$. However, the dimension of $\mathbb{C}$ over $\mathbb{C}$ is $1$, because any complex number can be reached from a non-zero $z\in\mathbb{C}$ by multiplication with a complex number.
+
+This difference in dimensions arises even though $\mathbb{C}$ over $\mathbb{R}$ (not over $\mathbb{C}$!) is isomorphic to $\mathbb{R}^2$ over $\mathbb{R}$.
+
+</details>
+
 :::{#thm-dim-bounds}
 The size of a linearly independent set in $V$ is a lower bound for $\dim V$. Likewise, the size of a spanning set is an upper bound for $\dim V$.
 :::
 
-:::{#exm-dim-shift}
-Suppose that $v_1,\cdots,v_n$ is a linearly independent set in $V$. Let $w$ be an arbitrary vector in $V$ and define $u_i=v_i-w$ with
+#### Adding vector to set of linearly independent vectors
+:::{#thm-}
+Let $v_1,\cdots,v_n$ be a set of linearly independent vectors in $V$, and consider an arbitrary $w\in V$. Then we have
 
-$$U=\text{span}(u_1,\cdots,u_n).$$
+$$\dim\text{span}(v_1+w,\cdots,v_n+w)\geq m-1.$$
 
-Let us consider the $n-1$ vectors in $U$ given by
-
-$$
-\begin{gather}
-u_2-u_1=v_2-v_1\\
-u_3-u_1=v_3-v_1\\
-\vdots\\
-u_n-u_1=v_n-v_1.
-\end{gather}
-$$
-
-It is trivial to check that these are linearly independent due to the linear independence of the $v_i$s. Therefore, 
-
-$$\dim U\geq n-1.$$
-
-(Furthermore, this lower bound is tight because $w=v_i$ leads to $\dim U=n-1$.)
 :::
 
-#### Trivial subspace
-Let us consider the trivial subspace $\{0\}$. We might think that $0$ is a basis of this subspace. However, it is not a linearly independent set, because $a0=0$ for any $a\in\mb{F}$. Instead, we say that its dimension is zero. This can be made consistent with our definition of basis if we set $\sum_{x\in\emptyset}x=0$.
+:::{.proof-idea}
+Consider the first difference of linearly independent vectors.
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
+It suffices to show that the span has a set of linearly independent vectors of size $m-1$.
+
+Previously, we have shown that if $v_1,\cdots,v_n$ is linearly independent, so is their first difference
+
+$$v_1-v_2,\cdots,v_{n-1}-v_n,v_n.$$
+
+This means that $v_1-v_2,\cdots,v_{n-1}-v_n$ is linearly independent as well, and each of these vectors are in $\text{span}(v_1+w,\cdots,v_n+w)$. (It is the first difference of the vectors in the set.) 
+
+As $\text{span}(v_1+w,\cdots,v_n+w)$ contains a linearly independent set of size $m-1$, its dimension must be at least $m-1$.
+
+</details>
 
 #### Dimension as limits to cardinality
 ###### For linearly independent sets
@@ -253,7 +302,9 @@ If it does not span $V$, then we can add to the set a vector not in the span, an
 
 </details>
 
-:::{#exm-poly-constraint-basis}
+<details class="example">
+<summary>Basis of polynomials equal at two points</summary>
+
 We wish to show that a basis of
 
 $$U=\{p\in\mathcal{P}_4(\mb{F}):p(x_1)=p(x_2)\}$$
@@ -271,15 +322,21 @@ $$a_1+a_2(x-x_1)(x-x_2)+a_3(x-x_1)^2(x-x_2)+a_4(x-x_1)^3(x-x_2)=0,$$
 the scalar $a_4$ has to vanish to eliminate $x^4$, so $a_3$ in turn has to vanish to eliminate $x^3$, and so on.
 
 Now, it is unnecessary to show that the set spans $U$ to show that it is a basis of $U$. Because $U\neq \mathcal{P}_4(\mb{F})$, we have $\dim U<5$ (see @thm-full-dim-subspace). Since we have found a linearly independent set of 4 vectors, the only possibility is that $\dim U=4$, with this set being a basis of $U$.
-:::
 
-:::{#exm-degree-basis}
+Furthermore, it can be extended to a basis of $V$ by adding the "missing degree": $x$.
+
+</details>
+
+<details class="example">
+<summary>Basis of $\mathcal{P}_n(\mb{F})$</summary>
+
 The above argument for showing linear independence can be generalised. Consider any set
 
 $$p_0,p_1,\cdots,p_n\in\mathcal{P}(\mb{F})$$
 
 where $p_i$ has degree $i$. The analogous argument shows the set to be linearly independent. Since $\dim\mathcal{P}_n(\mb{F})=n+1$, this set is a basis of $\mathcal{P}_n(\mb{F})$[^1].
-:::
+
+</details>
 
 ###### For spanning sets
 :::{#thm-spanning-dim-basis}
@@ -315,7 +372,9 @@ $$\text{span}(u_1,\cdots,u_n)=U=V.$$
 
 </details>
 
-:::{#exm-r3-classification}
+<details class="example">
+<summary>Enumeration of subspaces of $\mathbb{R}^3$</summary>
+
 We are now at a position to show that the only subspaces of $\mathbb{R}^3$ are what they are. The basis for a subspace $U$ has 3 linearly independent vectors at most, because $\dim\mathbb{R}^3=3$. So the possibilities are
 
 - $\dim U=0$: $U=\{0\}$.
@@ -323,7 +382,7 @@ We are now at a position to show that the only subspaces of $\mathbb{R}^3$ are w
 - $\dim U=2$: $U=\{tv_1+sv_2:t,s\in\mathbb{R}\}$, where $v_1$ and $v_2$ are linearly independent, which is a plane through the origin.
 - $\dim U=3$, in which case $U$ must be $\mathbb{R}^3$.
 
-:::
+</details>
 
 #### Dimension of a subspace sum
 ###### Sum of two subspaces
@@ -379,9 +438,23 @@ $$\dim (U_1+U_2)=\dim U_1+\dim U_2-\dim (U_1\cap U_2).$$
 
 </details>
 
-:::{#exm-dim-direct-check}
+<details class="example">
+<summary>When sum of dimensions is dimension of sum</summary>
+
 Suppose that $U+W=V$, with $\dim U=3$, $\dim W=5$ and $\dim V=8$. Then we immediately know that $V=U\oplus W$, because the above formula shows that $\dim(U\cap W)=0$, which in turn implies $U\cap W=\{0\}$.
-:::
+
+</details>
+
+<details class="example">
+<summary>When dimensions preclude direct sum</summary>
+
+Suppose that $U$ and $W$ are 4-dimensional subspaces of $\mathbb{C}^6$. At most, the dimension of $U+W$ is $6$, in which case the dimension of their intersection is
+
+$$\dim(U\cap W)=\dim U+\dim W-\dim\mathbb{C}^6=2.$$
+
+If the dimension of $U+W$ is smaller, then that of the intersection becomes larger. So the sum cannot be direct. (Also, the intersection always contains two vectors that are not scalar multiples of one another.)
+
+</details>
 
 ###### Sum of three subspaces
 Does the analogy to the inclusion-exclusion principle hold for 3 subspaces? That is, is it the case that

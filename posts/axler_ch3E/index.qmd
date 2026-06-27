@@ -43,6 +43,17 @@ where the dimension of the $i$th space is given by $\dim V_i$.
 
 </details>
 
+<details class="example">
+<summary>Basis of $\mathcal{P}_2(\mathbb{R})\times\mathbb{R}$</summary>
+
+The product space $\mathcal{P}_2(\mathbb{R})\times\mathbb{R}$ consists of vectors like $(x^2-3,(1,2))$. A basis is given by
+
+$$(1,(0,0)),(x,(0,0)),(x^2,(0,0)),(0,(1,0)),(0,(0,1)),$$
+
+and we see that its size is equal to $\dim\mathcal{P}_2(\mathbb{R})+\dim\mathbb{R}=3+2$.
+
+</details>
+
 :::{#thm-product-finite-implies-components}
 Conversely, if $V_1\times\cdots\times V_n$ is finite-dimensional, we can show that the component spaces are finite-dimensional.
 :::
@@ -245,6 +256,40 @@ Let $U$ be a subspace of $V$. Then the **quotient space** $V/U$ is a set of subs
 $$V/U=\{v+U:v\in V\}.$$
 
 Each subset $v+U$ is called an **affine subset** of $V$ that is **parallel** to $U$.
+
+<details class="example">
+<summary>Quotient space in $\mathbb{R}^2$</summary>
+
+Suppose that $U\subset\mathbb{R}^2$ is the set of points that lies on the line of slope $2$ through the origin, i.e.
+
+$$U=\{(x,2x):x\in\mathbb{R}\}.$$
+
+Then every line of slope $2$ is parallel to $U$, and $\mathbb{R}^2/U$ has as vectors the lines with slope $2$.
+
+</details>
+
+<details class="example">
+<summary>Subspace of $\mb{F}^\infty$ with finite number of non-zero entries</summary>
+
+Consider the subset of $\mb{F}^\infty$ defined as
+
+$$U=\{(x_1,x_2,\cdots):x_i\neq0\text{ for finitely many }i\}.$$
+
+We can check that $U$ is a subspace. 
+
+Two vectors of $\mb{F}^\infty$ are parallel with respect to $U$ if they disagree at a finite number of entries. So consider the sequence of vectors $v_1,v_2,\cdots$ where the $j$th entry of $v_i$ is equal to $1$ if and only if $j$ is a multiple of $2^i$, i.e.
+
+$$v_1=(0,1,0,1,0,\cdots,),\ v_2=(0,0,0,1,0,\cdots),$$
+
+and so on. We wish to show that $v_1+U,\cdots,v_n+U$ is linearly independent for all $n$, which means that $a_1v_1+\cdots+a_nv_n$ has an infinite number of non-zero entries unless $a_1=\cdots=a_n=0$.
+
+We will show this by induction. For $n=1$, the claim is trivially true. Now suppose that the claim is true for $n=k-1$. For contradiction, suppose that there exists $a_1,\cdots,a_k$, not all zero, such that $a_1v_1+\cdots+a_kv_k$ has a finite number of non-zero entries. In particular, $a_k$ cannnot be zero by the induction hypothesis.
+
+By construction, the sequence $a_1v_1+\cdots+a_{k-1}v_{k-1}$ is periodic with a period of $2^{k-1}$. So if it has a single non-zero entry, it must have an infinite number of them. This means that the sequence must vanish, and so we require $a_k=0$ in order for $a_1v_1+\cdots+a_kv_k$ to have a finite number of non-zero entries. This is a contradiction, and so the claim must hold for $n=k$ as well.
+
+By the principle of induction, we have $a_1v_1+\cdots+a_nv_n\in U$ only when $a_1=\cdots=a_n=0$, regardless of $n$. Therefore, $v_1+U,\cdots,v_n+U$ is linearly independent for all $n$, and so $\mb{F}^\infty/U$ is infinite-dimensional. 
+
+</details>
 
 #### Two affine subsets are equal or disjoint
 :::{#thm-affine-equal-or-disjoint}
@@ -730,6 +775,10 @@ $$\tilde{T}(v+\ker T)=Tv.$$
 Then $\tilde{T}$ is an isomorphism between $V/\ker T$ and $\im\ T$.
 :::
 
+:::{.informal}
+Any linear map produces an isomorphism between the domain quotiented by the map's kernel and the image. 
+:::
+
 :::{.proof-idea}
 We first show that $\tilde{T}$ is a well-defined linear map, then prove that it is injective and surjective (when we take the codomain to be $\im\ T$).
 :::
@@ -750,9 +799,35 @@ Hence, $V/\ker T$ is isomorphic to $\im\ T$.
 
 This is called the **first isomorphism theorem**.
 
-:::{#exm-functional-quotient}
-For a non-zero linear functional $\phi\in\mathcal{L}(V,\mb{F})$, we have $\dim\im\ \phi=\dim\mb{F}=1$. So the first isomorphism theorem gives us
-
-$$\dim (V/\ker\phi)=1.$$
-
+#### Subspace with quotient space of dimension $1$
+:::{#thm-}
+Suppose that $U$ is a subspace of $V$. Then $\dim V/U=1$ if and only if there exists a non-zero $\phi\in\mathcal{L}(V,\mb{F})$ such that $\ker\phi=U$.
 :::
+
+<details class="proof">
+<summary>Full proof</summary>
+
+Suppose that $\dim V/U=1$, and fix some arbitrary non-zero $v_0\in V$. Then any affine subset parallel to $U$ can be written as $\lambda(v_0+U)=\lambda v_0+U$, and any $v\in V$ can be expressed as $v=\lambda_vv_0+u$ for some $\lambda_v\in\mb{F}$ and $u\in U$. 
+
+Let us define $\phi:V\to\mb{F}$ as $\phi(v)=\lambda_v$. This is well-defined because every $v$ belongs to exactly one affine subset $\lambda v_0+U$. It is linear as
+
+$$
+\begin{gather}
+v+w=(\lambda_vv_0+u)+(\lambda_wv_0+u')=(\lambda_v+\lambda_w)v_0+(u+u')\\
+av=a(\lambda_vv_0+u)=(a\lambda_v)v_0+au
+\end{gather}
+$$
+
+and so $\phi(v+w)=\phi(v)+\phi(w)$ and $\phi(av)=a\phi(v)$.
+
+The kernel of $\phi$ consists of vectors that lies in $U$, as required.
+
+Conversely, suppose that there is a non-zero $\phi\in\mathcal{L}(V,\mb{F})$. Since $\phi$ is non-zero, we have
+
+$$\dim\im\ \phi=\dim\mb{F}=1.$$
+
+By the first isomorphism theorem, we have
+
+$$\dim(V/\ker\phi)=\dim\im\ \phi=1.$$
+
+</details>

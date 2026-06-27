@@ -12,7 +12,7 @@ execute:
 
 This is an augmented summary of Chapter 4 of [Linear Algebra Done Right](https://linear.axler.net/index.html) by Sheldon Axler.
 
-For this chapter, we assume that $\mb{F}$ is $\mathbb{R}$ or $\mathbb{C}$ (although we have not considered alternatives anyway).
+As in the previous section, we assume that $\mb{F}\in\{\mathbb{R},\mathbb{C}\}$.
 
 Recall that a map $p:\mb{F}\to\mb{F}$ is a **polynomial** (an element of $\mathcal{P}(\mb{F})$) if its action can be described as
 
@@ -151,7 +151,9 @@ Therefore, the decomposition $p=qd+r$ is unique when $r$ is restricted to $\deg 
 
 This is called the **division algorithm**, although we are not interested in the algorithm itself, but rather just in the existence and uniqueness statements that underlie it.
 
-:::{#exm-quotient-by-multiples}
+<details class="example">
+<summary>Quotienting by subspace of multiples of polynomial</summary>
+
 Let $p$ be a non-zero polynomial of degree $n$, and define the subspace $U=\{pq:q\in\mathcal{P}(\mb{F})\}$ of $\mathcal{P}(\mb{F})$.
 
 Let $r_s$ denote the remainder of $s$ when "divided" by $p$, so that $\deg r_s<\deg p$. Let us define a map $T:\mathcal{P}(\mb{F})/U\to \mathcal{P}_{n-1}(\mb{F})$ as $T(s+U)=r_s$. Through the division algorithm, we may check that it is well-defined and linear.
@@ -163,7 +165,8 @@ Since $T$ is an isomorphism, we have
 $$\dim(\mathcal{P}(\mb{F})/U)=\dim\mathcal{P}_{n-1}(\mb{F})=\deg p.$$
 
 Because the set $1+U,x+U,\cdots,x^{n-1}+U$ spans $\mathcal{P}(\mb{F})/U$ and is of the right size, it is a basis of $\mathcal{P}(\mb{F})/U$.
-:::
+
+</details>
 
 ## Zeros of polynomial
 A **zero** of a polynomial $p\in\mathcal{P}(\mb{F})$ is an element $\lambda\in\mb{F}$ such that $p(\lambda)=0$.

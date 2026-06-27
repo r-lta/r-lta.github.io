@@ -21,15 +21,34 @@ Suppose a set $V$ has **vector addition** $+:V\times V\to V$ defined on its elem
 
 Addition and multiplication are defined for $\mb{F}$ because it must be a **field**. $\mathbb{R}$ and $\mathbb{C}$ are concrete examples of fields.
 
-:::{#exm-trivial-space}
+<details class="example">
+<summary>Trivial vector space</summary>
+
 The empty set $\emptyset$ over some field is not a vector space, because it has no additive identity. The smallest vector space is the **trivial vector space** $\{0\}$.
-:::
 
-:::{#exm-fn}
-For some field $\mb{F}$, $\mb{F}^n$ denotes the set of all length-$n$ sequences of elements of $\mb{F}$. If we define vector addition and scalar multiplication in an element-wise manner, we can show that $\mb{F}^n$ is a vector space over $\mb{F}$. (Furthermore, the set $\mb{F}^\infty$ of *infinite* sequences is also a vector space over $\mb{F}$.)
-:::
+</details>
 
-:::{#exm-function-space}
+<details class="example">
+<summary>$\mb{F}^n$</summary>
+
+For a given field $\mb{F}$, $\mb{F}^n$ denotes the set of all length-$n$ sequences of elements of $\mb{F}$. If we define vector addition and scalar multiplication as
+
+$$
+\begin{gather}
+(x_1,\cdots,x_n)+(y_1,\cdots,y_n)=(x_1+y_1,\cdots,x_n+y_n)\\
+\lambda(x_1,\cdots,x_n)=(\lambda x_1,\cdots,\lambda x_n),
+\end{gather}
+$$
+
+we can directly check that $\mb{F}^n$ is a vector space over $\mb{F}$.
+
+Furthermore, the set $\mb{F}^\infty$ of *infinite* sequences is also a vector space over $\mb{F}$.
+
+</details>
+
+<details class="example">
+<summary>The function space $\mb{F}^S$</summary>
+
 Let $\mb{F}^S$ be the set of all functions from a set $S$ to $\mb{F}$. Define the sum of two functions as the function that evaluates at each $x\in S$ as
 
 $$(f+g)(x)=f(x)+g(x).$$
@@ -40,7 +59,7 @@ $$(\lambda f)(x)=\lambda f(x).$$
 
 We can check that $\mb{F}^S$ forms a vector space over $\mb{F}$. 
 
-In particular, $\mb{F}^n$ and $\mb{F}^\infty$ are instances of $\mb{F}^S$ with $S=\{1,\cdots,n\}$ and $S=\mathbb{N}$ respectively. Each sequence $(x_1,x_2,\cdots)$ corresponds to a function that maps each $i=1,2,\cdots$ to $x_i$: 
+In particular, $\mb{F}^n$ and $\mb{F}^\infty$ are instances of $\mb{F}^S$ with $S=\{1,\cdots,n\}$ and $S=\mathbb{N}$ respectively. Each sequence $(x_1,x_2,\cdots)$ corresponds to a function that maps each index $i=1,2,\cdots$ to $x_i$: 
 
 $$(x_1,x_2,\cdots)\leftrightarrow f(i)=x_i.$$
 
@@ -52,19 +71,51 @@ $$
 (\lambda x_1,\lambda x_2,\cdots)\leftrightarrow (\lambda f)(i)=\lambda f(i)=\lambda x_i.
 \end{gather}
 $$
-:::
+
+</details>
+
+A **real vector space** is a vector space over $\mb{R}$. A **complex vector space** is a vector space over $\mb{C}$. Somewhat confusingly, we can speak of the real vector space $\mathbb{C}^n$, where we restrict the scalar multiplication to real numbers.
 
 #### Basic properties
 ###### Uniqueness of identity and inverse
-As a group operation, the vector addition has a unique identity and inverse. We write the unique identity as $0$^[This is the same symbol as the unique identity of $\mb{F}$, but there is no ambiguity because we always write the scalar before the vector.], and the unique inverse of $v$ as $-v$.
+:::{#thm-}
+As a group operation, the vector addition has a unique identity and inverse. 
+:::
 
+We write the unique identity as $0$^[This is the same symbol as the unique identity of $\mb{F}$, but there is no ambiguity because we always write the scalar before the vector.], and the unique inverse of $v$ as $-v$.
+
+:::{#thm-}
 The uniqueness of the inverse implies that $-(-v)=v$, because $v$ is the only vector that adds with $-v$ to produce $0$.
+:::
 
 ###### Obtaining zero from scalar multiplication
-The scalar multiplication on a vector acts rather like multiplication between real numbers. For example, it is not too difficult to prove that $0v=0$ and $a0=0$. 
+:::{#thm-}
+For any $v\in V$ and $a\in\mb{F}$, we have $0v=0$ and $a0=0$. 
+:::
+
+:::{.informal}
+The zero vector is sufficient to kill the scalar multiple regardless of what the scalar is. The zero scalar is also sufficient to kill the scalar multiple regardless of the vector.
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
+We have
+
+$$0v=(0+0)v=0v+0v,$$
+
+and subtracting $0v$ from both sides leads to $0v=0$. 
+
+$a0=0$ is obtained in a similar manner.
+
+</details>
 
 :::{#thm-scalar-zero}
 In fact, $a=0$ or $v=0$ are the only cases where you can obtain the zero vector by scalar multiplication.
+:::
+
+:::{.informal}
+It is impossible to obtain a zero vector by multiplying a non-zero vector and a non-zero scalar together.
 :::
 
 :::{.proof-idea}
@@ -103,14 +154,20 @@ we see that $(-1)v$ is the (unique) additive inverse of $v$.
 ## Subspace
 Let's now think about subsets of $V$ that are vector spaces in their own right. These are called the **subspaces** of $V$. (Unfortunately, the motivations for defining this concept will not be forthcoming yet.) 
 
-If someone brings us a subset $U\subseteq V$, we need not check through every vector space axiom to verify that $U$ is a subspace of $V$. Since we inherit addition and scalar multiplication from $V$, we only have to verify that 
+If someone brings us a subset $U\subseteq V$, we need not check through every vector space axiom to verify that $U$ is a subspace of $V$. 
+
+:::{#thm-}
+Since we inherit addition and scalar multiplication from $V$, we only have to verify that 
 
 1. $U$ is closed under the inherited addition and scalar multiplication^[Previously, closure was not mentioned for vector addition, because we assumed that these binary operations map to the same set by definition.].
 2. $0\in U$. 
 
-It is easy to show that the vector space axioms are satisfied for $U$ once these two properties hold.
+Once these two properties hold, the vector space axioms are satisfied for $U$.
+:::
 
-:::{#exm-r3-subspaces}
+<details class="example">
+<summary>Subspaces of $\mathbb{R}^3$</summary>
+
 The subspaces of $\mathbb{R}^3$ include lines and planes through the origin. In fact, along with $\{0\}$ and $\mathbb{R}^3$, these comprise the *only* subspaces of $\mathbb{R}^3$. This is an interesting result, but we cannot prove it just yet.
 
 As an illustration, consider the subset
@@ -118,11 +175,40 @@ As an illustration, consider the subset
 $$\{(x_1,x_2,x_3):x_1x_2x_3=0\}\subset\mathbb{R}^3.$$
 
 This is not closed under addition because both $(1,1,0)$ and $(0,0,1)$ are in the set, but $(1,1,1)$ is not. (It is closed under scalar multiplication though.)
-:::
+
+</details>
+
+<details class="example">
+<summary>Subspace formed by linear constraint</summary>
+
+Consider the subset of $\mb{F}^3$ defined as
+
+$$\{(x_1,x_2,x_3):ax_1+bx_2+cx_3=d\}$$
+
+for some $a\in\mb{F}$. If $d=0$, then we can check that it a subspace of $\mb{F}^3$. If $d\neq0$, then it is not a subspace because it does not contain $(0,0,0)$. (Actually, it is also not closed under vector addition or scalar multiplication.)
+
+</details>
+
+<details class="example">
+<summary>$\mathbb{R}^2$ as subspace of $\mathbb{C}^2$</summary>
+
+In a *complex* vector space $\mathbb{C}^2$, $\mathbb{R}^2$ is not a subspace because it is not closed under scalar multiplication by a non-real complex number.
+
+In a *real* vector space $\mathbb{C}^2$, $\mathbb{R}^2$ is a subspace.
+
+</details>
+
+<details class="example">
+<summary>Almost-subspaces of $\mathbb{R}^2$</summary>
+
+The subset $\mathbb{Z}^2$ of $\mathbb{R}^2$ is closed under addition and the taking of additive inverses, but it is not closed under scalar multiplication.
+
+The subset $\{(x,0)\}\cup\{(0,y)\}$ of $\mathbb{R}^2$ is closed under scalar multiplication but is not closed under addition.
+
+</details>
 
 #### Intersection and union of subspaces
 ###### Intersection
-
 ::: {#thm-subspace-intersection}
 Suppose that $U_1$ and $U_2$ are subspaces of $V$. Then their intersection is also a subspace of $V$.
 :::
@@ -151,10 +237,10 @@ Finally, both $U_1$ and $U_2$ contain $0$ because they are subspaces. Therefore,
 Furthermore, we can see that the same argument generalises to intersections of any finite number of subspaces. It also works for intersections of a countably infinite number of subspaces.
 
 ###### Union
-What about the union of subspaces $U_1$ and $U_2$? In the trivial case where $U_1\subseteq U_2$, we have $U_1\cup U_2=U_2$, so we do obtain a subspace. However,
+What about the union of subspaces $U_1$ and $U_2$? In the trivial case where $U_1\subseteq U_2$, we have $U_1\cup U_2=U_2$, so we do obtain a subspace.
 
 ::: {#thm-subspace-union}
-$U_1\cup U_2$ is not a subspace when one subspace does not contain the other.
+However, $U_1\cup U_2$ is not a subspace when one subspace does not contain the other.
 :::
 
 :::{.informal}
@@ -187,9 +273,15 @@ Suppose that $U_1,\cdots,U_n$ are subspaces of a vector space. We define their *
 
 $$U_1+\cdots+U_n=\{u_1+\cdots+u_n:u_i\in U_i\}.$$
 
-(This is yet another unmotivated definition.) This is also a vector space, as we may easily check.
+(This is yet another unmotivated definition.) 
 
-:::{#exm-axis-sum}
+:::{#thm-}
+A sum of subspaces is itself a subspace.
+:::
+
+<details class="example">
+<summary>Sum of $x$- and $y$-axes</summary>
+
 If $U$ and $W$ are the "$x$- and $y$-axes" respectively, then $U+W$ is the "$x$-$y$ plane". That is, if $U$ and $W$ are subspaces of $\mb{F}^3$ where
 
 $$U=\{(x,0,0):x\in\mb{F}\}\quad\text{and}\quad W=\{(0,y,0):y\in\mb{F}\},$$
@@ -198,7 +290,26 @@ then we see that their sum is given by
 
 $$U+W=\{(x,y,0):x,y\in\mb{F}\}.$$
 
-:::
+</details>
+
+<details class="example">
+<summary>Sum of two subspaces in $\mb{F}^4$</summary>
+
+Let $U$ and $W$ be two subspaces of $\mb{F}^4$ defined by
+
+$$
+U=\{(x,x,y,y)\in\mb{F}^4:x,y\in\mb{F}\}\quad\text{and}\quad V=\{(x,x,x,y)\in\mb{F}^4:x,y\in\mb{F}\}.
+$$
+
+Then each vector in $U+V$ is produced from
+
+$$(x,x,y,y)+(x',x',x',y')=(x+x',x+x',y+x',y+y'),$$
+
+where each $x,y,x',y'\in\mb{F}$ can vary independently. We see that the second, third, and fourth components can vary independently, while the first component is equal to the third. This means that
+
+$$U+V=\{(x,x,y,z)\in\mb{F}^4:x,y,z\in\mb{F}\}.$$
+
+</details>
 
 #### "Size" of subspace sum
 :::{#thm-sum-smallest}
@@ -279,7 +390,7 @@ We cannot move from $U_1+W=U_2+W$ to $U_1=U_2$, however tempting it is (especial
 :::
 
 :::{.proof-idea}
-We can find a counterexample in $\mathbb{R}^2$.
+We can find a counter-example in $\mathbb{R}^2$.
 :::
 
 <details class="proof">
@@ -292,7 +403,9 @@ Consider $V=\mathbb{R}^2$ and let $U$ be the horizontal line through the origin.
 #### Direct sum
 The vectors of a subspace sum may not uniquely decompose into the constituent subspaces, i.e. there may be multiple elements of $U_1\times\cdots\times U_n$ that lead to the same sum. 
 
-:::{#exm-nonunique-sum}
+<details class="example">
+<summary>A non-unique decomposition</summary>
+
 Consider the subspaces of $\mathbb{R}^3$ given by
 
 $$
@@ -303,11 +416,14 @@ U_2&=\{(0,c,d):c,d\in\mathbb{R}\}.
 $$
 
 Then we have $U_1+U_2=\mathbb{R}^3$, but every vector in $\mathbb{R}^3$ can be reached in infinitely different ways by adjusting the second entries of the summands. 
-:::
+
+</details>
 
 If every element *is* uniquely decomposable, then we say that the sum is a **direct sum**, and write $\oplus$ instead $+$. In other words, for every $w\in U_1+\cdots+U_n$, there is exactly one $(u_1,\cdots,u_n)\in U_1\times\cdots\times U_n$ that satisfies $w=u_1+\cdots+u_n$.
 
-:::{#exm-direct-sum}
+<details class="example">
+<summary>A direct sum in $\mb{F}^4$</summary>
+
 If $U$ and $W$ are subspaces of $\mb{F}^4$ with
 
 $$U=\{(w,x,0,0):w,x\in\mb{F}\}\quad\text{and}\quad W=\{(0,0,y,z):y,z\in\mb{F}\},$$
@@ -316,7 +432,22 @@ then we see that $\mb{F}^4=U\oplus W$ because every vector $(w,x,y,z)\in\mb{F}^4
 
 $$u+v=(w,x,0,0)+(0,0,y,z).$$
 
-:::
+</details>
+
+<details class="example">
+<summary>A non-direct sum in $\mb{F}^3$</summary>
+
+The subspaces
+
+$$
+U_1=\{(x,y,0)\},\quad U_2=\{(0,0,z)\}\quad\text{and}\quad U_3=\{(0,y,y)\}
+$$
+
+do not form a direct sum, which can be verified by decomposing $0$ in two different ways:
+
+$$(0,0,0)=(0,1,0)+(0,0,1)+(0,-1,-1)=(0,0,0)+(0,0,0)+(0,0,0).$$
+
+</details>
 
 ###### Direct sum check
 :::{#thm-direct-zero-check}
@@ -325,6 +456,8 @@ A subspace sum is direct if the zero vector is uniquely decomposable.
 
 :::{.informal}
 From the definition alone, the directness of a sum seems impossible to check, because the unique decomposition property needs to hold for *every* vector of the vector space. But it turns out that we only need to check this for a single vector, which is a great relief.
+
+Of course, the uniqueness of the decomposition of $0$ must be supplied elsewhere.
 :::
 
 :::{.proof-idea}
@@ -350,8 +483,6 @@ where $u_i-u'_i\in U_i$. By the unique decomposition of $0$, this implies that $
 
 </details>
 
-Of course, the uniqueness of the decomposition of $0$ must be supplied elsewhere.
-
 ###### Direct sum check for two subspaces
 :::{#thm-trivial-intersection-implies-direct}
 The sum of two subspaces is direct if their intersection contains only $0$.
@@ -362,7 +493,7 @@ If we are dealing with a sum of two subspaces, then we can determine that their 
 :::
 
 :::{.proof-idea}
-$u+w=0$ implies that $u,w\in U\cap W$.
+$u+w=0$ implies that both $u$ and $w$ are in $U\cap W$.
 :::
 
 <details class="proof">
@@ -378,13 +509,27 @@ By the previous result, $U+W$ is a direct sum.
 
 </details>
 
-:::{#exm-even-odd}
-Consider $\mathbb{R}^\mathbb{R}$, the set of all real-valued functions on $\mathbb{R}$. Let $U_e$ and $U_o$ be subsets of even and odd functions respectively. Since every $f:\mathbb{R}\to\mathbb{R}$ can be written as a sum of even and odd parts as
+<details class="example">
+<summary>Finding direct sum partner in $\mb{F}^5$</summary>
+
+Consider a subspace of $\mb{F}^5$ defined as $U=\{(x,y,x+y,x-y,2x)\}$. Suppose we wish to find a subspace $W$ such that $\mb{F}^5=U\oplus W$.
+
+Because only the first two components of $u\in U$ can vary independently, we have $\mb{F}^5=U+W$ if we define $W=\{(0,0,x,y,z)\}$. 
+
+For $u\in U$ to have $0$ in the first two components, the other components also have to be zero. Therefore, $U\cap W=\{0\}$ and the sum is direct. 
+
+</details>
+
+<details class="example">
+<summary>Even and odd functions</summary>
+
+Consider $\mathbb{R}^\mathbb{R}$, the set of all real-valued functions on $\mathbb{R}$. Let $U_e$ and $U_o$ be the sets of even and odd functions respectively, which are subspaces of $\mathbb{R}^\mathbb{R}$. Since every $f:\mathbb{R}\to\mathbb{R}$ can be written as a sum of even and odd parts as
 
 $$f(x)=\frac{1}{2}(f(x)+f(-x))+\frac{1}{2}(f(x)-f(-x)),$$
 
 we have $\mathbb{R}^\mathbb{R}=U_e+U_o$. The sum is direct because the only function that is both even and odd is the zero function.
-:::
+
+</details>
 
 :::{#thm-direct-implies-trivial-intersection}
 The converse direction also holds: $U\cap W=\{0\}$ whenever $U+W$ is a direct sum. 

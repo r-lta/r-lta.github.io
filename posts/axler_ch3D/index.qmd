@@ -12,12 +12,18 @@ execute:
 
 This is an augmented summary of Section 3.D of [Linear Algebra Done Right](https://linear.axler.net/index.html) by Sheldon Axler.
 
+As in the previous section, we assume that $\mb{F}\in\{\mathbb{R},\mathbb{C}\}$.
+
 ## Invertibility
 A linear map $T:V\to W$ is **invertible** if there exists a linear map $S:W\to V$ (called the **inverse** of $T$) such that
 
 $$ST=I_V\quad\text{and}\quad TS=I_W,$$
 
-where $I_V$ and $I_W$ are the identity maps of $V$ and $W$ respectively. It is easy to check that the inverse of $T$ is unique, so we denote it by $T^{-1}$.
+where $I_V$ and $I_W$ are the identity maps of $V$ and $W$ respectively. 
+
+:::{#thm-}
+The inverse of $T$ is unique, and so it can be denoted as $T^{-1}$.
+:::
 
 #### Product of invertible maps
 :::{#thm-product-invertible}
@@ -61,6 +67,17 @@ states that $Sw_1+Sw_2$ is the (unique) vector that $T$ maps to $w_1+w_2$, and w
 $$T(Sw_1+Sw_2)=T(Sw_1)+T(Sw_2)=w_1+w_2.$$
 
 Similarly, we can show that $S$ is homogeneous. Therefore, $S$ is a linear map and $T$ is invertible.
+
+</details>
+
+<details class="example">
+<summary>Backward shift</summary>
+
+The backward shift map
+
+$$(x_1,x_2,x_3,\cdots)\mapsto(x_2,x_3,\cdots)$$
+
+is not invertible because it is not injective (despite being surjective): $(a,0,0,\cdots)$ is in its kernel for all $a\in\mb{F}$.
 
 </details>
 
@@ -321,17 +338,25 @@ as required.
 ## Isomorphism
 An invertible linear map is called an **isomorphism**. Two vector spaces are **isomorphic** if there is an isomorphism between them.
 
-:::{#exm-iso-fn}
-For $V$ with dimension $n$, the map $T:V\to\mb{F}^n$ defined as
+<details class="example">
+<summary>Isomorphism between $V$ and $\mathcal{L}(\mb{F},V)$</summary>
 
-$$Tv=\mathcal{M}(v)$$
+Consider the map $M:V\to\mathcal{L}(\mb{F},V)$ that sends each vector $v\in V$ to the linear map defined as $\phi_v(x)=xv$ for all $x\in\mb{F}$. It is linear because
 
-is injective and surjective, and so $V$ is isomorphic to $\mb{F}^n$.
-:::
+$$
+\begin{gather}
+\phi_{v+w}(x)=x(v+w)=xv+xw=(\phi_v+\phi_w)(x)\\
+\phi_{\lambda v}(x)=x(\lambda v)=\lambda(xv)=\lambda\phi_v(x).
+\end{gather}
+$$
 
-:::{#exm-iso-l-f-v}
-An isomorphism between $V$ and $\mathcal{L}(\mb{F},V)$ is the map $M$ that sends each vector $v\in V$ to the linear map $\phi(x)=xv$. We may check that $M$ is linear, injective and surjective.
-:::
+If $\phi_v$ is the zero map, it means that $xv=0$ for all $x\in\mb{F}$, which is only possible when $v=0$. So $M$ is injective.
+
+Every linear map in $\mathcal{L}(\mb{F},V)$ is fully specified by the vector it sends $1$ to. So the image of $M$ covers the entire $V$ because $\phi_v(1)=v$ and $v\in V$ can be arbitrary.
+
+Therefore, $V$ and $\mathcal{L}(\mb{F},V)$ are isomorphic.
+
+</details>
 
 #### Finite-dimensional vector spaces over field is determined by dimension
 :::{#thm-iso-iff-same-dimension}
@@ -340,6 +365,8 @@ All finite-dimensional vector spaces over a given field $\mb{F}$ are isomorphic 
 
 :::{.informal}
 All vector spaces over some $\mb{F}$ with the same dimension are isomorphic to each other---they are merely "relabellings".
+
+Conversely, if two vector spaces are isomorphic, then they have the same dimensions.
 :::
 
 :::{.proof-idea}
@@ -390,6 +417,31 @@ $$\dim\mb{F}^{m,n}=mn=(\dim V)(\dim W).$$
 
 :::
 
+###### Subset of linear maps with specific vector in kernel
+
+:::{#thm-}
+Suppose that $V$ and $W$ are finite-dimensional, and let $v\in V$ be a non-zero vector. Then
+
+$$E=\{T\in\mathcal{L}(V,W):Tv=0\}$$
+
+is a subspace of $\mathcal{L}(V,W)$ with $\dim E=(\dim V-1)\dim W$.
+:::
+
+<details class="proof">
+<summary>Full proof</summary>
+
+Consider the map $\phi:\mathcal{L}(V,W)\to W$ defined as $\phi(T)=Tv$. It is a linear map because
+
+$$\phi(T+S)=(T+S)v=Tv+Sv\quad\text{and}\quad\phi(\lambda T)=(\lambda T)v=\lambda Tv.$$
+
+Then $E$ is the kernel of $\phi$, and so is a subspace. 
+
+As long as $v\neq=0$, $\{v\}$ is linearly independent and so we can define a linear map $T$ such that $Tv=w$ for any $w\in W$. So $\phi$ is surjective, and the rank-nullity theorem gives
+
+$$\dim E=\dim\mathcal{L}(V,W)-\dim W=(\dim V)(\dim W)-\dim W=(\dim V-1)\dim W.$$
+
+</details>
+
 #### Isomorphisms from surjective linear maps
 :::{#thm-surjection-restricts-iso}
 Suppose that $V$ is finite-dimensional and let the linear map $T:V\to W$ be surjective. Then there is a subspace $U$ of $V$ such that the restriction $T|_U$ of $T$ to $U$ is an isomorphism between $U$ and $W$.
@@ -413,7 +465,7 @@ Let $U=\text{span}(v_1,\cdots,v_n)$. Then $T|_U$ is surjective because the $w_i$
 </details>
 
 ## Matrix of vector
-Let us define the action of $\mathcal{M}$ on a vector $v\in V$ to be the $n\times 1$ matrix consisting of the coordinates of $v$ in the basis of $V$ associated with $\mathcal{M}$. That is, if
+As we have done in the previous section, let us define the action of $\mathcal{M}$ on a vector $v\in V$ to be the $n\times 1$ matrix consisting of the coordinates of $v$ in the basis of $V$ associated with $\mathcal{M}$. That is, if
 
 $$v=a_1v_1+\cdots+a_nv_n$$
 
@@ -428,48 +480,11 @@ a_n
 \end{pmatrix}.
 $$
 
-Similarly, $\mathcal{M}(w)$ for $w\in W$ is the $m\times 1$ matrix consisting of the coordinates of $w$. 
+This map $\mathcal{M}:V\to\mb{F}^{n,1}$ is clearly injective and surjective, and so is an isomorphism. The corresponding inverse is the coordinate map
 
-By definition, the $j$th column of $\mathcal{M}(T)$ is the column matrix $\mathcal{M}(Tv_j)$, so 
+$$(a_1,\cdots,a_n)\mapsto a_1v_1+\cdots+a_nv_n.$$
 
-$$\mathcal{M}(T)_{\cdot,j}=\mathcal{M}(Tv_j).$$
-
-#### Linear maps as matrix multiplication
-:::{#thm-linear-map-as-matrix-mult}
-Applying a linear map to a vector is equivalent to multiplying their matrix representations together, i.e.
-
-$$\mathcal{M}(Tv)=\mathcal{M}(T)\mathcal{M}(v).$$
-
-:::
-
-:::{.informal}
-$Tv$ can be calculated by multiplying $\mathcal{M}(T)$ and $\mathcal{M}(v)$ and reading the coordinates.
-:::
-
-:::{.proof-idea}
-Decompose $v$ into a basis and consider how matrix multiplication and $\mathcal{M}$ work.
-:::
-
-<details class="proof">
-<summary>Full proof</summary>
-
-Consider an arbitrary
-
-$$v=a_1v_1+\cdots+a_nv_n\in V.$$
-
-By the linearity of $\mathcal{M}$, we have
-
-$$
-\begin{aligned}
-\mathcal{M}(Tv)&=a_1\mathcal{M}(Tv_1)+\cdots+a_n\mathcal{M}(Tv_n)\\
-&=a_1\mathcal{M}(T)_{\cdot,1}+\cdots+a_n\mathcal{M}(T)_{\cdot,n}\\
-&=\mathcal{M}(T)\mathcal{M}(v).
-\end{aligned}
-$$
-
-In the second line, we use the equality displayed just above. In the third line, we use the expression for $Ac$ (where $c$ is a column matrix) described in the previous section.
-
-</details>
+In the previous section, we saw that $\mathcal{Tv}=\mathcal{M}(T)\mathcal{M}(v)$.
 
 ## Operators
 A linear map in $\mathcal{L}(V)=\mathcal{L}(V,V)$ is called an **operator**.
@@ -504,7 +519,11 @@ Therefore, $\ker P\cap\im\ P=\{0\}$ and the sum is direct.
 
 #### Invertible operators in finite dimensions
 :::{#thm-injective-or-surjective-invertible}
-If $V$ is finite, then its operator is invertible when it is injective *or* surjective. (We have already seen that invertibility implies injectivity and surjectivity.)
+Suppose that $V$ is finite-dimensional, and let $T$ be an operator on $V$. Then the following statements are equivalent.
+
+1. $T$ is invertible.
+2. $T$ is injective.
+3. $T$ is surjective.
 :::
 
 :::{.informal}
@@ -518,6 +537,8 @@ This is a direct consequence of the rank-nullity theorem.
 <details class="proof">
 <summary>Full proof</summary>
 
+We have already seen that invertibility implies injectivity and surjectivity, so it suffices to show that injectivity or surjectivity implies invertibility.
+
 Suppose that $T\in\mathcal{L}(V)$ is injective. Then $\ker T=\{0\}$, so by the rank-nullity theorem
 
 $$\dim\im\ T=\dim V-\dim\ker T=\dim V.$$
@@ -530,14 +551,16 @@ We have earlier shown that an injective and surjective linear map is invertible.
 
 </details>
 
-:::{#exm-operator-fn}
-Consider an operator $T$ on $\mb{F}^n$, which can always be represented in the form of
+<details class="example">
+<summary>System of linear equations with same number of equations and variables</summary>
+
+If a system of linear equations has $n$ equations and $n$ variables, it can be expressed using an operator $T$ on $\mb{F}^n$ as
 
 $$T(x_1,\cdots,x_n)=(\sum_{i=1}^na_{1,i}x_i,\cdots,\sum_{i=1}^na_{n,i}x_i).$$
 
 The injectivity of $T$ implies that the corresponding homogeneous system of equations has no non-zero solutions. In this case, this is equivalent to the surjectivity of $T$, which implies that every inhomogeneous system of equations has a solution. 
 
-:::
+</details>
 
 ###### Product of operators
 :::{#thm-product-invertible-implies-factors}
@@ -561,11 +584,14 @@ Therefore, $T$ has a left inverse, while $S$ has a right inverse. A map with a l
 
 Importantly, this may not hold in infinite-dimensional spaces.
 
+:::{#thm-}
 In a similar manner, we have the following results in finite-dimensional spaces.
 
 - $ST=I$ if and only if $TS=I$.
 - If $STU=I$, then $T$ is invertible with $T^{-1}=US$.
 - If $RST$ is surjective, then $S$ is injective.
+
+:::
 
 #### Centre of vector space
 :::{#thm-centre-scalar-identity}
