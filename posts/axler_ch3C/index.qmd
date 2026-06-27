@@ -60,7 +60,7 @@ $$
 </details>
 
 <details class="example">
-<summary>Matrix of differentation map</summary>
+<summary>Matrix of differentiation map</summary>
 
 Consider the differentiation map $D:\mathcal{P}_3(\mathbb{R})\to\mathcal{P}_2(\mathbb{R})$. We wish to find the corresponding matrix with respect to the standard bases for $\mathcal{P}_3(\mathbb{R})$ and $\mathcal{P}_2(\mathbb{R})$. 
 
@@ -124,7 +124,7 @@ A_{m,1}&A_{m,2}&\cdots&A_{m,n}
 \end{pmatrix}=\mathcal{M}(T)\mathcal{M}(v_1),
 $$
 
-where $\mathcal{M}(v_1)$ on the right expresses the coordinates of $v_1$ with respect to $v_1,\cdots,v_n$, and $\mathcal{M}(Tv_1)$ on the left expresses the coordinates of $Tv_1$ respect to $w_1,\cdots,w_m$. (Note that we had not defined the action of $\mathcal{M}$ on vectors above. We will say more about this in the next section.)
+where $\mathcal{M}(v_1)$ on the right expresses the coordinates of $v_1$ with respect to $v_1,\cdots,v_n$, and $\mathcal{M}(Tv_1)$ on the left expresses the coordinates of $Tv_1$ with respect to $w_1,\cdots,w_m$. (Note that we had not defined the action of $\mathcal{M}$ on vectors above. We will say more about this in the next section.)
 
 Subsequently, the action on an arbitrary vector $a_1v_1+\cdots+a_nv_n\in V$ is given by
 
@@ -366,9 +366,9 @@ A_{m,1}+B_{m,1}&A_{m,2}+B_{m,2}&\cdots&A_{m,n}+B_{m,n}
 \end{aligned}
 $$
 
-then we have $\mathcal{M}(S)+\mathcal{M}(T)$.
+then we have $\mathcal{M}(S+T)=\mathcal{M}(S)+\mathcal{M}(T)$.
 
-By an analogous reasoning, if we define matrix multiplication element-wise as
+By an analogous reasoning, if we define scalar multiplication element-wise as
 
 $$
 \lambda\begin{pmatrix}

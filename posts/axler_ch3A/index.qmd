@@ -65,19 +65,15 @@ as required of a linear operator.
 <details class="example">
 <summary>Homogeneous but not linear map from $\mathbb{R}^2$ to $\mathbb{R}$</summary>
 
-The magnitude function $\phi:\mathbb{R}^2\to\mathbb{R}$ is defined as
+Consider the function $\phi:\mathbb{R}^2\to\mathbb{R}$ defined as
 
-$$\phi(x,y)=\sqrt{x^2+y^2}.$$
+$$\phi(x,y)=\text{sgn}(x)\sqrt{x^2+y^2}.$$
 
 This function is homogeneous because
 
-$$\phi(ax,ay)=\sqrt{a^2x^2+a^2y^2}=a\sqrt{x^2+y^2},$$
+$$\phi(ax,ay)=\text{sgn}(ax)\sqrt{a^2x^2+a^2y^2}=|a|\text{sgn}(a)\text{sgn}(x)\sqrt{x^2+y^2}=a\cdot\text{sgn}(x)\sqrt{x^2+y^2},$$
 
-but not additive as
-
-$$\phi(x_1+x_2,y_1+y_2)=\sqrt{(x_1+x_2)^2+(y_1+y_2)^2}\neq\phi(x_1,y_1)+\phi(x_2,y_2)$$
-
-in general.
+but not additive in general.
 
 </details>
 
@@ -132,7 +128,7 @@ as required.
 <details class="example">
 <summary>Map from $\mathbb{R}^3$ to $\mathbb{R}^2$</summary>
 
-The map $T:mathbb{R}^3\to\mathbb{R}^2$ defined as
+The map $T:\mathbb{R}^3\to\mathbb{R}^2$ defined as
 
 $$T(x_1,x_2,x_3)=(3x_1+2x_2-x_3,x_2+3x_3)$$
 

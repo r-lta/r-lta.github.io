@@ -185,7 +185,7 @@ Consider the subset of $\mb{F}^3$ defined as
 
 $$\{(x_1,x_2,x_3):ax_1+bx_2+cx_3=d\}$$
 
-for some $a\in\mb{F}$. If $d=0$, then we can check that it a subspace of $\mb{F}^3$. If $d\neq0$, then it is not a subspace because it does not contain $(0,0,0)$. (Actually, it is also not closed under vector addition or scalar multiplication.)
+for some $a,b,c,d\in\mb{F}$. If $d=0$, then we can check that it is a subspace of $\mb{F}^3$. If $d\neq0$, then it is not a subspace because it does not contain $(0,0,0)$. (Actually, it is also not closed under vector addition or scalar multiplication.)
 
 </details>
 
@@ -305,7 +305,7 @@ Then each vector in $U+V$ is produced from
 
 $$(x,x,y,y)+(x',x',x',y')=(x+x',x+x',y+x',y+y'),$$
 
-where each $x,y,x',y'\in\mb{F}$ can vary independently. We see that the second, third, and fourth components can vary independently, while the first component is equal to the third. This means that
+where each $x,y,x',y'\in\mb{F}$ can vary independently. We see that the second, third, and fourth components can vary independently, while the first component is equal to the second. This means that
 
 $$U+V=\{(x,x,y,z)\in\mb{F}^4:x,y,z\in\mb{F}\}.$$
 

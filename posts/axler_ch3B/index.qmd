@@ -25,13 +25,6 @@ It is easy to check that $\ker T$ is a subspace of $V$. (For starters, we alread
 <details class="example">
 <summary>Kernel of zero map</summary>
 
-The kernel of the zero map $T:V\to W$ is the vector space $V$ itself. 
-
-</details>
-
-<details class="example">
-<summary>Kernel of zero map</summary>
-
 The kernel of the zero map $0:V\to W$ is the vector space $V$ itself. 
 
 </details>
@@ -631,7 +624,7 @@ In the linear map language, we are asking whether $\ker T\neq\{0\}$, which is th
 
 ###### Inhomogeneous system
 :::{#thm-}
-Whenever there are more variables than equations ($n<m$), there exists a combination of the $c_i$s to which no solutions exist.
+Whenever there are more equations than variables ($n<m$), there exists a combination of the $c_i$s to which no solutions exist.
 :::
 
 <details class="proof">

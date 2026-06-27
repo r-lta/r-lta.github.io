@@ -436,7 +436,7 @@ $$\phi(T+S)=(T+S)v=Tv+Sv\quad\text{and}\quad\phi(\lambda T)=(\lambda T)v=\lambda
 
 Then $E$ is the kernel of $\phi$, and so is a subspace. 
 
-As long as $v\neq=0$, $\{v\}$ is linearly independent and so we can define a linear map $T$ such that $Tv=w$ for any $w\in W$. So $\phi$ is surjective, and the rank-nullity theorem gives
+As long as $v\neq 0$, $\{v\}$ is linearly independent and so we can define a linear map $T$ such that $Tv=w$ for any $w\in W$. So $\phi$ is surjective, and the rank-nullity theorem gives
 
 $$\dim E=\dim\mathcal{L}(V,W)-\dim W=(\dim V)(\dim W)-\dim W=(\dim V-1)\dim W.$$
 
@@ -484,7 +484,7 @@ This map $\mathcal{M}:V\to\mb{F}^{n,1}$ is clearly injective and surjective, and
 
 $$(a_1,\cdots,a_n)\mapsto a_1v_1+\cdots+a_nv_n.$$
 
-In the previous section, we saw that $\mathcal{Tv}=\mathcal{M}(T)\mathcal{M}(v)$.
+In the previous section, we saw that $\mathcal{M}(Tv)=\mathcal{M}(T)\mathcal{M}(v)$.
 
 ## Operators
 A linear map in $\mathcal{L}(V)=\mathcal{L}(V,V)$ is called an **operator**.

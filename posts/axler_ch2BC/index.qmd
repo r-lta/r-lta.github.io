@@ -262,7 +262,7 @@ The size of a linearly independent set in $V$ is a lower bound for $\dim V$. Lik
 :::{#thm-}
 Let $v_1,\cdots,v_n$ be a set of linearly independent vectors in $V$, and consider an arbitrary $w\in V$. Then we have
 
-$$\dim\text{span}(v_1+w,\cdots,v_n+w)\geq m-1.$$
+$$\dim\text{span}(v_1+w,\cdots,v_n+w)\geq n-1.$$
 
 :::
 
@@ -273,7 +273,7 @@ Consider the first difference of linearly independent vectors.
 <details class="proof">
 <summary>Full proof</summary>
 
-It suffices to show that the span has a set of linearly independent vectors of size $m-1$.
+It suffices to show that the span has a set of linearly independent vectors of size $n-1$.
 
 Previously, we have shown that if $v_1,\cdots,v_n$ is linearly independent, so is their first difference
 
@@ -281,7 +281,7 @@ $$v_1-v_2,\cdots,v_{n-1}-v_n,v_n.$$
 
 This means that $v_1-v_2,\cdots,v_{n-1}-v_n$ is linearly independent as well, and each of these vectors are in $\text{span}(v_1+w,\cdots,v_n+w)$. (It is the first difference of the vectors in the set.) 
 
-As $\text{span}(v_1+w,\cdots,v_n+w)$ contains a linearly independent set of size $m-1$, its dimension must be at least $m-1$.
+As $\text{span}(v_1+w,\cdots,v_n+w)$ contains a linearly independent set of size $n-1$, its dimension must be at least $n-1$.
 
 </details>
 

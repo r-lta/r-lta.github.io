@@ -178,11 +178,11 @@ For the standard basis $e_1,\cdots,e_n$, we see that $\phi_i(e_j)=1$ if $i=j$, a
 
 Consider the basis $1,x,\cdots,x^n$ of $\mathcal{P}_n(\mathbb{R})$. Its dual basis is given by $\phi_0,\cdots,\phi_n:\mathcal{P}_n(\mathbb{R})\to\mb{F}$ where
 
-$$\phi_i(p)=\frac{p^{(i)}(0)}{j!}.$$
+$$\phi_i(p)=\frac{p^{(i)}(0)}{i!}.$$
 
 For the basis $1,x-5,\cdots,(x-5)^n$ (note that it is a linearly independent set of the right size), the corresponding dual basis is
 
-$$\phi_i(p)=\frac{p^{(i)}(5)}{j!}.$$
+$$\phi_i(p)=\frac{p^{(i)}(5)}{i!}.$$
 
 </details>
 
@@ -668,7 +668,7 @@ This means that we have $0=\phi(Tv)$ for all $Tv\in\im\ T$. So $\phi\in\ker T'$ 
 <details class="example">
 <summary>When kernel of dual map is span of linear functional</summary>
 
-Suppose that $\phi$ is a linear functional on $\mathbb{R}^5$ defined as $\phi(p)=p(8)$. Let $T\in\mathcal{L}(\mathcal{P}_5(\mathbb{R}),\mathcal{P}(\mathbb{R}))$ be a map whose dual map $T'$ satisfies $\ker T'=\text{span}(\phi)$. We wish to find $\im\ T$.
+Suppose that $\phi$ is a linear functional on $\mathcal{P}_5(\mathbb{R})$ defined as $\phi(p)=p(8)$. Let $T\in\mathcal{L}(\mathcal{P}_5(\mathbb{R}),\mathcal{P}_5(\mathbb{R}))$ be a map whose dual map $T'$ satisfies $\ker T'=\text{span}(\phi)$. We wish to find $\im\ T$.
 
 Then by the above result, we have $(\im\ T)^0=\text{span}(\phi)$. By a previous result, no other vectors are annihilated by $\text{span}(\phi)$ except those in $\im\ T$. Therefore, a vector is in $\im\ T$ if and only if it lies in the kernel of $\phi$. So we have
 

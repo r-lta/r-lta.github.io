@@ -325,7 +325,7 @@ So we can continue exchanging a $w_i$ for a $u_j$ while keeping the span-ness of
 This result is called the **Steinitz exchange lemma**^[The mathematician Steinitz has no relation to the chess player Steinitz as far as I can tell.]. 
 
 :::{#thm-li-bounded-by-spanning}
-In the procedure, we have seen that the spanning set $U$ cannot run out of vectors before the exchange with $W$ is complete, on pain of contradiction. This means that no linearly independent subset of $V$ is larger than *any* spanning set of $V$. Conversely, no spanning subset is smaller than any linearly independent set.
+In the procedure, we have seen that the spanning set $U$ cannot run out of vectors before the exchange with $W$ is complete, on pain of contradiction. This means that no linearly independent subset of $V$ is larger than *any* spanning set of $V$. Conversely, no spanning set is smaller than any linearly independent set.
 :::
 
 <details class="example">
@@ -368,7 +368,7 @@ A vector space $V$ is infinite-dimensional if and only if there is a countably i
 <details class="proof">
 <summary>Full proof</summary>
 
-Suppose that $V$ is finite-dimensional. Then there exists a set of vectors $w_1,\cdots,w_m\in V$ that spans $V$. So any sequence $v_1,v_2,\cdots\in V$, the set $v_1,\cdots,v_{m+1}$ is linearly dependent because it is larger than a spanning set.
+Suppose that $V$ is finite-dimensional. Then there exists a set of vectors $w_1,\cdots,w_m\in V$ that spans $V$. So for any sequence $v_1,v_2,\cdots\in V$, the set $v_1,\cdots,v_{m+1}$ is linearly dependent because it is larger than a spanning set.
 
 Conversely, suppose that $V$ is infinite-dimensional. Then the process of growing a linearly independent set, in the manner of the previous proof, does not stop because at no point does the set span $V$. In this manner, we obtain a sequence $v_1,v_2,\cdots$ where $v_1,\cdots,v_n$ is linearly independent for all $n$.
 
@@ -381,7 +381,7 @@ In the vector space $\mb{F}^\infty$, the set of $n$ vectors
 
 $$(1,0,0,\cdots),(0,1,0,0,\cdots),\cdots,(0,\cdots,0,1,0,\cdots)$$
 
-(where the last vector has a single $1$ in the $n$th entry) linearly independent for any $n$. So by considering the countably infinite sequence of vectors where the $i$th vector has a single $1$ in the $i$th entry, we see that $\mb{F}^\infty$ is infinite-dimensional.
+(where the last vector has a single $1$ in the $n$th entry) are linearly independent for any $n$. So by considering the countably infinite sequence of vectors where the $i$th vector has a single $1$ in the $i$th entry, we see that $\mb{F}^\infty$ is infinite-dimensional.
 
 </details>
 
@@ -390,7 +390,7 @@ A function $f:\mb{F}\to\mb{F}$ is a **polynomial** if there exist coefficients $
 
 $$f(z)=a_0+a_1z+\cdots+a_nz^n$$
 
-for all $x\in\mb{F}$. The **degree** of $f$ is the largest $m$ such that $a_m$ is non-zero. Conventionally (as it makes the theorem statements more concise), the degree of the zero polynomial is taken to be $-\infty$.
+for all $z\in\mb{F}$. The **degree** of $f$ is the largest $m$ such that $a_m$ is non-zero. Conventionally (as it makes the theorem statements more concise), the degree of the zero polynomial is taken to be $-\infty$.
 
 :::{#thm-}
 The set of polynomials $1,z,\cdots,z^n$ is linearly independent.
@@ -399,7 +399,7 @@ The set of polynomials $1,z,\cdots,z^n$ is linearly independent.
 <details class="proof">
 <summary>Full proof</summary>
 
-Suppose that $a_1,\cdots,a_n$ are such that $a_0+a_1z+\cdots+a_nz^n$ is the zero polynomial. Then differentiating the polynomial $i$ times and setting $z=0$ shows that $a_i=0$, for each $i=1,\cdots,n$. 
+Suppose that $a_0,\cdots,a_n$ are such that $a_0+a_1z+\cdots+a_nz^n$ is the zero polynomial. Then differentiating the polynomial $i$ times and setting $z=0$ shows that $a_i=0$, for each $i=0,\cdots,n$. 
 
 </details>
 
